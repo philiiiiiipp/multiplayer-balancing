@@ -1,0 +1,20 @@
+package nl.uva.td.game;
+
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.map.Parser;
+import nl.uva.td.game.tower.SimpleTower;
+import nl.uva.td.test.OneTowerPlacement;
+import nl.uva.td.test.SpawnSimpleCreeps;
+
+public class Main {
+
+    public static void main(final String[] args) {
+        GameField gameField = Parser.parse();
+        gameField.print();
+
+        GameManager gameManager = new GameManager();
+        gameManager.run(new SpawnSimpleCreeps(), new OneTowerPlacement(7, new SimpleTower()), gameField);
+
+    }
+
+}

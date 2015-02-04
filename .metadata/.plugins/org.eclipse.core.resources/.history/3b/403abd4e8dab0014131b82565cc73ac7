@@ -1,0 +1,37 @@
+package nl.uva.td.test;
+
+import java.util.List;
+
+import nl.uva.td.game.TowerAgent;
+import nl.uva.td.game.tower.Tower;
+
+public class ListTowerPlacement extends TowerAgent {
+
+    private final List<Tower> mTowersToPlace;
+
+    private final List<Integer> mPositions;
+
+    public ListTowerPlacement(final List<Tower> towersToPlace, final List<Integer> positions) {
+        mTowersToPlace = towersToPlace;
+        mPositions = positions;
+    }
+
+    @Override
+    public Tower nextTower(final int stepCounter) {
+        if (mTowersToPlace.size() > stepCounter) {
+            return mTowersToPlace.get(stepCounter);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public int nextTowerPosition(final int stepCounter) {
+        if (mPositions.size() > stepCounter) {
+            return mPositions.get(stepCounter);
+        } else {
+            return -1;
+        }
+    }
+
+}

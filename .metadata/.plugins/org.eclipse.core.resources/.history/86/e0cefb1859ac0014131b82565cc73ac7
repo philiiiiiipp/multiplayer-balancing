@@ -1,0 +1,27 @@
+package nl.uva.td.experiment;
+
+import org.moeaframework.core.Solution;
+import org.moeaframework.core.variable.EncodingUtils;
+import org.moeaframework.problem.AbstractProblem;
+
+public class Experiment extends AbstractProblem {
+
+    public Experiment(final int numberOfVariables, final int numberOfObjectives) {
+        super(3, 1);
+    }
+
+    @Override
+    public Solution newSolution() {
+        Solution solution = new Solution(numberOfVariables, numberOfObjectives);
+        for (int variable = 0; variable < numberOfVariables; ++variable) {
+            solution.setVariable(variable, EncodingUtils.newInt(0, 15));
+        }
+    }
+
+    @Override
+    public void evaluate(final Solution solution) {
+        // TODO Auto-generated method stub
+
+    }
+
+}

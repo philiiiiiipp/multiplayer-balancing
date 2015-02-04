@@ -1,0 +1,156 @@
+package nl.uva.td.game.tower;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import nl.uva.td.game.map.Field;
+import nl.uva.td.game.map.TowerField;
+import nl.uva.td.game.unit.Creep;
+
+public abstract class Tower {
+
+    /** A list of all creeps in range of this tower */
+    protected Set<Creep> mCreepsInRange = new HashSet<Creep>();
+
+    /** If this tower deals splash damage */
+    protected final boolean mSplash;
+
+    /** The damage this tower deals per step */
+    protected final double mDamage;
+
+    /** The field this tower is standing on */
+    protected TowerField mField;
+
+    /** The range of this tower */
+    protected final int mRange;
+
+    public Tower(final boolean splash, final double damage, final int range) {
+        mSplash = splash;
+        mDamage = damage;
+        mRange = range;
+    }
+
+    /**
+     * Tells the tower to shot at a creep in range
+     *
+     * @return A list of creeps that died or null if no creep died
+     */
+    public Set<Creep> shoot() {
+        Set<Creep> deadCreeps = null;
+
+        Iterator<Creep> creepIterator = mCreepsInRange.iterator();
+        while (creepIterator.hasNext()) {
+            // creeps in range
+
+            Creep toShootAt = creepIterator.next();
+            if (toShootAt.acceptDamage(mDamage)) {
+                // creep died
+
+                if (deadCreeps == null) {
+                    deadCreeps = new HashSet<Creep>();
+                }
+                deadCreeps.add(toShootAt);
+
+                creepIterator.remove();
+            }
+
+            if (!mSplash) break;
+        }
+
+        return deadCreeps;
+    }
+
+    /**
+     * Registers a given creep to be in range of this tower
+     *
+     * @param creep
+     *            The creep to be registered
+     */
+    public void register(final Creep creep) {
+        mCreepsInRange.add(creep);
+    }
+
+    /**
+     * Deregisters a creep saying its not in range anymore
+     *
+     * @param creep
+     *            The creep to deregister
+     */
+    public void deregister(final Creep creep) {
+        mCreepsInRange.remove(creep);
+    }
+
+    /**
+     * Creates a bidirectional relation between tower and field.
+     *
+     * @param towerField
+     *            The field this tower is standing on
+     */
+    public void placeOnField(final TowerField towerField) {
+        if (mField != towerField) {
+            mField = towerField;
+            mField.placeTower(this);
+
+            Field currentField = mField;
+            currentField.addTowerInRange(this);
+            int overflowNorth = 0, overflowSouth = 0, overflowWest = 0, overflowEast = 0;
+
+            for (int range = 0; range < mRange; range++) {
+                if (currentField.getNorth() != null) {
+                    currentField = currentField.getNorth();
+                    currentField.addTowerInRange(this);
+
+                } else {
+                    overflowNorth += 1;
+                }
+
+                for (int west = 0; west < 1 + 2 * range - overflowEast; ++west) {
+                    if (currentField.getWest() != null) {
+                        currentField = currentField.getWest();
+                        currentField.addTowerInRange(this);
+                    } else {
+                        overflowWest = 1 + 2 * range - west;
+                        break;
+                    }
+                }
+                overflowEast = 0;
+
+                for (int south = 0; south < 2 + 2 * range - overflowNorth; ++south) {
+                    if (currentField.getSouth() != null) {
+                        currentField = currentField.getSouth();
+                        currentField.addTowerInRange(this);
+
+                    } else {
+                        overflowSouth = 2 + 2 * range - south;
+                    }
+                }
+                overflowNorth = 0;
+
+                for (int east = 0; east < 2 + 2 * range - overflowWest; ++east) {
+                    if (currentField.getEast() != null) {
+                        currentField = currentField.getEast();
+
+                        currentField.addTowerInRange(this);
+
+                    } else {
+                        overflowEast = 2 + 2 * range - east;
+                    }
+                }
+                overflowWest = 0;
+
+                for (int north = 0; north < 2 + 2 * range - overflowSouth; ++north) {
+                    if (currentField.getNorth() != null) {
+                        currentField = currentField.getNorth();
+
+                        currentField.addTowerInRange(this);
+
+                    } else {
+                        overflowNorth = 2 + 2 * range - north;
+                    }
+                }
+                overflowSouth = 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+package nl.uva.td.test;
+
+import nl.uva.td.game.CreepAgent;
+
+public class SpawnSimpleCreeps extends CreepAgent {
+
+}

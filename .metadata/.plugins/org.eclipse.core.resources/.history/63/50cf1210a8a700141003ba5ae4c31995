@@ -1,0 +1,11 @@
+package nl.uva.td.game.map;
+
+public class TowerField extends Field {
+
+	public static final String ID = "O";
+	
+	public TowerField(int row, int column) {
+		super(Type.TOWER_FIELD, row, column);
+	}
+	
+}

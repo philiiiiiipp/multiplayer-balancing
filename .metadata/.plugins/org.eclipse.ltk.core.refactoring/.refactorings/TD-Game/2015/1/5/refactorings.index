@@ -1,0 +1,11 @@
+1422289103472	Move compilation unit
+1422289106933	Move compilation unit
+1422289190512	Rename enum constant 'WAY_FIELD'
+1422378922094	Rename type 'MapParser'
+1422522616400	Rename local variable 'i'
+1422522684730	Rename local variable 'row'
+1422527019956	Delete element
+1422528441638	Rename local variable 'gameField'
+1422543456976	Rename method 'towersInRange'
+1422620657637	Delete element
+1422623582303	Rename local variable 'turnCouter'

@@ -1,0 +1,9 @@
+package nl.uva.td.game.exceptions;
+
+public class MapParserException extends RuntimeException {
+
+	public MapParserException() {
+		super("");
+	}
+	
+}

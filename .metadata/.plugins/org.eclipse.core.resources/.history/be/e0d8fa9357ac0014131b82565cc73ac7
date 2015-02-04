@@ -1,0 +1,25 @@
+package nl.uva.td.experiment;
+
+import org.moeaframework.core.Solution;
+import org.moeaframework.problem.AbstractProblem;
+
+public class Experiment extends AbstractProblem {
+
+    public Experiment(final int numberOfVariables, final int numberOfObjectives) {
+        super(numberOfVariables, numberOfObjectives);
+    }
+
+
+    @Override
+    public Solution newSolution() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public void evaluate(final Solution solution) {
+        // TODO Auto-generated method stub
+
+    }
+
+}

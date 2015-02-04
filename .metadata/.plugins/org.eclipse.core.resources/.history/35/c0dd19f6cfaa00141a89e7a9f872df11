@@ -1,0 +1,26 @@
+package nl.uva.td.test;
+
+import java.util.List;
+
+import nl.uva.td.game.TowerAgent;
+import nl.uva.td.game.tower.Tower;
+
+public class ListTowerPlacement extends TowerAgent {
+
+    private List<Tower> mTowersToPlace;
+    
+    private List<Integer> mPositions;
+    
+    @Override
+    public Tower nextTower(int stepCounter) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int nextTowerPosition(int stepCounter) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+}

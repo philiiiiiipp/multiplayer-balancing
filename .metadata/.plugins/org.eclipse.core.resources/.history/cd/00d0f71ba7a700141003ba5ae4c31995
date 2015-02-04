@@ -1,0 +1,35 @@
+package nl.uva.td.game.map;
+
+import java.util.List;
+
+import nl.uva.td.game.Agent;
+
+public class GameField {
+
+	private final CreepField mStartField;
+	
+	private final CreepField mEndField;
+	public GameField(
+			CreepField startField, 
+			CreepField endField,
+			List<TowerField> towerFields, 
+			List<CreepField> creepFields,
+			Field[][] gameField) {
+
+		
+	}
+
+	public void step() {
+		
+		//Build new Towers
+		if(mTimeStep % 10 == 0) {
+//			mAgent.
+		}
+		
+		//Shoot
+		
+		//Walk
+		
+	}
+	
+}

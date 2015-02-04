@@ -1,0 +1,367 @@
+2015-02-04 10:38:23,024 [Worker-497] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: TD-Game:TD-Game:0.0.1-SNAPSHOT @ /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/pom.xml.
+2015-02-04 10:38:23,425 [Worker-497] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /TD-Game/src
+2015-02-04 10:38:23,426 [Worker-497] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /TD-Game/src/test/java because it overlaps with /TD-Game/src
+2015-02-04 10:38:23,507 [Worker-497] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2015-02-04 10:38:23,533 [Worker-497] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: TD-Game:TD-Game:0.0.1-SNAPSHOT @ /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/pom.xml.
+2015-02-04 10:38:23,637 [Worker-497] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /TD-Game/src
+2015-02-04 10:38:23,637 [Worker-497] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /TD-Game/src/test/java because it overlaps with /TD-Game/src
+2015-02-04 10:38:23,689 [Worker-497] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 0 sec
+2015-02-04 10:38:23,903 [Worker-493] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:38:23,904 [Worker-493] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 10:38:23,907 [Worker-493] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:38:23,907 [Worker-493] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 10:40:06,686 [Worker-495] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: TD-Game:TD-Game:0.0.1-SNAPSHOT @ /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/pom.xml.
+2015-02-04 10:40:07,154 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/moeaframework/moeaframework/2.4/moeaframework-2.4.pom
+2015-02-04 10:40:07,415 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/moeaframework/moeaframework/2.4/moeaframework-2.4.pom
+2015-02-04 10:40:07,456 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.8/commons-codec-1.8.pom
+2015-02-04 10:40:07,529 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.8/commons-codec-1.8.pom
+2015-02-04 10:40:07,558 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/28/commons-parent-28.pom
+2015-02-04 10:40:07,663 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/28/commons-parent-28.pom
+2015-02-04 10:40:07,716 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1.pom
+2015-02-04 10:40:07,767 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1.pom
+2015-02-04 10:40:07,796 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/24/commons-parent-24.pom
+2015-02-04 10:40:07,874 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/24/commons-parent-24.pom
+2015-02-04 10:40:07,910 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.21/jcommon-1.0.21.pom
+2015-02-04 10:40:07,961 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.21/jcommon-1.0.21.pom
+2015-02-04 10:40:07,997 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.pom
+2015-02-04 10:40:08,047 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.pom
+2015-02-04 10:40:08,076 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.17/jcommon-1.0.17.pom
+2015-02-04 10:40:08,126 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.17/jcommon-1.0.17.pom
+2015-02-04 10:40:08,157 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+2015-02-04 10:40:08,204 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+2015-02-04 10:40:08,238 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/lowagie/itext/2.1.5/itext-2.1.5.pom
+2015-02-04 10:40:08,297 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/lowagie/itext/2.1.5/itext-2.1.5.pom
+2015-02-04 10:40:08,330 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.pom
+2015-02-04 10:40:08,379 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.pom
+2015-02-04 10:40:08,407 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.pom
+2015-02-04 10:40:08,456 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.pom
+2015-02-04 10:40:08,493 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/fifesoft/rsyntaxtextarea/2.5.1/rsyntaxtextarea-2.5.1.pom
+2015-02-04 10:40:08,540 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/fifesoft/rsyntaxtextarea/2.5.1/rsyntaxtextarea-2.5.1.pom
+2015-02-04 10:40:08,593 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/moeaframework/moeaframework/2.4/moeaframework-2.4.jar
+2015-02-04 10:40:09,700 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/moeaframework/moeaframework/2.4/moeaframework-2.4.jar
+2015-02-04 10:40:09,725 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.8/commons-codec-1.8.jar
+2015-02-04 10:40:09,883 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.8/commons-codec-1.8.jar
+2015-02-04 10:40:09,914 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1.jar
+2015-02-04 10:40:11,529 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1.jar
+2015-02-04 10:40:11,554 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.21/jcommon-1.0.21.jar
+2015-02-04 10:40:11,738 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.21/jcommon-1.0.21.jar
+2015-02-04 10:40:11,768 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar
+2015-02-04 10:40:12,452 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar
+2015-02-04 10:40:12,476 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar
+2015-02-04 10:40:12,604 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar
+2015-02-04 10:40:12,633 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/lowagie/itext/2.1.5/itext-2.1.5.jar
+2015-02-04 10:40:13,162 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/lowagie/itext/2.1.5/itext-2.1.5.jar
+2015-02-04 10:40:13,186 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar
+2015-02-04 10:40:13,314 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar
+2015-02-04 10:40:13,344 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar
+2015-02-04 10:40:14,059 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar
+2015-02-04 10:40:14,087 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/fifesoft/rsyntaxtextarea/2.5.1/rsyntaxtextarea-2.5.1.jar
+2015-02-04 10:40:14,555 [Worker-495] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/fifesoft/rsyntaxtextarea/2.5.1/rsyntaxtextarea-2.5.1.jar
+2015-02-04 10:40:14,782 [Worker-495] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:40:14,782 [Worker-495] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 10:40:14,784 [Worker-495] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:40:14,785 [Worker-495] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 10:40:15,983 [Worker-489] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:40:15,983 [Worker-489] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 10:40:15,985 [Worker-489] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:40:15,986 [Worker-489] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 10:40:20,071 [Worker-495] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: TD-Game:TD-Game:0.0.1-SNAPSHOT @ /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/pom.xml.
+2015-02-04 10:40:20,167 [Worker-495] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:40:20,167 [Worker-495] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 10:40:20,169 [Worker-495] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:40:20,169 [Worker-495] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 10:40:59,445 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2015-02-04 10:41:18,271 [Worker-497] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2015-02-04 10:41:18,299 [Worker-497] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: TD-Game:TD-Game:0.0.1-SNAPSHOT @ /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/pom.xml.
+2015-02-04 10:41:18,405 [Worker-497] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /TD-Game/src
+2015-02-04 10:41:18,406 [Worker-497] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /TD-Game/src/test/java because it overlaps with /TD-Game/src
+2015-02-04 10:41:18,488 [Worker-497] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 0 sec
+2015-02-04 10:41:19,335 [Worker-500] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:41:19,336 [Worker-500] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 10:41:19,338 [Worker-500] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:41:19,338 [Worker-500] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 10:41:37,189 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/moeaframework/moeaframework/2.4/moeaframework-2.4-sources.jar
+2015-02-04 10:41:44,102 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/moeaframework/moeaframework/2.4/moeaframework-2.4-sources.jar
+2015-02-04 10:41:44,118 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.moeaframework:moeaframework:2.4
+2015-02-04 10:41:44,147 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-cli/commons-cli/1.2/commons-cli-1.2-sources.jar
+2015-02-04 10:41:44,212 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-cli/commons-cli/1.2/commons-cli-1.2-sources.jar
+2015-02-04 10:41:44,251 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for commons-cli:commons-cli:1.2
+2015-02-04 10:41:44,280 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.8/commons-codec-1.8-sources.jar
+2015-02-04 10:41:44,446 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.8/commons-codec-1.8-sources.jar
+2015-02-04 10:41:44,461 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for commons-codec:commons-codec:1.8
+2015-02-04 10:41:44,490 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1-sources.jar
+2015-02-04 10:41:44,706 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1-sources.jar
+2015-02-04 10:41:44,720 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.apache.commons:commons-lang3:3.1
+2015-02-04 10:41:44,756 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1-sources.jar
+2015-02-04 10:41:45,625 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1-sources.jar
+2015-02-04 10:41:45,639 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.apache.commons:commons-math3:3.1.1
+2015-02-04 10:41:45,666 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.21/jcommon-1.0.21-sources.jar
+2015-02-04 10:41:46,039 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.21/jcommon-1.0.21-sources.jar
+2015-02-04 10:41:46,054 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.jfree:jcommon:1.0.21
+2015-02-04 10:41:46,091 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15-sources.jar
+2015-02-04 10:41:46,965 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15-sources.jar
+2015-02-04 10:41:46,981 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.jfree:jfreechart:1.0.15
+2015-02-04 10:41:47,009 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-sources.jar
+2015-02-04 10:41:47,283 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-sources.jar
+2015-02-04 10:41:47,300 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for xml-apis:xml-apis:1.3.04
+2015-02-04 10:41:47,335 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/lowagie/itext/2.1.5/itext-2.1.5-sources.jar
+2015-02-04 10:41:48,258 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/lowagie/itext/2.1.5/itext-2.1.5-sources.jar
+2015-02-04 10:41:48,271 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for com.lowagie:itext:2.1.5
+2015-02-04 10:41:48,297 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138-sources.jar
+2015-02-04 10:41:48,309 [Worker-496] ERROR o.e.m.j.internal.DownloadSourcesJob - Could not download sources for bouncycastle:bcmail-jdk14:138
+org.eclipse.core.runtime.CoreException: Could not resolve artifact bouncycastle:bcmail-jdk14:jar:sources:138
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl$5.call(MavenImpl.java:769) ~[org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl$5.call(MavenImpl.java:1) ~[org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:166) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:109) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:96) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:736) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:713) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.download(DownloadSourcesJob.java:244) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadAttachments(DownloadSourcesJob.java:223) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadMaven(DownloadSourcesJob.java:197) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.run(DownloadSourcesJob.java:153) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob$1.call(DownloadSourcesJob.java:136) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob$1.call(DownloadSourcesJob.java:1) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:166) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:142) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:96) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.execute(MavenImpl.java:1348) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.run(DownloadSourcesJob.java:134) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54) [org.eclipse.core.jobs_3.6.0.v20140424-0053.jar:na]
+2015-02-04 10:41:48,359 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138-sources.jar
+2015-02-04 10:41:48,362 [Worker-496] ERROR o.e.m.j.internal.DownloadSourcesJob - Could not download sources for bouncycastle:bcprov-jdk14:138
+org.eclipse.core.runtime.CoreException: Could not resolve artifact bouncycastle:bcprov-jdk14:jar:sources:138
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl$5.call(MavenImpl.java:769) ~[org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl$5.call(MavenImpl.java:1) ~[org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:166) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:109) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:96) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:736) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:713) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.download(DownloadSourcesJob.java:244) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadAttachments(DownloadSourcesJob.java:223) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadMaven(DownloadSourcesJob.java:197) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.run(DownloadSourcesJob.java:153) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob$1.call(DownloadSourcesJob.java:136) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob$1.call(DownloadSourcesJob.java:1) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:166) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:142) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:96) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.execute(MavenImpl.java:1348) [org.eclipse.m2e.core_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.run(DownloadSourcesJob.java:134) [org.eclipse.m2e.jdt_1.5.0.20140606-0033.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54) [org.eclipse.core.jobs_3.6.0.v20140424-0053.jar:na]
+2015-02-04 10:41:48,414 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/junit/junit/4.11/junit-4.11-sources.jar
+2015-02-04 10:41:48,569 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/junit/junit/4.11/junit-4.11-sources.jar
+2015-02-04 10:41:48,611 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for junit:junit:4.11
+2015-02-04 10:41:48,638 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar
+2015-02-04 10:41:48,695 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar
+2015-02-04 10:41:48,709 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.hamcrest:hamcrest-core:1.3
+2015-02-04 10:41:48,755 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/fifesoft/rsyntaxtextarea/2.5.1/rsyntaxtextarea-2.5.1-sources.jar
+2015-02-04 10:41:49,420 [Worker-496] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/fifesoft/rsyntaxtextarea/2.5.1/rsyntaxtextarea-2.5.1-sources.jar
+2015-02-04 10:41:49,435 [Worker-496] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for com.fifesoft:rsyntaxtextarea:2.5.1
+2015-02-04 10:41:49,602 [Worker-489] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:41:49,602 [Worker-489] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 10:41:49,604 [Worker-489] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 10:41:49,604 [Worker-489] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:01:12,253 [Worker-510] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:01:12,254 [Worker-510] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:01:12,256 [Worker-510] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:01:12,256 [Worker-510] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:21:04,921 [Worker-521] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:21:04,922 [Worker-521] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:21:04,924 [Worker-521] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:21:04,925 [Worker-521] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:21:17,885 [Worker-520] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:21:17,886 [Worker-520] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:21:17,887 [Worker-520] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:21:17,888 [Worker-520] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:21:27,407 [Worker-522] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:21:27,408 [Worker-522] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:21:27,409 [Worker-522] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:21:27,410 [Worker-522] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:22:32,638 [Worker-521] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:22:32,639 [Worker-521] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:22:32,640 [Worker-521] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:22:32,641 [Worker-521] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:23:21,845 [Worker-516] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:23:21,845 [Worker-516] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:23:21,847 [Worker-516] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:23:21,847 [Worker-516] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:25:10,502 [Worker-520] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:25:10,502 [Worker-520] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:25:10,503 [Worker-520] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:25:10,503 [Worker-520] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:32:14,062 [Worker-524] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:32:14,062 [Worker-524] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:32:14,063 [Worker-524] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:32:14,064 [Worker-524] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:32:20,109 [Worker-529] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:32:20,110 [Worker-529] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:32:20,112 [Worker-529] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:32:20,113 [Worker-529] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:36:04,741 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:36:04,742 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:36:04,743 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:36:04,743 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:36:19,910 [Worker-531] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:36:19,910 [Worker-531] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:36:19,911 [Worker-531] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:36:19,912 [Worker-531] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:36:49,513 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:36:49,513 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:36:49,515 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:36:49,515 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:39:24,131 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:39:24,131 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:39:24,132 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:39:24,133 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:39:27,048 [Worker-533] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:39:27,048 [Worker-533] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:39:27,050 [Worker-533] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:39:27,050 [Worker-533] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:39:36,669 [Worker-530] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:39:36,669 [Worker-530] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:39:36,671 [Worker-530] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:39:36,671 [Worker-530] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:40:22,532 [Worker-526] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:40:22,533 [Worker-526] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:40:22,534 [Worker-526] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:40:22,534 [Worker-526] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:41:55,798 [Worker-534] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:41:55,798 [Worker-534] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:41:55,800 [Worker-534] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:41:55,801 [Worker-534] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:42:03,172 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:42:03,172 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:42:03,173 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:42:03,174 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:42:07,129 [Worker-534] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:42:07,129 [Worker-534] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:42:07,130 [Worker-534] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:42:07,131 [Worker-534] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:43:04,231 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:43:04,232 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:43:04,233 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:43:04,233 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:43:35,970 [Worker-530] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:43:35,971 [Worker-530] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:43:35,972 [Worker-530] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:43:35,972 [Worker-530] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:44:16,970 [Worker-526] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:44:16,970 [Worker-526] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:44:16,971 [Worker-526] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:44:16,972 [Worker-526] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:45:26,782 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:45:26,782 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:45:26,783 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:45:26,784 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:45:52,717 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:45:52,717 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:45:52,719 [Worker-528] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:45:52,719 [Worker-528] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:46:05,775 [Worker-533] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:46:05,776 [Worker-533] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:46:05,777 [Worker-533] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:46:05,777 [Worker-533] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:46:43,174 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:46:43,175 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:46:43,176 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:46:43,176 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:47:04,087 [Worker-527] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:47:04,087 [Worker-527] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:47:04,089 [Worker-527] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:47:04,089 [Worker-527] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:47:35,434 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:47:35,435 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:47:35,436 [Worker-532] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:47:35,437 [Worker-532] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:47:44,512 [Worker-527] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:47:44,513 [Worker-527] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:47:44,514 [Worker-527] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:47:44,514 [Worker-527] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 11:48:22,963 [Worker-530] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:48:22,963 [Worker-530] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 11:48:22,964 [Worker-530] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 11:48:22,965 [Worker-530] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 12:59:54,665 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: TD-Game:TD-Game:0.0.1-SNAPSHOT @ /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/pom.xml.
+2015-02-04 12:59:56,970 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 12:59:56,972 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 12:59:56,975 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 12:59:56,975 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:02:40,556 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:02:40,557 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:02:40,559 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:02:40,560 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:03:18,612 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:03:18,613 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:03:18,616 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:03:18,616 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:04:06,159 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:04:06,160 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:04:06,161 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:04:06,162 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:04:16,282 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:04:16,282 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:04:16,284 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:04:16,285 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:05:16,141 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:05:16,141 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:05:16,143 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:05:16,143 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:07:00,163 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:07:00,163 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:07:00,164 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:07:00,165 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:08:43,925 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:08:43,926 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:08:43,928 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:08:43,929 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:08:45,773 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:08:45,774 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:08:45,775 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:08:45,775 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:09:37,054 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:09:37,055 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:09:37,057 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:09:37,058 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:10:47,909 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:10:47,909 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:10:47,910 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:10:47,911 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:10:51,125 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:10:51,125 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:10:51,126 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:10:51,127 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:14:18,359 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:14:18,359 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:14:18,361 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:14:18,362 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:16:13,031 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:16:13,032 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:16:13,033 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:16:13,033 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:20:25,751 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:20:25,752 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:20:25,753 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:20:25,754 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:20:36,210 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:20:36,210 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:20:36,214 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:20:36,214 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:21:29,181 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:29,182 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:21:29,184 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:29,184 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:21:37,843 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:37,844 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:21:37,845 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:37,846 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:21:39,990 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:39,990 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:21:39,991 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:39,992 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-04 13:21:55,537 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:55,537 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-04 13:21:55,539 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (US-ASCII actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-04 13:21:55,539 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources

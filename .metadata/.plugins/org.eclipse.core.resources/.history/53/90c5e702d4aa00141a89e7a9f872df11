@@ -1,0 +1,95 @@
+package nl.uva.td.test;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import nl.uva.td.game.GameManager;
+import nl.uva.td.game.map.Field;
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.map.Parser;
+import nl.uva.td.game.map.TowerField;
+import nl.uva.td.game.tower.SimpleTower;
+import nl.uva.td.game.tower.Tower;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class TestGame {
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {}
+
+    @Before
+    public void setUp() throws Exception {}
+
+    @Test
+    public void towerRangeTest() {
+        GameField gameField = Parser.parse();
+
+        GameManager gameManager = new GameManager();
+
+        List<Integer> positionsList = new LinkedList<Integer>(Arrays.asList(0, 12, 3, 7, 5, 15));
+        List<Tower> towerList = generateSimpleTowerList(positionsList);
+
+        gameManager.run(new SpawnSimpleCreeps(), new ListTowerPlacement(towerList, positionsList), gameField);
+
+        printRanges(gameField);
+    }
+
+    private List<Tower> generateSimpleTowerList(final List<Integer> positionList) {
+        List<Tower> towerList = new LinkedList<Tower>();
+        for (Integer position : positionList) {
+            towerList.add(new SimpleTower());
+        }
+
+        return towerList;
+    }
+
+    /**
+     * Prints the amount of towers which can shoot at each of the fields
+     *
+     * @param gameField
+     *            The game field to test
+     */
+    private void printRanges(final GameField gameField) {
+        for (int x = 0; x < gameField.getGameField().length; x++) {
+            for (int y = 0; y < gameField.getGameField()[x].length; ++y) {
+                Field currentField = gameField.getGameField()[x][y];
+                if (currentField.getTowersInRange().size() != 0) {
+                    System.out.print(currentField.getTowersInRange().size());
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Prints the amount of towers which can shoot at each of the fields
+     *
+     * @param gameField
+     *            The game field to test
+     */
+    private void printTowers(final GameField gameField) {
+        for (int x = 0; x < gameField.getGameField().length; x++) {
+            for (int y = 0; y < gameField.getGameField()[x].length; ++y) {
+                Field currentField = gameField.getGameField()[x][y];
+                if (currentField instanceof TowerField) {
+                    if ((TowerField) ((TowerField) currentField).getTower() != null) {
+                        System.out.print("X");
+                    }
+                }
+
+                if (currentField.getTowersInRange().size() != 0) {
+                    System.out.print(currentField.getTowersInRange().size());
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
+    }
+}

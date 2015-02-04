@@ -1,0 +1,7 @@
+package nl.uva.td.test;
+
+import nl.uva.td.game.TowerAgent;
+
+public class ListTowerPlacement extends TowerAgent {
+
+}

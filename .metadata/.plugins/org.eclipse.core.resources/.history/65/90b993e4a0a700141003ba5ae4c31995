@@ -1,0 +1,14 @@
+package nl.uva.td.game.exceptions;
+
+public class MapParserException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1580004335469508949L;
+
+	public MapParserException() {
+		super("");
+	}
+	
+}

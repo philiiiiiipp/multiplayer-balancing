@@ -1,0 +1,38 @@
+package nl.uva.td.game;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import nl.uva.td.experiment.Score;
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.unit.Creep;
+
+public class GameManager {
+
+    public Score run(final Agent agent, final GameField gameField) {
+        int playerHealth = 10;
+        Set<Creep> creeps = new HashSet<Creep>();
+        Set<Tower> towers = new HashSet<Tower>();
+        Creep killedCreep;
+
+        /*
+         * 1.Shoot 2.Walk
+         */
+        while (playerHealth > 0) {
+
+            for (Tower tower : towers) {
+                killedCreep = tower.shoot();
+                
+                if(killedCreep != null) {
+                    
+                    creeps.remove(killedCreep);
+                    killedCreep = null;
+                }
+            }
+
+        }
+
+        return null;
+    }
+}

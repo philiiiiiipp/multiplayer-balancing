@@ -1,0 +1,79 @@
+package nl.uva.td.game;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import nl.uva.td.experiment.Score;
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.unit.Creep;
+
+public class GameManager {
+
+    public Score run(final CreepAgent creepAgent, final TowerAgent towerAgent, final GameField gameField) {
+        int playerHealth = 10;
+        int stepCounter = 0;
+        Set<Creep> creeps = new HashSet<Creep>();
+        Set<Tower> towers = new HashSet<Tower>();
+        Set<Creep> killedCreep;
+
+        /*
+         * 1.Place 2.Shoot 3.Walk
+         */
+        while (playerHealth > 0) {
+
+            // Place towers first so creeps can register
+            Tower nextTower = towerAgent.nextTower(stepCounter);
+            if (nextTower != null) {
+                int nextTowerPosition = towerAgent.nextTowerPosition(stepCounter);
+                gameField.addTowerToTheGame(nextTower, nextTowerPosition);
+                towers.add(nextTower);
+            }
+
+            // Place creep
+            Creep nextCreep = creepAgent.nextCreep(stepCounter);
+            if (nextCreep != null) {
+                gameField.addCreepToTheGame(nextCreep);
+                creeps.add(nextCreep);
+            }
+
+            // Shoot
+            for (Tower tower : towers) {
+                killedCreep = tower.shoot();
+
+                if (killedCreep != null) {
+                    creeps.remove(killedCreep);
+                    killedCreep = null;
+                }
+            }
+
+            // Walk
+            for (Creep creep : creeps) {
+                if (creep.move()) {
+                    // creep went into the goal
+                    playerHealth--;
+                }
+            }
+
+            stepCounter++;
+            printField(gameField);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return new Score(++stepCounter);
+    }
+
+    private void printField(final GameField gameField) {
+        for (int x = 0; x < gameField.getGameField().length; ++x) {
+            for (int y = 0; y < gameField.getGameField()[x].length; ++y) {
+                System.out.print(gameField.getGameField());
+            }
+            System.out.println();
+        }
+    }
+}

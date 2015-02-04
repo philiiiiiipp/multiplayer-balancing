@@ -1,0 +1,11 @@
+package nl.uva.td.game;
+
+import nl.uva.td.game.unit.SimpleCreep;
+
+public class CreepAgent {
+
+    public Creep nextCreep(int stepCounter) {
+        return new SimpleCreep();
+    }
+    
+}

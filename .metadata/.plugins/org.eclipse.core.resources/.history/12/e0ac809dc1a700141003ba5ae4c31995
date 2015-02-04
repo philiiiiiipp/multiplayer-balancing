@@ -1,0 +1,17 @@
+package nl.uva.td.game.unit;
+
+public abstract class Creep {
+
+    private double mHealth;
+
+    public Creep(final double health) {
+        mHealth = health;
+    }
+
+    public boolean acceptDamage(final double dmg) {
+        mHealth -= dmg;
+
+        return mHealth <= 0;
+    }
+
+}

@@ -1,0 +1,7 @@
+1422874735192	Rename method 'setField'
+1422874755390	Rename method 'setTower'
+1422875698953	Rename method 'placeOnFieldIfPossible'
+1422875732462	Rename local variable 'south'
+1422878117371	Rename local variable 'overflowDown'
+1422878127470	Rename local variable 'overflowLeft'
+1422878135044	Rename local variable 'overflowRight'

@@ -1,0 +1,116 @@
+package nl.uva.td.game.map;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Parser {
+
+	public static final String START_FIELD = "S";
+	
+	public static final String END_FIELD = "E";
+	
+	/** 
+	 * O decodes a tower-placement field
+	 * X is a way field where the creeps walk
+	 */
+	private static final String sField =
+			"OOOSO\n"+
+			"OXXXO\n"+
+			"OXOOO\n"+
+			"OXXXO\n"+
+			"OOOEO";
+	
+	public static GameField parse() {
+		return parse(sField);
+	}
+	
+	/**
+	 * Only game fields with equal row length are allowed
+	 * @param gameFieldString
+	 * @return
+	 */
+	public static GameField parse(String gameFieldString) {
+		String[] splittedField = gameFieldString.split("\n");
+		
+		List<TowerField> towerFields = new ArrayList<TowerField>();
+		List<CreepField> creepFields = new ArrayList<CreepField>();
+		CreepField startField, endField;
+		Field[][] gameField = new Field[splittedField.length][splittedField[0].length()];
+
+		int row = 0;
+		for(String rowEntry : splittedField) {
+			for(int column = 0; column < rowEntry.length(); ++column) {
+				String fieldID = String.valueOf(rowEntry.charAt(column));
+
+				switch (fieldID) {
+				
+				case TowerField.ID:
+					TowerField towerField = new TowerField(row, column);
+					towerFields.add(towerField);
+					gameField[row][column] = towerField;
+					break;
+					
+				case CreepField.ID:
+					CreepField creepField = new CreepField(CreepField.Type.NONE, row, column);
+					creepFields.add(creepField);
+					gameField[row][column] = creepField;
+					break;
+
+				case START_FIELD:
+					creepFields.add(startField = new CreepField(CreepField.Type.START, row, column));
+					gameField[row][column] = startField;
+					break;
+					
+				case END_FIELD:
+					creepFields.add(endField = new CreepField(CreepField.Type.END, row, column));
+					gameField[row][column] = endField;
+					break;
+					
+				default:
+					throw new RuntimeException("Could not parse \"" +fieldID +"\" unknown ID");
+				}
+			}
+			
+			row++;
+		}
+		
+		//Make the field connections
+		for(row = 0; row < gameField.length; row++) {
+			int columnLength = gameField[row].length;
+			
+			for(int column = 0; column < columnLength; column++) {
+				Field currentField = gameField[row][column];
+				
+				if(hasNorthField(row))
+					currentField.setNorth(gameField[row -1][column]);
+				
+				if(hasEastField(column, columnLength))
+					currentField.setEast(gameField[row][column +1]);
+					
+				if(hasSouthField(row, gameField.length))
+					currentField.setSouth(gameField[row +1][column]);
+				
+				if(hasWestField(column, columnLength))
+					currentField.setWest(gameField[row][column -1]);
+			}
+		}
+		
+		return null;
+	}
+	
+	private static boolean hasNorthField(int row) {
+		return row > 0;
+	}
+	
+	private static boolean hasEastField(int column, int columnLength) {
+		return column < columnLength-1;
+	}
+	
+	private static boolean hasSouthField(int row, int rowLength) {
+		return row < rowLength-1;
+	}
+	
+	private static boolean hasWestField(int column, int columnLength) {
+		return column > 0;
+	}
+}

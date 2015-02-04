@@ -1,0 +1,22 @@
+package nl.uva.td.game.unit;
+
+public abstract class Creep {
+
+    private double mHealth;
+
+    public Creep(final double health) {
+        mHealth = health;
+    }
+
+    /**
+     * Inflicts damage on this creep
+     * @param dmg The damage dealt 
+     * @return true if the creep survived, false if not
+     */
+    public boolean acceptDamage(final double dmg) {
+        mHealth -= dmg;
+
+        return mHealth <= 0;
+    }
+
+}

@@ -1,0 +1,27 @@
+package nl.uva.td.game;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.map.Parser;
+import nl.uva.td.game.tower.Tower;
+import nl.uva.td.test.ListTowerPlacement;
+import nl.uva.td.test.SpawnSimpleCreeps;
+
+public class Main {
+
+    public static void main(final String[] args) {
+        GameField gameField = Parser.parse();
+
+        GameManager gameManager = new GameManager();
+
+        List<Integer> positionsList = new LinkedList<Integer>(Arrays.asList(7, 8, 14));
+        List<Tower> towerList = ListTowerPlacement.generateSimpleTowerList(positionsList);
+
+        gameManager.run(new SpawnSimpleCreeps(), new ListTowerPlacement(towerList, positionsList), gameField);
+
+    }
+
+}

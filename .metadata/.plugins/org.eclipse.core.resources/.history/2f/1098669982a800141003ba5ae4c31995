@@ -1,0 +1,9 @@
+package nl.uva.td.game;
+
+public class TowerAgent {
+
+    public int nextTowerPlacement(final int stepCounter) {
+        return -1;
+    }
+
+}

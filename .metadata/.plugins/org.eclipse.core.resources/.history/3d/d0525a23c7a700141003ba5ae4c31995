@@ -1,0 +1,121 @@
+package nl.uva.td.game.map;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import nl.uva.td.game.unit.Creep;
+
+public class CreepField extends Field {
+
+    public static final String ID = "X";
+
+    /** The identifier for the field where creeps start walking from */
+    public static final String SPECIAL_START_ID = "S";
+
+    /** The identifier for the field where creeps are ending */
+    public static final String SPECIAL_END_ID = "E";
+
+    public enum Type {
+        START,
+        END,
+        NONE
+
+    }
+
+    /** The type of creep field: START,END,NONE */
+    private final Type mType;
+
+    private final Set<Creep> mCreeps = new HashSet<Creep>();
+
+    private CreepField mNextField;
+
+    public CreepField(final Type type, final int row, final int column) {
+        super(Field.Type.CREEP_FIELD, row, column);
+
+        mType = type;
+    }
+
+    /**
+     * Deal damage to this field and all its standing creeps
+     *
+     * @param dmg
+     *            The damage dealt to all the units
+     */
+    public void dealDamage(final double dmg, final boolean splash) {
+        Iterator<Creep> creepIterator = mCreeps.iterator();
+
+        while (creepIterator.hasNext()) {
+            Creep current = creepIterator.next();
+
+            if (current.acceptDamage(dmg)) {
+                // creep died
+
+                creepIterator.remove();
+            }
+
+            if (!splash) return;
+        }
+    }
+
+    /**
+     * Removes the creep from this field
+     *
+     * @param creep
+     *            The creep to remove
+     */
+    public void removeCreep(final Creep creep) {
+        mCreeps.remove(creep);
+    }
+
+    /**
+     * Adds the creep to the list of creeps standing on this field
+     *
+     * @param creep
+     *            The creep to add to the list
+     */
+    public void addCreep(final Creep creep) {
+        mCreeps.add(creep);
+    }
+
+    /**
+     * The next field after this one, or null if there are no more
+     *
+     * @return The next field or null of there are not more
+     */
+    public CreepField getNextField() {
+        return mNextField;
+    }
+
+    /**
+     * Set the next field after this one
+     *
+     * @param nextField
+     *            The field to be appended as the next field
+     */
+    public void setNextField(final CreepField nextField) {
+        mNextField = nextField;
+    }
+
+    /**
+     * Determines if this field is the end field
+     *
+     * @return true if it's the final goal field, false if not
+     */
+    public boolean isEnd() {
+        return mType == Type.END;
+    }
+
+    @Override
+    public String toString() {
+        if (mType == Type.NONE) {
+            return ID;
+        } else if (mType == Type.END) {
+            return SPECIAL_END_ID;
+        } else if (mType == Type.START) {
+            return SPECIAL_START_ID;
+        }
+
+        return "Unknown ID";
+    }
+}

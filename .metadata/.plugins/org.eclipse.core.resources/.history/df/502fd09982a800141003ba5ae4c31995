@@ -1,0 +1,14 @@
+package nl.uva.td.game;
+
+public class TowerAgent {
+
+    public Tower nextTower(final int stepCounter) {
+        return -1;
+    }
+
+    public int nextTowerPosition(int stepCounter) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+}

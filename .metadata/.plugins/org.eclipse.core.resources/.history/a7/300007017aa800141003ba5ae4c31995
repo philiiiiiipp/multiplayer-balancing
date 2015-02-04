@@ -1,0 +1,14 @@
+package nl.uva.td.game;
+
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.map.Parser;
+
+public class Main {
+
+	public static void main(String[] args) {
+		GameField gameField = Parser.parse();
+		gameField.print();
+
+	}
+
+}

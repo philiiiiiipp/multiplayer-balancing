@@ -1,0 +1,11 @@
+package nl.uva.td.game.unit;
+
+import nl.uva.td.util.Util;
+
+public class SimpleCreep extends Creep {
+
+    public SimpleCreep() {
+        super(3 + Util.RND.nextInt(2));
+    }
+
+}

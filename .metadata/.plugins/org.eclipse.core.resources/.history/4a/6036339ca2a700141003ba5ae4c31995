@@ -1,0 +1,32 @@
+package nl.uva.td.game.map;
+
+/** Represents a field inside the game **/
+public abstract class Field {
+	
+	/** The type of field **/
+	public enum Type {
+		CREEP_FIELD,
+		TOWER_FIELD
+	}
+	
+	protected final Type mType;
+	
+	protected final int mRow;
+	
+	protected final int mColumn;
+	
+	public Field(Type type, int row, int column) {
+		mType = type;
+		mRow = row;
+		mColumn = column;
+	}
+	
+	/**
+	 * The type of the field
+	 * @return its type
+	 */
+	public Type getType() {
+		return mType;
+	}
+	
+}
