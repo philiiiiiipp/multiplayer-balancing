@@ -37,12 +37,12 @@ public class TestGame {
     public void towerRangeTest() {
         GameField gameField = Parser.parse(TEST_FIELD_1);
 
-        GameManager gameManager = new GameManager();
-
         List<Integer> positionsList = new LinkedList<Integer>(Arrays.asList(0, 3, 5, 7, 12, 15));
         List<Tower> towerList = ListTowerPlacement.generateSimpleTowerList(positionsList);
 
-        gameManager.run(new SpawnSimpleCreeps(), new ListTowerPlacement(towerList, positionsList), gameField);
+        GameManager gameManager = new GameManager(new SpawnSimpleCreeps(), new ListTowerPlacement(towerList,
+                positionsList), gameField, false);
+        gameManager.run();
 
         int[][] expected = { { 1, 1, 0, 2, 2 }, { 1, 2, 1, 3, 2 }, { 0, 1, 1, 2, 1 }, { 1, 2, 1, 2, 1 },
                 { 1, 1, 0, 1, 1 } };

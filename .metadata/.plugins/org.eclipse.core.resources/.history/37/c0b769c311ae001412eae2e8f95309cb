@@ -1,0 +1,13 @@
+package nl.uva.td.game;
+
+public abstract class GameUpdateHUB {
+
+    private GameUpdateSubscriber mSubscriber;
+    
+    public void subscriber(GameUpdateSubscriber subscriber) {
+        mSubscriber = subscriber;
+    }
+    
+    public void unsubscribe(GameUpdateSub)
+    
+}

@@ -1,0 +1,26 @@
+package nl.uva.td.experiment;
+
+public class Score {
+
+    private final double mPoints;
+
+    private final double mLastStepTowerPoints;
+
+    private final double mTotalTowerPoints;
+
+    public Score(final double points, final double lastStepTowerPoints, final double totalTowerPoints) {
+        mPoints = points;
+        mLastStepTowerPoints = lastStepTowerPoints;
+        mTotalTowerPoints = totalTowerPoints;
+    }
+
+    /**
+     * Get the points for the last run
+     *
+     * @return The points archeived
+     */
+    public double getPoints() {
+        return mPoints;
+    }
+
+}

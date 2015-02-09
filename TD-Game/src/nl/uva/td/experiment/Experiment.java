@@ -18,7 +18,7 @@ import org.moeaframework.problem.AbstractProblem;
 public class Experiment extends AbstractProblem {
 
     public Experiment() {
-        super(3, 1);
+        super(4, 1);
     }
 
     @Override
@@ -34,7 +34,6 @@ public class Experiment extends AbstractProblem {
     @Override
     public void evaluate(final Solution solution) {
         GameField gameField = Parser.parse();
-        GameManager gameManager = new GameManager();
 
         CreepAgent creepAgent = new SpawnSimpleCreeps();
         List<Integer> towerPlacements = new LinkedList<Integer>();
@@ -45,8 +44,10 @@ public class Experiment extends AbstractProblem {
 
         TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
                 towerPlacements);
-        Score score = gameManager.run(creepAgent, towerAgent, gameField);
 
-        solution.setObjective(0, score.getPoints());
+        GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
+        Score score = gameManager.dryRun();
+
+        solution.setObjective(0, -score.getTotalTowerPoints());
     }
 }

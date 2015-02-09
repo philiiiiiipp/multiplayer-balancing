@@ -1,0 +1,61 @@
+package nl.uva.td.experiment;
+
+public class Score {
+
+    private final double mPoints;
+
+    private final double mLastStepTowerPoints;
+
+    private final double mTotalTowerPoints;
+
+    private final int mLastStepLivesLost;
+
+    public Score(final double points, final double lastStepTowerPoints, final double totalTowerPoints,
+            final int lastStepLivesLost) {
+        mPoints = points;
+        mLastStepTowerPoints = lastStepTowerPoints;
+        mTotalTowerPoints = totalTowerPoints;
+        mLastStepLivesLost = lastStepLivesLost;
+    }
+
+    /**
+     * Get the points for the last run
+     *
+     * @return The points archived
+     */
+    public double getPoints() {
+        return mPoints;
+    }
+
+    /**
+     * Get all points the towers archived last round
+     *
+     * @return The amount of points the towers archived last round
+     */
+    public double getLastStepTowerPoints() {
+        return mLastStepTowerPoints;
+    }
+
+    /**
+     * Get the total amount of points the towers archived in this game so far
+     *
+     * @return The total amount of points archived so far by the towers
+     */
+    public double getTotalTowerPoints() {
+        return mTotalTowerPoints;
+    }
+
+    /**
+     * Get the amount of lives lost in the previous step
+     * 
+     * @return The amount of lives lost in the previous step
+     */
+    public int getLastStepLivesLost() {
+        return mLastStepLivesLost;
+    }
+
+    public int getLivesLeft() {
+        return mLivesLeft;
+    }
+
+}

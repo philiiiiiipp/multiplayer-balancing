@@ -39,7 +39,7 @@ public class GameField {
     /**
      * Adds a given tower to the field at a given position. If there is already a tower, the tower
      * is not added.
-     * 
+     *
      * @param nextTower
      *            The tower to be added
      * @param nextTowerPosition
@@ -47,7 +47,7 @@ public class GameField {
      * @return True if the tower was successfully added, false if not.
      */
     public boolean addTowerToTheGame(final Tower nextTower, final int nextTowerPosition) {
-        if (mTowerFields.get(nextTowerPosition).getTower() != null) {
+        if (mTowerFields.get(nextTowerPosition).getTower() == null) {
             mTowerFields.get(nextTowerPosition).placeTower(nextTower);
             return true;
         }

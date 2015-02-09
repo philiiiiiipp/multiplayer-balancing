@@ -11,5 +11,4 @@ public class SimpleCreep extends Creep {
     public SimpleCreep(final double health) {
         super(health);
     }
-
 }

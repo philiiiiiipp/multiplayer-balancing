@@ -1,9 +1,0 @@
-package nl.uva.td.game.unit;
-
-public class SimpleCreep extends Creep {
-
-    public SimpleCreep() {
-        super(100);
-    }
-
-}

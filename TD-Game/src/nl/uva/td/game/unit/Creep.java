@@ -10,12 +10,14 @@ public abstract class Creep {
 
     private double mHealth;
 
+    private double mMaxHealth;
+
     private CreepField mCurrentField;
 
     private final List<Tower> mRegisteredTowers = new LinkedList<Tower>();
 
     public Creep(final double health) {
-        mHealth = health;
+        mHealth = mMaxHealth = health;
     }
 
     /**
@@ -51,7 +53,7 @@ public abstract class Creep {
 
     /**
      * Sets the field this creep is currently standing on
-     * 
+     *
      * @param currentField
      *            The field this creep is currently standing on
      */
@@ -66,6 +68,24 @@ public abstract class Creep {
      */
     public CreepField getCurrentField() {
         return mCurrentField;
+    }
+
+    /**
+     * Get the current health of this minion
+     *
+     * @return The current health points of this minion
+     */
+    public int getHealth() {
+        return (int) mHealth;
+    }
+
+    /**
+     * The maximum health of this minion
+     * 
+     * @return The maximum health of this minion
+     */
+    public double getMaxHealth() {
+        return mMaxHealth;
     }
 
     @Override

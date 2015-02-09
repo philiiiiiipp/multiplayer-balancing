@@ -1,6 +1,0 @@
-package nl.uva.td.test;
-
-@JUnit
-public class TestTD {
-
-}

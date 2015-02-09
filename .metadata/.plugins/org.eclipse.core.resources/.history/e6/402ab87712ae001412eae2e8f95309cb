@@ -1,0 +1,27 @@
+package nl.uva.td.game;
+
+import nl.uva.td.game.map.GameField;
+
+public abstract class GameUpdateHUB {
+
+    private GameUpdateSubscriber mSubscriber;
+
+    protected GameField mGameField;
+
+    public void subscriber(final GameUpdateSubscriber subscriber) {
+        mSubscriber = subscriber;
+    }
+
+    public void unsubscribe(final GameUpdateSubscriber subscriber) {
+        if (mSubscriber == subscriber) {
+            mSubscriber = null;
+        } else {
+            throw new RuntimeException("Trying to unsubscribe without beeing subscribed");
+        }
+    }
+
+    public GameField getGameField() {
+        return mGameField;
+    }
+
+}

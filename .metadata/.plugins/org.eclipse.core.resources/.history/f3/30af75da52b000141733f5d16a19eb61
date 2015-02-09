@@ -1,0 +1,89 @@
+package nl.uva.td.visual;
+
+import java.util.Optional;
+import java.util.Random;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+
+/**
+ * @author bruno.borges@oracle.com
+ */
+public class Tile extends Label {
+
+    private final static int TOP_HEALTH = 5;
+    private final static int MIDDLE_HEALTH = 6;
+    private final static int LOW_HEALTH = 7;
+    
+    private final double mMaxValue;
+    private Integer mHealth;
+    private Location location;
+    private Boolean merged;
+
+    public static Tile newRandomTile() {
+        int value = new Random().nextDouble() < 0.9 ? 2 : 4;
+        return new Tile(value, 100);
+    }
+
+    public static Tile newTile(final int health, final double maxValue) {
+        return new Tile(health, maxValue);
+    }
+
+    private Tile(final Integer health, final double maxValue) {
+        mMaxValue = maxValue;
+
+        final int squareSize = Board.CELL_SIZE - 13;
+        setMinSize(squareSize, squareSize);
+        setMaxSize(squareSize, squareSize);
+        setPrefSize(squareSize, squareSize);
+        setAlignment(Pos.CENTER);
+
+        this.mHealth = health;
+        this.merged = false;
+        setText(health.toString());
+
+        double fitness = mHealth / mMaxValue;
+        if(fitness > 0.9) {
+            //Fit 
+        }
+
+        getStyleClass().addAll("game-label", "game-tile-" + health);
+    }
+
+    public void merge(final Tile another) {
+        getStyleClass().remove("game-tile-" + mHealth);
+        this.mHealth += another.getValue();
+        setText(mHealth.toString());
+        merged = true;
+        getStyleClass().add("game-tile-" + mHealth);
+    }
+
+    public Integer getValue() {
+        return mHealth;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(final Location location) {
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" + "value=" + mHealth + ", location=" + location + '}';
+    }
+
+    public boolean isMerged() {
+        return merged;
+    }
+
+    public void clearMerge() {
+        merged = false;
+    }
+
+    public boolean isMergeable(final Optional<Tile> anotherTile) {
+        return anotherTile.filter(t -> t.getValue().equals(getValue())).isPresent();
+    }
+}

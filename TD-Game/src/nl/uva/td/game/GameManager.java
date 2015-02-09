@@ -1,6 +1,7 @@
 package nl.uva.td.game;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import nl.uva.td.experiment.Score;
@@ -8,35 +9,52 @@ import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.tower.Tower;
 import nl.uva.td.game.unit.Creep;
 
-public class GameManager {
+public class GameManager extends GameUpdateHUB {
 
-    public Score run(final CreepAgent creepAgent, final TowerAgent towerAgent, final GameField gameField) {
-        int playerHealth = 10;
+    /** The amount of lives a player starts with */
+    public final static int PLAYER_STARTING_LIVES = 10;
+
+    private final CreepAgent mCreepAgent;
+    private final TowerAgent mTowerAgent;
+
+    public GameManager(final CreepAgent creepAgent, final TowerAgent towerAgent, final GameField gameField,
+            final boolean showUI) {
+        super(gameField, showUI);
+
+        mCreepAgent = creepAgent;
+        mTowerAgent = towerAgent;
+    }
+
+    public Score dryRun() {
+        int playerTotalHealth = PLAYER_STARTING_LIVES;
+        int lastStepLivesLost = 0;
         int stepCounter = 0;
+        int totalTowerPoints = 0;
+        int lastStepTowerPoints = 0;
         Set<Creep> creeps = new HashSet<Creep>();
         Set<Tower> towers = new HashSet<Tower>();
-        Set<Creep> killedCreep;
+        Set<Creep> killedCreep = null;
 
         /*
          * 1.Place 2.Shoot 3.Walk
          */
-        while (playerHealth > 0) {
+        while (playerTotalHealth > 0) {
 
-            // Place towers first so creeps can register
+            // Place towers first
             if (stepCounter % 3 == 0) {
-                Tower nextTower = towerAgent.nextTower(stepCounter / 3);
+                Tower nextTower = mTowerAgent.nextTower(stepCounter / 3);
                 if (nextTower != null) {
-                    int nextTowerPosition = towerAgent.nextTowerPosition(stepCounter / 3);
-                    if (gameField.addTowerToTheGame(nextTower, nextTowerPosition)) {
+                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / 3);
+                    if (mGameField.addTowerToTheGame(nextTower, nextTowerPosition)) {
                         towers.add(nextTower);
                     }
                 }
             }
 
             // Place creep
-            Creep nextCreep = creepAgent.nextCreep(stepCounter);
+            Creep nextCreep = mCreepAgent.nextCreep(stepCounter);
             if (nextCreep != null) {
-                gameField.addCreepToTheGame(nextCreep);
+                mGameField.addCreepToTheGame(nextCreep);
                 creeps.add(nextCreep);
             }
 
@@ -46,22 +64,42 @@ public class GameManager {
 
                 if (killedCreep != null) {
                     creeps.removeAll(killedCreep);
+
+                    // update points
+                    for (Creep creep : killedCreep) {
+                        lastStepTowerPoints += creep.getMaxHealth();
+                    }
+
+                    totalTowerPoints += lastStepTowerPoints;
                     killedCreep = null;
                 }
             }
 
             // Walk
-            for (Creep creep : creeps) {
-                if (creep.move()) {
+            Iterator<Creep> creepIterator = creeps.iterator();
+            while (creepIterator.hasNext()) {
+                Creep current = creepIterator.next();
+
+                if (current.move()) {
                     // creep went into the goal
-                    playerHealth--;
+                    playerTotalHealth--;
+                    lastStepLivesLost++;
+                    creepIterator.remove();
                 }
             }
 
-            stepCounter++;
+            super.updateUI(new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
+                    playerTotalHealth));
+            lastStepTowerPoints = 0;
+            lastStepLivesLost = 0;
         }
 
-        return new Score(++stepCounter);
+        return new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost, playerTotalHealth);
+    }
+
+    @Override
+    public void run() {
+        dryRun();
     }
 
     private static void printField(final GameField gameField) {

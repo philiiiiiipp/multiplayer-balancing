@@ -1,5 +1,0 @@
-package nl.uva.td.game.unit;
-
-public class SimpleCreep extends Creep {
-
-}

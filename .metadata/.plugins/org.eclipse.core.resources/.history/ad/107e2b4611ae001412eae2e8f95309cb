@@ -1,0 +1,6 @@
+package nl.uva.td.game;
+
+public interface GameUpdateSubscriber {
+
+    
+}

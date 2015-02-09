@@ -1,0 +1,90 @@
+package nl.uva.td.game;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import nl.uva.td.experiment.Score;
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.unit.Creep;
+
+public class GameManager extends GameUpdateHUB {
+
+    private final CreepAgent mCreepAgent;
+    private final TowerAgent mTowerAgent;
+
+    public GameManager(final CreepAgent creepAgent, final TowerAgent towerAgent, final GameField gameField,
+            final boolean showUI) {
+        super(gameField, showUI);
+
+        mCreepAgent = creepAgent;
+        mTowerAgent = towerAgent;
+    }
+
+    public Score run() {
+        int playerHealth = 10;
+        int stepCounter = 0;
+        Set<Creep> creeps = new HashSet<Creep>();
+        Set<Tower> towers = new HashSet<Tower>();
+        Set<Creep> killedCreep;
+
+        /*
+         * 1.Place 2.Shoot 3.Walk
+         */
+        while (playerHealth > 0) {
+
+            // Place towers first so creeps can register
+            if (stepCounter % 3 == 0) {
+                Tower nextTower = mTowerAgent.nextTower(stepCounter / 3);
+                if (nextTower != null) {
+                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / 3);
+                    if (mGameField.addTowerToTheGame(nextTower, nextTowerPosition)) {
+                        towers.add(nextTower);
+                    }
+                }
+            }
+
+            // Place creep
+            Creep nextCreep = mCreepAgent.nextCreep(stepCounter);
+            if (nextCreep != null) {
+                mGameField.addCreepToTheGame(nextCreep);
+                creeps.add(nextCreep);
+            }
+
+            // Shoot
+            for (Tower tower : towers) {
+                killedCreep = tower.shoot();
+
+                if (killedCreep != null) {
+                    creeps.removeAll(killedCreep);
+                    killedCreep = null;
+                }
+            }
+
+            // Walk
+            for (Creep creep : creeps) {
+                if (creep.move()) {
+                    // creep went into the goal
+                    playerHealth--;
+                }
+            }
+
+            stepCounter++;
+            super.updateUI();
+            
+            Thread.sleep(2000);
+        }
+
+        return new Score(++stepCounter);
+    }
+
+    private static void printField(final GameField gameField) {
+        for (int x = 0; x < gameField.getGameField().length; ++x) {
+            for (int y = 0; y < gameField.getGameField()[x].length; ++y) {
+                System.out.print(gameField.getGameField()[x][y]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}

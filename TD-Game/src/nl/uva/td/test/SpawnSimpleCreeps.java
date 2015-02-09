@@ -8,8 +8,6 @@ public class SpawnSimpleCreeps extends CreepAgent {
 
     @Override
     public Creep nextCreep(final int stepCounter) {
-        if (stepCounter % 2 == 0) return new SimpleCreep(3 + stepCounter / 4);
-
-        return null;
+        return new SimpleCreep(3 + stepCounter / 10);
     }
 }
