@@ -17,7 +17,7 @@ public abstract class Creep {
     private final List<Tower> mRegisteredTowers = new LinkedList<Tower>();
 
     public Creep(final double health) {
-        mHealth = mMaxHealth = health;
+        mHealth = mMaxHealth = health - 1;
     }
 
     /**
@@ -25,13 +25,26 @@ public abstract class Creep {
      *
      * @param dmg
      *            The damage dealt
+     * @param tower
+     *            The tower which dealt the damage
      * @return true if the creep died, false if not
      */
-    public boolean acceptDamage(final double dmg) {
-        mHealth -= dmg;
+    public boolean acceptDamage(final double dmg, final Tower tower) {
+        mHealth -= modifyDamage(dmg, tower);
 
         return mHealth <= 0;
     }
+
+    /**
+     * Modifies the damage dealt to this creep depending on its creep type
+     * 
+     * @param dmg
+     *            The damage originally dealt to this creep
+     * @param tower
+     *            The tower which is dealing the damage
+     * @return The true damage this creep will receive, minus resitance etc.
+     */
+    protected abstract double modifyDamage(final double dmg, final Tower tower);
 
     /**
      * Moves the creep one field forward
@@ -81,7 +94,7 @@ public abstract class Creep {
 
     /**
      * The maximum health of this minion
-     * 
+     *
      * @return The maximum health of this minion
      */
     public double getMaxHealth() {

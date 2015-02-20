@@ -1,0 +1,5 @@
+package nl.uva.td.game.tower;
+
+public class FireTower extends Tower {
+
+}

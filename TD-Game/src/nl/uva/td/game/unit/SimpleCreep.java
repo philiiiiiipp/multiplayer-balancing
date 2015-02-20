@@ -1,14 +1,15 @@
 package nl.uva.td.game.unit;
 
-import nl.uva.td.util.Util;
+import nl.uva.td.game.tower.Tower;
 
 public class SimpleCreep extends Creep {
 
-    public SimpleCreep() {
-        super(3 + Util.RND.nextInt(2));
-    }
-
     public SimpleCreep(final double health) {
         super(health);
+    }
+
+    @Override
+    protected double modifyDamage(final double dmg, final Tower tower) {
+        return dmg;
     }
 }

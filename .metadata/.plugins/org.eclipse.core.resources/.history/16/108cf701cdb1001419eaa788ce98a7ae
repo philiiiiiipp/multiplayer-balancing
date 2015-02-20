@@ -1,0 +1,90 @@
+package nl.uva.td.experiment;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import nl.uva.td.game.CreepAgent;
+import nl.uva.td.game.GameManager;
+import nl.uva.td.game.TowerAgent;
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.map.Parser;
+import nl.uva.td.test.ListTowerPlacement;
+import nl.uva.td.test.SpawnSimpleCreeps;
+
+import org.moeaframework.Executor;
+import org.moeaframework.Instrumenter;
+import org.moeaframework.analysis.collector.Accumulator;
+import org.moeaframework.core.NondominatedPopulation;
+import org.moeaframework.core.Solution;
+import org.moeaframework.core.variable.EncodingUtils;
+import org.moeaframework.problem.AbstractProblem;
+
+public class Experiment extends AbstractProblem {
+
+    public Experiment() {
+        super(15, 1);
+    }
+
+    @Override
+    public Solution newSolution() {
+        Solution solution = new Solution(numberOfVariables, numberOfObjectives);
+        for (int variable = 0; variable < numberOfVariables; ++variable) {
+            solution.setVariable(variable, EncodingUtils.newInt(0, 15));
+        }
+
+        return solution;
+    }
+
+    @Override
+    public void evaluate(final Solution solution) {
+        GameField gameField = Parser.parse();
+
+        CreepAgent creepAgent = new SpawnSimpleCreeps();
+        List<Integer> towerPlacements = new LinkedList<Integer>();
+
+        for (int i = 0; i < solution.getNumberOfVariables(); ++i) {
+            towerPlacements.add(EncodingUtils.getInt(solution.getVariable(i)));
+        }
+
+        TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
+                towerPlacements);
+
+        GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
+        Score score = gameManager.dryRun();
+
+        // solution.setObjective(0, -score.getTotalTowerPoints());
+        solution.setObjective(0, -score.getSteps());
+    }
+
+    public static void main(final String[] args) {
+
+        Instrumenter instrumenter = new Instrumenter().withProblemClass(Experiment.class).withFrequency(100);
+
+        instrumenter.attachGenerationalDistanceCollector();
+
+        Executor ex = new Executor().withProblemClass(Experiment.class).withAlgorithm("NSGAII")
+                .withMaxEvaluations(100000).distributeOnAllCores();
+
+        ex = ex.withProperty("populationSize", 100).withProperty("sbx.rate", 1)
+                .withProperty("sbx.distributionIndex", 15.0).withInstrumenter(instrumenter);
+        NondominatedPopulation result = ex.run();
+
+        int solutionCounter = 0;
+        for (Solution s : result) {
+            System.out.print(++solutionCounter + ": " + s.getObjective(0) + " ");
+            for (int variable = 0; variable < s.getNumberOfVariables(); ++variable) {
+                System.out.print(EncodingUtils.getInt(s.getVariable(variable)) + ", ");
+            }
+            System.out.println();
+        }
+
+        Accumulator accu = instrumenter.getLastAccumulator();
+        for (String key : accu.keySet()) {
+            System.out.println(key);
+        }
+
+        for (int i = 0; i < accu.size("NFE"); ++i) {
+            System.out.println(accu.get("NFE", i) + "\t" + accu.get("GenerationalDistance", i));
+        }
+    }
+}

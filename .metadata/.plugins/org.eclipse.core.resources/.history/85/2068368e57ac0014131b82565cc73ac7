@@ -1,7 +1,0 @@
-package nl.uva.td.experiment;
-
-import org.moeaframework.problem.AbstractProblem;
-
-public class Experiment extends AbstractProblem {
-
-}

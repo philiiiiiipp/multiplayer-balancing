@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import nl.uva.td.game.Attribute;
 import nl.uva.td.game.map.CreepField;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.TowerField;
@@ -28,6 +29,9 @@ public abstract class Tower {
     /** The range of this tower */
     protected final int mRange;
 
+    /** The attributes of this tower, e.g. ICE / FIRE ... */
+    protected final Set<Attribute> mAttributes = new HashSet<Attribute>();
+
     public Tower(final boolean splash, final double damage, final int range) {
         mSplash = splash;
         mDamage = damage;
@@ -41,12 +45,14 @@ public abstract class Tower {
      */
     public Set<Creep> shoot() {
 
-        if (mLockedOnCreep != null && !mFieldsInRange.contains(mLockedOnCreep.getCurrentField())) {
-            // Creep walked out of range
+        if (mLockedOnCreep != null
+                && (mLockedOnCreep.getHealth() >= 0 || !mFieldsInRange.contains(mLockedOnCreep.getCurrentField()))) {
+            // Creep walked out of range or is dead
             mLockedOnCreep = null;
         }
 
         if (mLockedOnCreep == null) {
+            // find a new creep
             Iterator<CreepField> creepFieldIterator = mFieldsInRange.iterator();
             while (creepFieldIterator.hasNext() && mLockedOnCreep == null) {
                 CreepField creepField = creepFieldIterator.next();
@@ -59,7 +65,7 @@ public abstract class Tower {
 
         if (mLockedOnCreep != null) {
             // Fire on that creep
-            return mLockedOnCreep.getCurrentField().dealDamage(mDamage, mSplash);
+            return mLockedOnCreep.getCurrentField().dealDamage(mDamage, this);
         } else {
             // No creep in sight
             return null;
@@ -149,5 +155,25 @@ public abstract class Tower {
                 overflowSouth = 0;
             }
         }
+    }
+
+    /**
+     * Does this tower do splash damage?
+     *
+     * @return true if it does splash damage, false if not
+     */
+    public boolean doesSplash() {
+        return mSplash;
+    }
+
+    /**
+     * Determines if this tower has a certain attribute
+     * 
+     * @param attribute
+     *            The attribute to ask for
+     * @return true if it contains this attribute, false if not
+     */
+    public boolean hasAttribute(final Attribute attribute) {
+        return mAttributes.contains(attribute);
     }
 }

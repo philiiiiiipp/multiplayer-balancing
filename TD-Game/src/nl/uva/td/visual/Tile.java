@@ -60,6 +60,28 @@ public class Tile extends Label {
         }
     }
 
+    public void update(final int health, final double maxHealth) {
+        this.mHealth = health;
+        this.merged = false;
+        setText(mHealth + "");
+
+        double fitness = mHealth / mMaxValue;
+        if (fitness > 0.9) {
+
+            getStyleClass().addAll("game-label", TOP_HEALTH);
+        } else if (fitness > 0.1) {
+
+            getStyleClass().addAll("game-label", MIDDLE_HEALTH);
+        } else if (fitness >= 0) {
+
+            getStyleClass().addAll("game-label", LOW_HEALTH);
+        } else {
+            getStyleClass().addAll("game-label", TOWER);
+            setText("T");
+        }
+
+    }
+
     public void merge(final Tile another) {
         getStyleClass().remove("game-tile-" + mHealth);
         this.mHealth += another.getValue();

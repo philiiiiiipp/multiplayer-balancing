@@ -165,7 +165,7 @@ public class Board extends Group {
 
     private Rectangle createCell(final int i, final int j, final Field.Type type) {
         final double arcSize = CELL_SIZE / 6d;
-        Rectangle cell = new Rectangle(i * CELL_SIZE, j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        Rectangle cell = new Rectangle(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         // provide default style in case css are not loaded
 
         cell.setFill(Color.WHITE);

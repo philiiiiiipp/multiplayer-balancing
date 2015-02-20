@@ -41,10 +41,10 @@ public class GameManager extends GameUpdateHUB {
         while (playerTotalHealth > 0) {
 
             // Place towers first
-            if (stepCounter % 3 == 0) {
-                Tower nextTower = mTowerAgent.nextTower(stepCounter / 3);
+            if (stepCounter % 8 == 0) {
+                Tower nextTower = mTowerAgent.nextTower(stepCounter / 8);
                 if (nextTower != null) {
-                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / 3);
+                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / 8);
                     if (mGameField.addTowerToTheGame(nextTower, nextTowerPosition)) {
                         towers.add(nextTower);
                     }
@@ -70,10 +70,11 @@ public class GameManager extends GameUpdateHUB {
                         lastStepTowerPoints += creep.getMaxHealth();
                     }
 
-                    totalTowerPoints += lastStepTowerPoints;
                     killedCreep = null;
                 }
             }
+
+            totalTowerPoints += lastStepTowerPoints;
 
             // Walk
             Iterator<Creep> creepIterator = creeps.iterator();

@@ -3,3 +3,6 @@
 1423482845104	Rename local variable 'value'
 1423482849641	Rename local variable 'value'
 1423490780531	Rename field 'gameBestProperty'
+1423579129153	Rename field 'mPoints'
+1423579134753	Rename local variable 'points'
+1423579143026	Rename method 'getPoints'

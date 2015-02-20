@@ -48,8 +48,16 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
 
         CreepAgent creepAgent = new SpawnSimpleCreeps();
         // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 6, 14));
-        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(10, 1, 8));
-        List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 9, 13, 8));
+        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 8, 14, 2, 1,
+        // 13));
+
+        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(2, 14, 10, 8, 7,
+        // 6));
+
+        // Best AI choice
+        List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(2, 6, 4, 7, 8, 14));
+        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 14, 8, 2, 6,
+        // 13));
 
         TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
                 towerPlacements);
@@ -108,6 +116,8 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         return System.getProperty("os.arch").toUpperCase().contains("ARM");
     }
 
+    static boolean resume = false;
+
     @Override
     public void update(final Score score) {
         Platform.runLater(new Runnable() {
@@ -118,11 +128,11 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
             }
         });
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        // Thread.sleep(200);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
     }
 
     private void addKeyHandler(final Scene scene) {
@@ -133,7 +143,8 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
                 return;
             }
             if (keyCode.equals(KeyCode.R)) {
-                gameManager.restoreSession();
+                resume = true;
+                // gameManager.restoreSession();
                 return;
             }
             if (keyCode.equals(KeyCode.P)) {

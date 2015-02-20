@@ -1,0 +1,17 @@
+package nl.uva.td.game.unit;
+
+import nl.uva.td.game.tower.Tower;
+
+public class IceCreep extends Creep {
+
+    public IceCreep(double health) {
+        super(health);
+    }
+
+    @Override
+    protected double modifyDamage(double dmg, Tower tower) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+}

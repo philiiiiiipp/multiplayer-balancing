@@ -141,8 +141,22 @@ public class GameManager extends Group {
         board.addPoints((int) score.getLastStepTowerPoints());
         board.removeLives(score.getLastStepLivesLost());
 
+        // for (int a = 0; a < gameField.getGameField().length; ++a) {
+        // for (int b = 0; b < gameField.getGameField()[a].length; ++b) {
+        // System.out.print(gameField.getGameField()[a][b]);
+        // }
+        // System.out.println();
+        // }
+        // System.out.println();
+        // System.out.println();
+        // System.out.println();
+        // System.out.println();
+        // System.out.println();
+        // System.out.println();
+
         gridOperator.traverseGrid((x, y) -> {
-            Location thisloc = new Location(x, y);
+
+            Location thisloc = new Location(y, x);
             Optional<Tile> opTile = optionalTile(thisloc);
 
             Field field = gameField.getGameField()[x][y];
@@ -154,8 +168,11 @@ public class GameManager extends Group {
                     if (!f.hasCreeps()) {
                         gameGrid.replace(thisloc, null);
                         board.getGridGroup().getChildren().remove(opTile.get());
+                    } else {
+                        opTile.get().update(f.getCreep().getHealth(), f.getCreep().getMaxHealth());
                     }
                 } else if (f.hasCreeps()) {
+
                     Tile tile = Tile.newTile(f.getCreep().getHealth(), f.getCreep().getMaxHealth());
                     tile.setLocation(thisloc);
                     board.addTile(tile);
@@ -215,45 +232,45 @@ public class GameManager extends Group {
         final int tilesWereMoved = gridOperator.traverseGrid((x, y) -> {
             Location thisloc = new Location(x, y);
             Location farthestLocation = findFarthestLocation(thisloc, direction); // farthest
-                // available
-                // location
-                Optional<Tile> opTile = optionalTile(thisloc);
+            // available
+            // location
+            Optional<Tile> opTile = optionalTile(thisloc);
 
-                AtomicInteger result = new AtomicInteger();
-                Location nextLocation = farthestLocation.offset(direction); // calculates to a
-                // possible merge
-                optionalTile(nextLocation).filter(t -> t.isMergeable(opTile) && !t.isMerged()).ifPresent(t -> {
-                    Tile tile = opTile.get();
-                    t.merge(tile);
-                    t.toFront();
-                    gameGrid.put(nextLocation, t);
-                    gameGrid.replace(thisloc, null);
+            AtomicInteger result = new AtomicInteger();
+            Location nextLocation = farthestLocation.offset(direction); // calculates to a
+            // possible merge
+            optionalTile(nextLocation).filter(t -> t.isMergeable(opTile) && !t.isMerged()).ifPresent(t -> {
+                Tile tile = opTile.get();
+                t.merge(tile);
+                t.toFront();
+                gameGrid.put(nextLocation, t);
+                gameGrid.replace(thisloc, null);
 
-                    parallelTransition.getChildren().add(animateExistingTile(tile, t.getLocation()));
-                    parallelTransition.getChildren().add(animateMergedTile(t));
-                    mergedToBeRemoved.add(tile);
+                parallelTransition.getChildren().add(animateExistingTile(tile, t.getLocation()));
+                parallelTransition.getChildren().add(animateMergedTile(t));
+                mergedToBeRemoved.add(tile);
 
-                    board.addPoints(t.getValue());
+                board.addPoints(t.getValue());
 
-                    if (t.getValue() == FINAL_VALUE_TO_WIN) {
-                        board.setGameWin(true);
-                    }
-                    result.set(1);
-                });
-                if (result.get() == 0 && opTile.isPresent() && !farthestLocation.equals(thisloc)) {
-                    Tile tile = opTile.get();
-                    parallelTransition.getChildren().add(animateExistingTile(tile, farthestLocation));
-
-                    gameGrid.put(farthestLocation, tile);
-                    gameGrid.replace(thisloc, null);
-
-                    tile.setLocation(farthestLocation);
-
-                    result.set(1);
+                if (t.getValue() == FINAL_VALUE_TO_WIN) {
+                    board.setGameWin(true);
                 }
-
-                return result.get();
+                result.set(1);
             });
+            if (result.get() == 0 && opTile.isPresent() && !farthestLocation.equals(thisloc)) {
+                Tile tile = opTile.get();
+                parallelTransition.getChildren().add(animateExistingTile(tile, farthestLocation));
+
+                gameGrid.put(farthestLocation, tile);
+                gameGrid.replace(thisloc, null);
+
+                tile.setLocation(farthestLocation);
+
+                result.set(1);
+            }
+
+            return result.get();
+        });
 
         board.animateScore();
 
@@ -388,11 +405,11 @@ public class GameManager extends Group {
         scaleTransition.setInterpolator(Interpolator.EASE_OUT);
         scaleTransition.setOnFinished(e -> {
             // after last movement on full grid, check if there are movements available
-                if (this.gameGrid.values().parallelStream().noneMatch(Objects::isNull)
-                        && mergeMovementsAvailable() == 0) {
-                    board.setGameOver(true);
-                }
-            });
+            if (this.gameGrid.values().parallelStream().noneMatch(Objects::isNull)
+                    && mergeMovementsAvailable() == 0) {
+                board.setGameOver(true);
+            }
+        });
         return scaleTransition;
     }
 

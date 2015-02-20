@@ -44,18 +44,18 @@ public class CreepField extends Field {
      *
      * @param dmg
      *            The damage dealt to all the units
-     * @param splash
-     *            Does it do splash damage
+     * @param tower
+     *            The tower which did the damage
      * @return A set of all dead creeps or null if nothing died
      */
-    public Set<Creep> dealDamage(final double dmg, final boolean splash) {
+    public Set<Creep> dealDamage(final double dmg, final Tower tower) {
         Iterator<Creep> creepIterator = mCreeps.iterator();
         Set<Creep> killedCreeps = null;
 
         while (creepIterator.hasNext()) {
             Creep current = creepIterator.next();
 
-            if (current.acceptDamage(dmg)) {
+            if (current.acceptDamage(dmg, tower)) {
                 // creep died
 
                 if (killedCreeps == null) {
@@ -66,7 +66,7 @@ public class CreepField extends Field {
                 creepIterator.remove();
             }
 
-            if (!splash) return killedCreeps;
+            if (!tower.doesSplash()) return killedCreeps;
         }
 
         return killedCreeps;

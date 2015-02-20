@@ -1,5 +1,6 @@
 package nl.uva.td.game;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import org.moeaframework.core.variable.EncodingUtils;
 public class Main {
 
     public static void main(final String[] args) {
-        AI();
+        BF();
     }
 
     public static void TEST() {
@@ -46,5 +47,73 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    public static void BF() {
+        double best = 0;
+        List<Integer> bestList = new LinkedList<Integer>();
+
+        best = bruteForce(new boolean[15], new LinkedList<Integer>(), 0,
+                new LinkedList<Integer>(Collections.nCopies(15, -1)), 15);
+        System.out.println(best);
+
+        for (Integer i : bestList) {
+            System.out.print(i + ", ");
+        }
+
+    }
+
+    public static double bruteForce(final boolean[] takenNumbers, final List<Integer> towers, double bestValue,
+            final List<Integer> bestTowers, final int desiredTowerNumber) {
+        if (towers.size() == desiredTowerNumber) {
+            // evaluate
+            GameField gameField = Parser.parse();
+
+            CreepAgent creepAgent = new SpawnSimpleCreeps();
+
+            TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towers), towers);
+
+            GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
+            Score score = gameManager.dryRun();
+
+            if (score.getTotalTowerPoints() > bestValue) {
+
+                for (Integer i : towers) {
+                    System.out.print(i + ", ");
+                }
+
+                System.out.println(score.getTotalTowerPoints());
+                bestValue = score.getTotalTowerPoints();
+            }
+            for (Integer i : towers) {
+                System.out.print(i + ", ");
+            }
+
+            System.out.println(score.getTotalTowerPoints() + "  " + score.getSteps());
+            return bestValue;
+        }
+
+        for (int towerToAdd = 0; towerToAdd < desiredTowerNumber; ++towerToAdd) {
+            if (towers.size() == 0) {
+                System.out.println(towerToAdd);
+            }
+
+            if (takenNumbers[towerToAdd]) {
+                continue;
+            }
+
+            takenNumbers[towerToAdd] = true;
+
+            towers.add(towerToAdd);
+            bestValue = bruteForce(takenNumbers, towers, bestValue, bestTowers, desiredTowerNumber);
+            towers.remove(towers.size() - 1);
+            takenNumbers[towerToAdd] = false;
+
+            if (bestValue < 20 && towers.size() != 0) {
+                break;
+            }
+        }
+
+        return bestValue;
     }
 }

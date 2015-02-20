@@ -1,0 +1,9 @@
+package nl.uva.td.game.unit;
+
+public class FireCreep extends Creep {
+
+    public FireCreep(final double health) {
+        super(health);
+    }
+
+}

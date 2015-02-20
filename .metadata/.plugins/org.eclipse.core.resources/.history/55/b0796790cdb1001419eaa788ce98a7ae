@@ -1,0 +1,5 @@
+package nl.uva.td.experiment;
+
+public class FitnessCollector implements org.moeaframework.analysis.collector.Collector {
+
+}

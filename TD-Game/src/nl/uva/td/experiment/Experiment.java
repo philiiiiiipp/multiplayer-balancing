@@ -11,6 +11,8 @@ import nl.uva.td.game.map.Parser;
 import nl.uva.td.test.ListTowerPlacement;
 import nl.uva.td.test.SpawnSimpleCreeps;
 
+import org.moeaframework.Executor;
+import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.problem.AbstractProblem;
@@ -18,7 +20,7 @@ import org.moeaframework.problem.AbstractProblem;
 public class Experiment extends AbstractProblem {
 
     public Experiment() {
-        super(4, 1);
+        super(15, 1);
     }
 
     @Override
@@ -48,6 +50,40 @@ public class Experiment extends AbstractProblem {
         GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
         Score score = gameManager.dryRun();
 
-        solution.setObjective(0, -score.getTotalTowerPoints());
+        // solution.setObjective(0, -score.getTotalTowerPoints());
+        solution.setObjective(0, -score.getSteps());
+    }
+
+    public static void main(final String[] args) {
+
+        // Instrumenter instrumenter = new
+        // Instrumenter().withProblemClass(Experiment.class).withFrequency(100);
+        // instrumenter.attachAll().withReferenceSet(new File("reference"));
+
+        Executor ex = new Executor().withProblemClass(Experiment.class).withAlgorithm("NSGAII")
+                .withMaxEvaluations(100000).distributeOnAllCores();
+
+        ex = ex.withProperty("populationSize", 100).withProperty("sbx.rate", 1)
+                .withProperty("sbx.distributionIndex", 15.0);
+        NondominatedPopulation result = ex.run();
+
+        int solutionCounter = 0;
+        for (Solution s : result) {
+            System.out.println(s.toString());
+            System.out.print(++solutionCounter + ": " + s.getObjective(0) + " ");
+            for (int variable = 0; variable < s.getNumberOfVariables(); ++variable) {
+                System.out.print(EncodingUtils.getInt(s.getVariable(variable)) + ", ");
+            }
+            System.out.println();
+        }
+        //
+        // Accumulator accu = instrumenter.getLastAccumulator();
+        // for (String key : accu.keySet()) {
+        // System.out.println(key);
+        // }
+        //
+        // for (int i = 0; i < accu.size("NFE"); ++i) {
+        // System.out.println(accu.get("NFE", i) + "\t" + accu.get("GenerationalDistance", i));
+        // }
     }
 }

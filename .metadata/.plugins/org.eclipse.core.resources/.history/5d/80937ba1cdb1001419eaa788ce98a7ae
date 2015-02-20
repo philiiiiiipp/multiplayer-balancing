@@ -1,0 +1,27 @@
+package nl.uva.td.experiment;
+
+import org.moeaframework.analysis.collector.Accumulator;
+import org.moeaframework.analysis.collector.AttachPoint;
+import org.moeaframework.analysis.collector.Collector;
+
+public class FitnessCollector implements Collector {
+
+    @Override
+    public AttachPoint getAttachPoint() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Collector attach(Object object) {
+        System.out.println(object);
+        return null;
+    }
+
+    @Override
+    public void collect(Accumulator accumulator) {
+        // TODO Auto-generated method stub
+        
+    }
+
+}

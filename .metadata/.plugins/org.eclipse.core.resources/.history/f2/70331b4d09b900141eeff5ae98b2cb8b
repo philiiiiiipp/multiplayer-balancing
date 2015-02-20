@@ -1,0 +1,18 @@
+package nl.uva.td.game.unit;
+
+import nl.uva.td.game.tower.Tower;
+import nl.uva.td.util.Util;
+
+public class SimpleCreep extends Creep {
+
+
+    public SimpleCreep(final double health) {
+        super(health);
+    }
+
+    @Override
+    protected double modifyDamage(double dmg, Tower tower) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+}

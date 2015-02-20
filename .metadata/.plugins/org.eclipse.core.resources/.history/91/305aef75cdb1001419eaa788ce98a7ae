@@ -1,0 +1,7 @@
+package nl.uva.td.experiment;
+
+import Collector;
+
+public class FitnessCollector extends Collector {
+
+}

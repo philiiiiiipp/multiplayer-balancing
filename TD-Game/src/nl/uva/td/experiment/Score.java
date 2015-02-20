@@ -2,7 +2,7 @@ package nl.uva.td.experiment;
 
 public class Score {
 
-    private final double mPoints;
+    private final double mTotalSteps;
 
     private final double mLastStepTowerPoints;
 
@@ -12,9 +12,9 @@ public class Score {
 
     private final int mLivesLeft;
 
-    public Score(final double points, final double lastStepTowerPoints, final double totalTowerPoints,
+    public Score(final double steps, final double lastStepTowerPoints, final double totalTowerPoints,
             final int lastStepLivesLost, final int livesLeft) {
-        mPoints = points;
+        mTotalSteps = steps;
         mLastStepTowerPoints = lastStepTowerPoints;
         mTotalTowerPoints = totalTowerPoints;
         mLastStepLivesLost = lastStepLivesLost;
@@ -22,12 +22,12 @@ public class Score {
     }
 
     /**
-     * Get the points for the last run
+     * Get the amount of steps the game ran in total
      *
-     * @return The points archived
+     * @return The amount of steps the game ran
      */
-    public double getPoints() {
-        return mPoints;
+    public double getSteps() {
+        return mTotalSteps;
     }
 
     /**
