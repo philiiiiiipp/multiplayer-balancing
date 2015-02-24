@@ -1,7 +1,5 @@
 package nl.uva.td.visual;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import javafx.application.Application;
@@ -24,8 +22,9 @@ import nl.uva.td.game.GameUpdateSubscriber;
 import nl.uva.td.game.TowerAgent;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
+import nl.uva.td.game.tower.Tower;
 import nl.uva.td.test.ListTowerPlacement;
-import nl.uva.td.test.SpawnSimpleCreeps;
+import nl.uva.td.test.SpawnCreeps;
 
 /**
  * @author bruno.borges@oracle.com
@@ -38,6 +37,10 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
 
     private GameManager mGameManager;
 
+    private static int[] AI_LIST = { 4, 1, 2, 1, 1, 1, 7, 1, 8, 1, 6, 1 };
+
+    static final boolean ASD = false;
+
     @Override
     public void init() {
         // Downloaded from https://01.org/clear-sans/blogs
@@ -46,21 +49,15 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
 
         GameField gameField = Parser.parse();
 
-        CreepAgent creepAgent = new SpawnSimpleCreeps();
-        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 6, 14));
-        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 8, 14, 2, 1,
-        // 13));
+        CreepAgent creepAgent = new SpawnCreeps();
 
-        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(2, 14, 10, 8, 7,
-        // 6));
+        // int[] AIList = new int[] { 4, 1, 2, 1, 1, 1, 7, 1, 8, 1, 6, 1 };
+        // int[] AIList = new int[] { 7, 1, 8, 1, 6, 1, 14, 1, 1, 1, 2, 1 };
 
-        // Best AI choice
-        List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(2, 6, 4, 7, 8, 14));
-        // List<Integer> towerPlacements = new LinkedList<Integer>(Arrays.asList(7, 14, 8, 2, 6,
-        // 13));
+        List<Integer> towerPlacements = ListTowerPlacement.generateAdvancedPlacesList(AI_LIST);
+        List<Tower> towerTypes = ListTowerPlacement.generateAdvancedTowerList(AI_LIST);
 
-        TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
-                towerPlacements);
+        TowerAgent towerAgent = new ListTowerPlacement(towerTypes, towerPlacements);
 
         mGameManager = new GameManager(creepAgent, towerAgent, gameField, true);
         mGameManager.subscriber(this);
@@ -128,11 +125,13 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
             }
         });
 
-        // try {
-        // Thread.sleep(200);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
+        if (ASD == true) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void addKeyHandler(final Scene scene) {
@@ -167,6 +166,11 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         scene.setOnSwipeRight(e -> gameManager.move(Direction.RIGHT));
         scene.setOnSwipeLeft(e -> gameManager.move(Direction.LEFT));
         scene.setOnSwipeDown(e -> gameManager.move(Direction.DOWN));
+    }
+
+    public static void show(final int[] positions) {
+        AI_LIST = positions;
+        launch();
     }
 
     public static void main(final String[] args) {

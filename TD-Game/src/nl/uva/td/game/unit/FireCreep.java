@@ -25,5 +25,4 @@ public class FireCreep extends Creep {
 
         return resultingDmg;
     }
-
 }

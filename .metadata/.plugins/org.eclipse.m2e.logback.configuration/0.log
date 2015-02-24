@@ -3567,3 +3567,9 @@ java.lang.NullPointerException: null
 2015-02-20 15:21:20,014 [Worker-953] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
 2015-02-20 15:21:20,014 [Worker-953] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2015-02-20 15:21:20,014 [Worker-953] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-20 15:23:35,582 [Worker-962] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-20 15:23:35,583 [Worker-962] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources
+2015-02-20 15:23:35,584 [Worker-962] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-20 15:23:35,585 [Worker-962] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/test/resources
+2015-02-20 15:23:36,623 [Worker-962] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-02-20 15:23:36,623 [Worker-962] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/philipp/Documents/Master Thesis/TD-Game/TD-Game/src/main/resources

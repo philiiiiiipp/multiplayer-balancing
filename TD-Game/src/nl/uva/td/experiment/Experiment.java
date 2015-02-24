@@ -9,7 +9,7 @@ import nl.uva.td.game.TowerAgent;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
 import nl.uva.td.test.ListTowerPlacement;
-import nl.uva.td.test.SpawnSimpleCreeps;
+import nl.uva.td.test.SpawnCreeps;
 
 import org.moeaframework.Executor;
 import org.moeaframework.core.NondominatedPopulation;
@@ -37,7 +37,7 @@ public class Experiment extends AbstractProblem {
     public void evaluate(final Solution solution) {
         GameField gameField = Parser.parse();
 
-        CreepAgent creepAgent = new SpawnSimpleCreeps();
+        CreepAgent creepAgent = new SpawnCreeps();
         List<Integer> towerPlacements = new LinkedList<Integer>();
 
         for (int i = 0; i < solution.getNumberOfVariables(); ++i) {

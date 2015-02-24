@@ -1,8 +1,6 @@
 package nl.uva.td.experiment.watchmaker;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import nl.uva.td.experiment.Score;
 import nl.uva.td.game.CreepAgent;
@@ -10,28 +8,31 @@ import nl.uva.td.game.GameManager;
 import nl.uva.td.game.TowerAgent;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
+import nl.uva.td.game.tower.Tower;
 import nl.uva.td.test.ListTowerPlacement;
-import nl.uva.td.test.SpawnSimpleCreeps;
 
-import org.uncommons.maths.random.MersenneTwisterRNG;
-import org.uncommons.watchmaker.framework.CandidateFactory;
-import org.uncommons.watchmaker.framework.EvolutionEngine;
-import org.uncommons.watchmaker.framework.EvolutionObserver;
-import org.uncommons.watchmaker.framework.EvolutionaryOperator;
 import org.uncommons.watchmaker.framework.FitnessEvaluator;
-import org.uncommons.watchmaker.framework.GenerationalEvolutionEngine;
-import org.uncommons.watchmaker.framework.PopulationData;
-import org.uncommons.watchmaker.framework.SelectionStrategy;
-import org.uncommons.watchmaker.framework.operators.EvolutionPipeline;
-import org.uncommons.watchmaker.framework.operators.IntArrayCrossover;
-import org.uncommons.watchmaker.framework.selection.RouletteWheelSelection;
-import org.uncommons.watchmaker.framework.termination.GenerationCount;
 
 public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
 
-    private static final int sGameFieldSize = 16;
+    /** The total time spend for game field parsing */
+    private static long sParsingTime = 0;
 
-    private static final String sField = "OOOOSO\n" + "OOOOXO\n" + "OOXXXO\n" + "OOXOOO\n" + "OOXXXO\n" + "OOOOEO";
+    /** The total time spend for game field creation */
+    private static long sCreationTime = 0;
+
+    /** The total time spend for running the game */
+    private static long sRunTime = 0;
+
+    /** The game field */
+    public static String sGameField = null;
+
+    /** The creeps send on this game field */
+    private final CreepAgent mCreepAgent;
+
+    public WatchmakerExperiment(final CreepAgent creepAgent) {
+        mCreepAgent = creepAgent;
+    }
 
     @Override
     public double getFitness(final int[] candidate, final List<? extends int[]> candidates) {
@@ -45,30 +46,27 @@ public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
         return true;
     }
 
-    static long sParsingTime = 0;
-
-    static long sCreationTime = 0;
-
-    static long sRunTime = 0;
-
-    public static Score evaluate(final int[] candidate) {
+    /**
+     * Evaluates one tower placement candidate
+     *
+     * @param candidate
+     *            The candidate to evaluate
+     * @return The score of the candidate
+     */
+    private Score evaluate(final int[] candidate) {
         long current = System.currentTimeMillis();
 
-        GameField gameField = Parser.parse();
+        GameField gameField = Parser.parse(sGameField);
         sParsingTime += System.currentTimeMillis() - current;
 
         current = System.currentTimeMillis();
-        CreepAgent creepAgent = new SpawnSimpleCreeps();
-        List<Integer> towerPlacements = new LinkedList<Integer>();
 
-        for (int i = 0; i < candidate.length; ++i) {
-            towerPlacements.add(candidate[i]);
-        }
+        List<Integer> towerPlacements = ListTowerPlacement.generateAdvancedPlacesList(candidate);
+        List<Tower> towerTypes = ListTowerPlacement.generateAdvancedTowerList(candidate);
 
-        TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
-                towerPlacements);
+        TowerAgent towerAgent = new ListTowerPlacement(towerTypes, towerPlacements);
 
-        GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
+        GameManager gameManager = new GameManager(mCreepAgent, towerAgent, gameField, false);
         sCreationTime += System.currentTimeMillis() - current;
 
         current = System.currentTimeMillis();
@@ -78,50 +76,16 @@ public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
         return result;
     }
 
-    public static void main(final String[] args) {
-
-        CandidateFactory<int[]> factory = new TowerPlacement(6);
-
-        // Create a pipeline that applies cross-over then mutation.
-        List<EvolutionaryOperator<int[]>> operators = new LinkedList<EvolutionaryOperator<int[]>>();
-
-        operators.add(new IntArrayMutation(3, sGameFieldSize));
-        operators.add(new IntArrayCrossover());
-
-        EvolutionaryOperator<int[]> pipeline = new EvolutionPipeline<int[]>(operators);
-
-        WatchmakerExperiment fitnessEvaluator = new WatchmakerExperiment();
-        SelectionStrategy<Object> selection = new RouletteWheelSelection();
-        Random rng = new MersenneTwisterRNG();
-
-        EvolutionEngine<int[]> engine = new GenerationalEvolutionEngine<int[]>(factory, pipeline, fitnessEvaluator,
-                selection, rng);
-
-        engine.addEvolutionObserver(new EvolutionObserver<int[]>() {
-
-            @Override
-            public void populationUpdate(final PopulationData<? extends int[]> data) {
-                System.out.print(data.getGenerationNumber() + " -> " + data.getBestCandidateFitness() + ": \t");
-                int[] best = data.getBestCandidate();
-                for (int i : best) {
-                    System.out.print(i + " ,");
-                }
-
-                System.out.println();
-            }
-        });
-
-        // int[] result = engine.evolve(100, 10, new TargetFitness(586, true));
-        int[] result = engine.evolve(100, 10, new GenerationCount(100));
-
-        for (int i : result) {
-            System.out.print(i + " ,");
-        }
-
+    /**
+     * Prints all the statistics gathered
+     */
+    public static void printTimeStatistic() {
         System.out.println();
         System.out.println("--- TIME --- ");
         System.out.println("Parsing: " + sParsingTime / 1000 + "s");
         System.out.println("Setup: " + sCreationTime / 1000 + "s");
         System.out.println("Run: " + sRunTime / 1000 + "s");
+        System.out.println();
     }
+
 }

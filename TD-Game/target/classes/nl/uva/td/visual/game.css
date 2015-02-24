@@ -117,7 +117,7 @@
 }
 
 .creep-tile-top-health    {
-    -fx-font-size: 55px;
+    -fx-font-size: 40px;
     -fx-text-fill: #776e65;
     -fx-background-color: #008000;
     -fx-background-radius: 3;
@@ -125,7 +125,7 @@
 }
 
 .creep-tile-middle-health    {
-    -fx-font-size: 55px;
+    -fx-font-size: 40px;
     -fx-text-fill: #776e65;
     -fx-background-color: #FFA500;
     -fx-background-radius: 3;
@@ -133,7 +133,7 @@
 }
 
 .creep-tile-low-health    {
-    -fx-font-size: 55px;
+    -fx-font-size: 40px;
     -fx-text-fill: #776e65;
     -fx-background-color: #FF0000;
     -fx-background-radius: 3;
@@ -141,16 +141,32 @@
 }
 
 .tower-tile-placed	{
-	-fx-font-size: 55px;
+	-fx-font-size: 40px;
     -fx-text-fill: #776e65;
     -fx-background-color: #009F9F;
     -fx-background-radius: 3;
     -fx-border-radius: 3;
 }
 
+.ice_tower-tile-placed {
+	-fx-font-size: 40px;
+    -fx-text-fill: #776e65;
+    -fx-background-color: #8d93e1;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+}
+
+.fire_tower-tile-placed {
+	-fx-font-size: 40px;
+    -fx-text-fill: #776e65;
+    -fx-background-color: #6d0e0e;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+}
+
 .tower-tile-empty	{
 
-    -fx-font-size: 55px;
+    -fx-font-size: 40px;
     -fx-text-fill: #776e65;
     -fx-background-color: #eee4da;
     -fx-background-radius: 3;

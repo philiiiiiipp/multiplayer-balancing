@@ -40,7 +40,7 @@ public class TestGame {
         List<Integer> positionsList = new LinkedList<Integer>(Arrays.asList(0, 3, 5, 7, 12, 15));
         List<Tower> towerList = ListTowerPlacement.generateSimpleTowerList(positionsList);
 
-        GameManager gameManager = new GameManager(new SpawnSimpleCreeps(), new ListTowerPlacement(towerList,
+        GameManager gameManager = new GameManager(new SpawnCreeps(), new ListTowerPlacement(towerList,
                 positionsList), gameField, false);
         gameManager.run();
 

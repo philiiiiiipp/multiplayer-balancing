@@ -51,12 +51,18 @@ public class GameManager extends GameUpdateHUB {
                 }
             }
 
+            super.updateUI(new Score(stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
+                    playerTotalHealth));
+
             // Place creep
             Creep nextCreep = mCreepAgent.nextCreep(stepCounter);
             if (nextCreep != null) {
                 mGameField.addCreepToTheGame(nextCreep);
                 creeps.add(nextCreep);
             }
+
+            super.updateUI(new Score(stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
+                    playerTotalHealth));
 
             // Shoot
             for (Tower tower : towers) {
@@ -67,12 +73,14 @@ public class GameManager extends GameUpdateHUB {
 
                     // update points
                     for (Creep creep : killedCreep) {
-                        lastStepTowerPoints += creep.getMaxHealth();
+                        lastStepTowerPoints += 1; // creep.getMaxHealth();
                     }
 
                     killedCreep = null;
                 }
             }
+
+            super.updateUI(new Score(stepCounter, 0, totalTowerPoints, lastStepLivesLost, playerTotalHealth));
 
             totalTowerPoints += lastStepTowerPoints;
 

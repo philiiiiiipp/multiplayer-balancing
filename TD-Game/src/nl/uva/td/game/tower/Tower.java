@@ -12,6 +12,11 @@ import nl.uva.td.game.unit.Creep;
 
 public abstract class Tower {
 
+    public enum Type {
+        FIRE,
+        ICE
+    }
+
     /** A list of all creeps in range of this tower */
     protected Set<CreepField> mFieldsInRange = new HashSet<CreepField>();
 
@@ -46,7 +51,7 @@ public abstract class Tower {
     public Set<Creep> shoot() {
 
         if (mLockedOnCreep != null
-                && (mLockedOnCreep.getHealth() >= 0 || !mFieldsInRange.contains(mLockedOnCreep.getCurrentField()))) {
+                && (mLockedOnCreep.getHealth() <= 0 || !mFieldsInRange.contains(mLockedOnCreep.getCurrentField()))) {
             // Creep walked out of range or is dead
             mLockedOnCreep = null;
         }
@@ -168,7 +173,7 @@ public abstract class Tower {
 
     /**
      * Determines if this tower has a certain attribute
-     * 
+     *
      * @param attribute
      *            The attribute to ask for
      * @return true if it contains this attribute, false if not

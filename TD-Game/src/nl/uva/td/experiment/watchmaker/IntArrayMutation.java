@@ -27,7 +27,13 @@ public class IntArrayMutation implements EvolutionaryOperator<int[]> {
             int[] mutatedCandidate = Arrays.copyOf(candidate, candidate.length);
 
             for (int i = 0; i < mutationCounter; ++i) {
-                mutatedCandidate[rng.nextInt(mutatedCandidate.length)] = rng.nextInt(mBoundary);
+                int toMutate = rng.nextInt(mutatedCandidate.length);
+
+                if (toMutate % 2 == 0) {
+                    mutatedCandidate[toMutate] = rng.nextInt(mBoundary);
+                } else {
+                    mutatedCandidate[toMutate] = (mutatedCandidate[toMutate] == 0 ? 1 : 0);
+                }
             }
 
             result.add(mutatedCandidate);

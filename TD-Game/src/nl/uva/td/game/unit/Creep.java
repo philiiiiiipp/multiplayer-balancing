@@ -37,7 +37,7 @@ public abstract class Creep {
 
     /**
      * Modifies the damage dealt to this creep depending on its creep type
-     * 
+     *
      * @param dmg
      *            The damage originally dealt to this creep
      * @param tower
@@ -88,8 +88,8 @@ public abstract class Creep {
      *
      * @return The current health points of this minion
      */
-    public int getHealth() {
-        return (int) mHealth;
+    public double getHealth() {
+        return mHealth;
     }
 
     /**

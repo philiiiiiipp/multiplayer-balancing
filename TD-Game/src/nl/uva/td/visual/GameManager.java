@@ -29,6 +29,8 @@ import nl.uva.td.game.map.CreepField;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.TowerField;
+import nl.uva.td.game.tower.FireTower;
+import nl.uva.td.game.tower.IceTower;
 
 /**
  *
@@ -184,7 +186,16 @@ public class GameManager extends Group {
                 TowerField towerField = (TowerField) field;
                 if (towerField.getTower() != null) {
                     if (!opTile.isPresent()) {
-                        Tile tile = Tile.newTile(-1, 64);
+                        Tile tile = null;
+
+                        if (towerField.getTower() instanceof FireTower) {
+                            tile = Tile.newTile(-2, 1);
+                        } else if (towerField.getTower() instanceof IceTower) {
+                            tile = Tile.newTile(-1, 1);
+                        } else {
+                            throw new RuntimeException("Nono");
+                        }
+
                         tile.setLocation(thisloc);
                         board.addTile(tile);
                         gameGrid.put(tile.getLocation(), tile);

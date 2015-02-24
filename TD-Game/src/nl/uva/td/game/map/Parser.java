@@ -21,11 +21,16 @@ public class Parser {
 
     /**
      * Only game fields with equal row length are allowed
-     * 
+     *
      * @param gameFieldString
-     * @return
+     *            The game field string to be parsed, null will use the default game field
+     * @return The parsed game field object
      */
-    public static GameField parse(final String gameFieldString) {
+    public static GameField parse(String gameFieldString) {
+        if (gameFieldString == null) {
+            gameFieldString = sField;
+        }
+
         String[] splittedField = gameFieldString.split("\n");
 
         List<TowerField> towerFields = new ArrayList<TowerField>();

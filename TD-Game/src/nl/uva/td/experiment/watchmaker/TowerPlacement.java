@@ -14,9 +14,13 @@ public class TowerPlacement extends AbstractCandidateFactory<int[]> {
 
     @Override
     public int[] generateRandomCandidate(final Random rng) {
-        int[] candidate = new int[mPositionCount];
-        for (int i = 0; i < candidate.length; ++i) {
+        int[] candidate = new int[mPositionCount * 2];
+        for (int i = 0; i < candidate.length; i += 2) {
             candidate[i] = rng.nextInt(candidate.length);
+        }
+
+        for (int i = 1; i < candidate.length; i += 2) {
+            candidate[i] = rng.nextInt(2);
         }
 
         return candidate;

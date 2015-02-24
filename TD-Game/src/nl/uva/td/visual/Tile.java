@@ -15,7 +15,9 @@ public class Tile extends Label {
     private final static String TOP_HEALTH = "creep-tile-top-health";
     private final static String MIDDLE_HEALTH = "creep-tile-middle-health";
     private final static String LOW_HEALTH = "creep-tile-low-health";
-    private final static String TOWER = "tower-tile-placed";
+
+    private final static String ICE_TOWER = "ice_tower-tile-placed";
+    private final static String FIRE_TOWER = "fire_tower-tile-placed";
 
     private final double mMaxValue;
     private double mHealth;
@@ -27,11 +29,11 @@ public class Tile extends Label {
         return new Tile(value, 100);
     }
 
-    public static Tile newTile(final int health, final double maxValue) {
+    public static Tile newTile(final double health, final double maxValue) {
         return new Tile(health, maxValue);
     }
 
-    private Tile(final Integer health, final double maxValue) {
+    private Tile(final double health, final double maxValue) {
         mMaxValue = maxValue;
 
         final int squareSize = Board.CELL_SIZE - 13;
@@ -40,30 +42,14 @@ public class Tile extends Label {
         setPrefSize(squareSize, squareSize);
         setAlignment(Pos.CENTER);
 
-        this.mHealth = health;
-        this.merged = false;
-        setText(health.toString());
-
-        double fitness = mHealth / mMaxValue;
-        if (fitness > 0.9) {
-
-            getStyleClass().addAll("game-label", TOP_HEALTH);
-        } else if (fitness > 0.1) {
-
-            getStyleClass().addAll("game-label", MIDDLE_HEALTH);
-        } else if (fitness >= 0) {
-
-            getStyleClass().addAll("game-label", LOW_HEALTH);
-        } else {
-            getStyleClass().addAll("game-label", TOWER);
-            setText("T");
-        }
+        update(health, maxValue);
     }
 
-    public void update(final int health, final double maxHealth) {
+    public void update(final double health, final double maxHealth) {
         this.mHealth = health;
         this.merged = false;
-        setText(mHealth + "");
+        DecimalFormat df = new DecimalFormat("0.0");
+        setText(df.format(mHealth));
 
         double fitness = mHealth / mMaxValue;
         if (fitness > 0.9) {
@@ -75,9 +61,15 @@ public class Tile extends Label {
         } else if (fitness >= 0) {
 
             getStyleClass().addAll("game-label", LOW_HEALTH);
-        } else {
-            getStyleClass().addAll("game-label", TOWER);
+        } else if (fitness == -1) {
+            getStyleClass().addAll("game-label", ICE_TOWER);
             setText("T");
+        } else if (fitness == -2) {
+            getStyleClass().addAll("game-label", FIRE_TOWER);
+            setText("T");
+        } else {
+            // This shows a mistake
+            getStyleClass().addAll("game-label", TOP_HEALTH);
         }
 
     }
