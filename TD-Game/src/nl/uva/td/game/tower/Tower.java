@@ -34,13 +34,17 @@ public abstract class Tower {
     /** The range of this tower */
     protected final int mRange;
 
+    /** The cost of to build this tower */
+    protected final double mCost;
+
     /** The attributes of this tower, e.g. ICE / FIRE ... */
     protected final Set<Attribute> mAttributes = new HashSet<Attribute>();
 
-    public Tower(final boolean splash, final double damage, final int range) {
+    public Tower(final boolean splash, final double damage, final int range, final double cost) {
         mSplash = splash;
         mDamage = damage;
         mRange = range;
+        mCost = cost;
     }
 
     /**
@@ -180,5 +184,14 @@ public abstract class Tower {
      */
     public boolean hasAttribute(final Attribute attribute) {
         return mAttributes.contains(attribute);
+    }
+
+    /**
+     * Get the cost to build this tower
+     * 
+     * @return The cost to build this tower
+     */
+    public double getCost() {
+        return mCost;
     }
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.uva.td.game.GameManager;
+import nl.uva.td.game.GameState;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
@@ -40,7 +40,7 @@ public class TestGame {
         List<Integer> positionsList = new LinkedList<Integer>(Arrays.asList(0, 3, 5, 7, 12, 15));
         List<Tower> towerList = ListTowerPlacement.generateSimpleTowerList(positionsList);
 
-        GameManager gameManager = new GameManager(new SpawnCreeps(), new ListTowerPlacement(towerList,
+        GameState gameManager = new GameState(new SpawnCreeps(), new ListTowerPlacement(towerList,
                 positionsList), gameField, false);
         gameManager.run();
 

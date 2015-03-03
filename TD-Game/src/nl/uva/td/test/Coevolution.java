@@ -6,7 +6,7 @@ import java.util.Random;
 
 import nl.uva.td.experiment.watchmaker.IntArrayMutation;
 import nl.uva.td.experiment.watchmaker.TowerIntArrayCrossover;
-import nl.uva.td.experiment.watchmaker.TowerPlacement;
+import nl.uva.td.experiment.watchmaker.TowerPlacementCandidate;
 import nl.uva.td.experiment.watchmaker.WatchmakerExperiment;
 import nl.uva.td.game.CreepAgent;
 import nl.uva.td.game.TowerAgent;
@@ -38,13 +38,13 @@ public class Coevolution {
         String fieldName = "Standard3";
 
         TowerAgent towerAgent = evolveTowers(fieldName, new SpawnCreeps());
-        CreepAgent creepAgent = evolveCreeps(fieldName, towerAgent);
+        // CreepAgent creepAgent = evolveCreeps(fieldName, towerAgent);
     }
 
     private static CreepAgent evolveCreeps(final String fieldName, final CreepAgent creepAgent) {
         GameField gameField = Parser.parseFile(fieldName);
 
-        CandidateFactory<int[]> factory = new TowerPlacement(10);
+        CandidateFactory<int[]> factory = new TowerPlacementCandidate(10);
 
         // Create a pipeline that applies cross-over then mutation.
         List<EvolutionaryOperator<int[]>> operators = new LinkedList<EvolutionaryOperator<int[]>>();
@@ -105,7 +105,7 @@ public class Coevolution {
 
         GameField gameField = Parser.parseFile(fieldName);
 
-        CandidateFactory<int[]> factory = new TowerPlacement(10);
+        CandidateFactory<int[]> factory = new TowerPlacementCandidate(10);
 
         // Create a pipeline that applies cross-over then mutation.
         List<EvolutionaryOperator<int[]>> operators = new LinkedList<EvolutionaryOperator<int[]>>();

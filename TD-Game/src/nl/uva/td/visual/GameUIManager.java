@@ -36,7 +36,7 @@ import nl.uva.td.game.tower.IceTower;
  *
  * @author bruno
  */
-public class GameManager extends Group {
+public class GameUIManager extends Group {
 
     public static final int FINAL_VALUE_TO_WIN = 2048;
 
@@ -53,7 +53,7 @@ public class GameManager extends Group {
     private final Board board;
     private final GridOperator gridOperator;
 
-    public GameManager(final GameField gameField) {
+    public GameUIManager(final GameField gameField) {
         this(gameField.getGameField().length, gameField);
     }
 
@@ -67,7 +67,7 @@ public class GameManager extends Group {
      * @param gridSize
      *            defines the size of the grid, default 4x4
      */
-    public GameManager(final int gridSize, final GameField gameField) {
+    public GameUIManager(final int gridSize, final GameField gameField) {
         this.gameGrid = new HashMap<>();
 
         gridOperator = new GridOperator(gameField.getGameField().length, gameField.getGameField()[0].length);

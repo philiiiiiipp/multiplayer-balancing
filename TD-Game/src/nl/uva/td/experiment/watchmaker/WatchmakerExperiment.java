@@ -4,7 +4,7 @@ import java.util.List;
 
 import nl.uva.td.experiment.Score;
 import nl.uva.td.game.CreepAgent;
-import nl.uva.td.game.GameManager;
+import nl.uva.td.game.GameState;
 import nl.uva.td.game.TowerAgent;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
@@ -67,7 +67,7 @@ public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
 
         TowerAgent towerAgent = new ListTowerPlacement(towerTypes, towerPlacements);
 
-        GameManager gameManager = new GameManager(mCreepAgent, towerAgent, gameField, false);
+        GameState gameManager = new GameState(mCreepAgent, towerAgent, gameField, false);
         sCreationTime += System.currentTimeMillis() - current;
 
         current = System.currentTimeMillis();

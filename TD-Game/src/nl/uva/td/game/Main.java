@@ -31,7 +31,7 @@ public class Main {
         TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
                 towerPlacements);
 
-        GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, true);
+        GameState gameManager = new GameState(creepAgent, towerAgent, gameField, true);
         Score score = gameManager.dryRun();
     }
 
@@ -73,7 +73,7 @@ public class Main {
 
             TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towers), towers);
 
-            GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
+            GameState gameManager = new GameState(creepAgent, towerAgent, gameField, false);
             Score score = gameManager.dryRun();
 
             if (score.getTotalTowerPoints() > bestValue) {

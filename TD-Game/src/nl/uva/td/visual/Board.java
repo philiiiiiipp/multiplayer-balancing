@@ -333,7 +333,7 @@ public class Board extends Group {
         });
 
         restoreRecord();
-        gameLivesProperty.set(nl.uva.td.game.GameManager.PLAYER_STARTING_LIVES);
+        gameLivesProperty.set(nl.uva.td.game.GameState.PLAYER_STARTING_LIVES);
 
         // gameScoreProperty.addListener((ov, i, i1) -> {
         // if (i1.intValue() > gameLivesProperty.get()) {
@@ -528,7 +528,7 @@ public class Board extends Group {
             // check tiles>=2048
             gameWonProperty.set(false);
             gameGrid.forEach((l, t) -> {
-                if (t != null && t.getValue() >= GameManager.FINAL_VALUE_TO_WIN) {
+                if (t != null && t.getValue() >= GameUIManager.FINAL_VALUE_TO_WIN) {
                     gameWonProperty.removeListener(wonListener);
                     gameWonProperty.set(true);
                     gameWonProperty.addListener(wonListener);

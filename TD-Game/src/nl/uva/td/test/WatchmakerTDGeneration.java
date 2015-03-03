@@ -6,7 +6,7 @@ import java.util.Random;
 
 import nl.uva.td.experiment.watchmaker.IntArrayMutation;
 import nl.uva.td.experiment.watchmaker.TowerIntArrayCrossover;
-import nl.uva.td.experiment.watchmaker.TowerPlacement;
+import nl.uva.td.experiment.watchmaker.TowerPlacementCandidate;
 import nl.uva.td.experiment.watchmaker.WatchmakerExperiment;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
@@ -31,7 +31,7 @@ public class WatchmakerTDGeneration {
 
         GameField gameField = Parser.parseFile(fieldName);
 
-        CandidateFactory<int[]> factory = new TowerPlacement(10);
+        CandidateFactory<int[]> factory = new TowerPlacementCandidate(10);
 
         // Create a pipeline that applies cross-over then mutation.
         List<EvolutionaryOperator<int[]>> operators = new LinkedList<EvolutionaryOperator<int[]>>();

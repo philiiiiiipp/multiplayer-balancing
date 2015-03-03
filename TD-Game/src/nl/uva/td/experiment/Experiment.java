@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.uva.td.game.CreepAgent;
-import nl.uva.td.game.GameManager;
+import nl.uva.td.game.GameState;
 import nl.uva.td.game.TowerAgent;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
@@ -47,7 +47,7 @@ public class Experiment extends AbstractProblem {
         TowerAgent towerAgent = new ListTowerPlacement(ListTowerPlacement.generateSimpleTowerList(towerPlacements),
                 towerPlacements);
 
-        GameManager gameManager = new GameManager(creepAgent, towerAgent, gameField, false);
+        GameState gameManager = new GameState(creepAgent, towerAgent, gameField, false);
         Score score = gameManager.dryRun();
 
         // solution.setObjective(0, -score.getTotalTowerPoints());

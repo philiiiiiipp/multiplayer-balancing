@@ -17,7 +17,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nl.uva.td.experiment.Score;
 import nl.uva.td.game.CreepAgent;
-import nl.uva.td.game.GameManager;
+import nl.uva.td.game.GameState;
 import nl.uva.td.game.GameUpdateSubscriber;
 import nl.uva.td.game.TowerAgent;
 import nl.uva.td.game.map.GameField;
@@ -31,11 +31,11 @@ import nl.uva.td.test.SpawnCreeps;
  */
 public class Game2048 extends Application implements GameUpdateSubscriber {
 
-    private nl.uva.td.visual.GameManager gameManager;
+    private nl.uva.td.visual.GameUIManager gameManager;
     private Bounds gameBounds;
     private final static int MARGIN = 36;
 
-    private GameManager mGameManager;
+    private GameState mGameManager;
 
     private static String FIELD_NAME = "Standard3";
     private static int[] AI_LIST = { 13, 1, 12, 1, 11, 1, 18, 1, 15, 1, 20, 1 };
@@ -58,14 +58,14 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
 
         TowerAgent towerAgent = new ListTowerPlacement(towerTypes, towerPlacements);
 
-        mGameManager = new GameManager(creepAgent, towerAgent, gameField, true);
+        mGameManager = new GameState(creepAgent, towerAgent, gameField, true);
         mGameManager.subscriber(this);
         Font.loadFont(Game2048.class.getResource("ClearSans-Bold.ttf").toExternalForm(), 10.0);
     }
 
     @Override
     public void start(final Stage primaryStage) {
-        gameManager = new nl.uva.td.visual.GameManager(mGameManager.getGameField());
+        gameManager = new nl.uva.td.visual.GameUIManager(mGameManager.getGameField());
         gameBounds = gameManager.getLayoutBounds();
 
         StackPane root = new StackPane(gameManager);

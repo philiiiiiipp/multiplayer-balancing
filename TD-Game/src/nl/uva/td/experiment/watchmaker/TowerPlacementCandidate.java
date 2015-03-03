@@ -4,11 +4,11 @@ import java.util.Random;
 
 import org.uncommons.watchmaker.framework.factories.AbstractCandidateFactory;
 
-public class TowerPlacement extends AbstractCandidateFactory<int[]> {
+public class TowerPlacementCandidate extends AbstractCandidateFactory<int[]> {
 
     private final int mPositionCount;
 
-    public TowerPlacement(final int positionCount) {
+    public TowerPlacementCandidate(final int positionCount) {
         mPositionCount = positionCount;
     }
 

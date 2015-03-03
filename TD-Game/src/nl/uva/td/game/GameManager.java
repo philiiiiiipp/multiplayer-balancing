@@ -1,125 +1,40 @@
 package nl.uva.td.game;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import nl.uva.td.experiment.Score;
+import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.map.GameField;
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.unit.Creep;
+import nl.uva.td.game.map.Parser;
 
-public class GameManager extends GameUpdateHUB {
+public class GameManager {
 
-    /** The amount of lives a player starts with */
-    public final static int PLAYER_STARTING_LIVES = 10;
+    private static final int STARTING_LIVES = 10;
 
-    private final static int TOWER_PLACEMENT_FREQUENCY = 15;
+    private static final int STARTING_GOLD = 100;
 
-    private final CreepAgent mCreepAgent;
-    private final TowerAgent mTowerAgent;
+    private static final double SALARY = 20;
 
-    public GameManager(final CreepAgent creepAgent, final TowerAgent towerAgent, final GameField gameField,
-            final boolean showUI) {
-        super(gameField, showUI);
+    private static final int SALARY_FREQUENCY = 5;
 
-        mCreepAgent = creepAgent;
-        mTowerAgent = towerAgent;
-    }
+    private static final String MAP_FILE = "Standard2";
 
-    public Score dryRun() {
-        int playerTotalHealth = PLAYER_STARTING_LIVES;
-        int lastStepLivesLost = 0;
-        int stepCounter = 0;
-        int totalTowerPoints = 0;
-        int lastStepTowerPoints = 0;
-        Set<Creep> creeps = new HashSet<Creep>();
-        Set<Tower> towers = new HashSet<Tower>();
-        Set<Creep> killedCreep = null;
+    public void run(final Agent playerOne, final Agent playerTwo) {
 
-        /*
-         * 1.Place 2.Shoot 3.Walk
-         */
-        while (playerTotalHealth > 0) {
+        PlayerAttributes playerOneAttributes = new PlayerAttributes(STARTING_LIVES, STARTING_GOLD);
+        PlayerAttributes playerTwoAttributes = new PlayerAttributes(STARTING_LIVES, STARTING_GOLD);
 
-            // Place towers first
-            if (stepCounter % TOWER_PLACEMENT_FREQUENCY == 0) {
-                Tower nextTower = mTowerAgent.nextTower(stepCounter / TOWER_PLACEMENT_FREQUENCY);
-                if (nextTower != null) {
-                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / TOWER_PLACEMENT_FREQUENCY);
-                    if (mGameField.addTowerToTheGame(nextTower, nextTowerPosition)) {
-                        towers.add(nextTower);
-                    }
-                }
-            }
+        GameField playerOneMap = Parser.parse(MAP_FILE);
+        GameField playerTwoMap = Parser.parse(MAP_FILE);
 
-            super.updateUI(new Score(stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
-                    playerTotalHealth));
+        GameState playerOneGameState = new GameState(playerOneMap, false);
+        GameState playerTwoGameState = new GameState(playerTwoMap, false);
 
-            // Place creep
-            Creep nextCreep = mCreepAgent.nextCreep(stepCounter);
-            if (nextCreep != null) {
-                mGameField.addCreepToTheGame(nextCreep);
-                creeps.add(nextCreep);
-            }
+        while (playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
 
-            super.updateUI(new Score(stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
-                    playerTotalHealth));
+            Decision playerOnesDecision = playerOne.makeDecision();
+            Decision playerTwosDecision = playerTwo.makeDecision();
 
-            // Shoot
-            for (Tower tower : towers) {
-                killedCreep = tower.shoot();
-
-                if (killedCreep != null) {
-                    creeps.removeAll(killedCreep);
-
-                    // update points
-                    for (Creep creep : killedCreep) {
-                        lastStepTowerPoints += 1; // creep.getMaxHealth();
-                    }
-
-                    killedCreep = null;
-                }
-            }
-
-            super.updateUI(new Score(stepCounter, 0, totalTowerPoints, lastStepLivesLost, playerTotalHealth));
-
-            totalTowerPoints += lastStepTowerPoints;
-
-            // Walk
-            Iterator<Creep> creepIterator = creeps.iterator();
-            while (creepIterator.hasNext()) {
-                Creep current = creepIterator.next();
-
-                if (current.move()) {
-                    // creep went into the goal
-                    playerTotalHealth--;
-                    lastStepLivesLost++;
-                    creepIterator.remove();
-                }
-            }
-
-            super.updateUI(new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
-                    playerTotalHealth));
-            lastStepTowerPoints = 0;
-            lastStepLivesLost = 0;
+            playerOneGameState.step(playerOnesDecision, playerTwosDecision, playerOneAttributes);
+            playerTwoGameState.step(playerTwosDecision, playerOnesDecision, playerTwoAttributes);
         }
-
-        return new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost, playerTotalHealth);
     }
 
-    @Override
-    public void run() {
-        dryRun();
-    }
-
-    private static void printField(final GameField gameField) {
-        for (int x = 0; x < gameField.getGameField().length; ++x) {
-            for (int y = 0; y < gameField.getGameField()[x].length; ++y) {
-                System.out.print(gameField.getGameField()[x][y]);
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
 }
