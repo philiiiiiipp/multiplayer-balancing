@@ -14,6 +14,8 @@ public class GameManager extends GameUpdateHUB {
     /** The amount of lives a player starts with */
     public final static int PLAYER_STARTING_LIVES = 10;
 
+    private final static int TOWER_PLACEMENT_FREQUENCY = 15;
+
     private final CreepAgent mCreepAgent;
     private final TowerAgent mTowerAgent;
 
@@ -41,10 +43,10 @@ public class GameManager extends GameUpdateHUB {
         while (playerTotalHealth > 0) {
 
             // Place towers first
-            if (stepCounter % 8 == 0) {
-                Tower nextTower = mTowerAgent.nextTower(stepCounter / 8);
+            if (stepCounter % TOWER_PLACEMENT_FREQUENCY == 0) {
+                Tower nextTower = mTowerAgent.nextTower(stepCounter / TOWER_PLACEMENT_FREQUENCY);
                 if (nextTower != null) {
-                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / 8);
+                    int nextTowerPosition = mTowerAgent.nextTowerPosition(stepCounter / TOWER_PLACEMENT_FREQUENCY);
                     if (mGameField.addTowerToTheGame(nextTower, nextTowerPosition)) {
                         towers.add(nextTower);
                     }

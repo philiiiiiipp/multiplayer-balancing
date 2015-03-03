@@ -25,13 +25,14 @@ public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
     private static long sRunTime = 0;
 
     /** The game field */
-    public static String sGameField = null;
+    private final String mGameField;
 
     /** The creeps send on this game field */
     private final CreepAgent mCreepAgent;
 
-    public WatchmakerExperiment(final CreepAgent creepAgent) {
+    public WatchmakerExperiment(final CreepAgent creepAgent, final String gameField) {
         mCreepAgent = creepAgent;
+        mGameField = gameField;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
     private Score evaluate(final int[] candidate) {
         long current = System.currentTimeMillis();
 
-        GameField gameField = Parser.parse(sGameField);
+        GameField gameField = Parser.parseFile(mGameField);
         sParsingTime += System.currentTimeMillis() - current;
 
         current = System.currentTimeMillis();

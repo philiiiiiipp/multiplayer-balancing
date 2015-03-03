@@ -13,20 +13,22 @@ import java.util.stream.IntStream;
  */
 public class GridOperator {
 
-    public static final int DEFAULT_GRID_SIZE = 5;
+    // public static final int DEFAULT_GRID_SIZE = 5;
 
-    private final int gridSize;
+    private final int gridSizeX;
+    private final int gridSizeY;
     private final List<Integer> traversalX;
     private final List<Integer> traversalY;
 
-    public GridOperator() {
-        this(DEFAULT_GRID_SIZE);
-    }
+    // public GridOperator() {
+    // this(DEFAULT_GRID_SIZE);
+    // }
 
-    public GridOperator(final int gridSize) {
-        this.gridSize = gridSize;
-        this.traversalX = IntStream.range(0, gridSize).boxed().collect(Collectors.toList());
-        this.traversalY = IntStream.range(0, gridSize).boxed().collect(Collectors.toList());
+    public GridOperator(final int gridSizeX, final int gridSizeY) {
+        this.gridSizeX = gridSizeX;
+        this.gridSizeY = gridSizeY;
+        this.traversalX = IntStream.range(0, gridSizeX).boxed().collect(Collectors.toList());
+        this.traversalY = IntStream.range(0, gridSizeY).boxed().collect(Collectors.toList());
     }
 
     public void sortGrid(final Direction direction) {
@@ -47,12 +49,16 @@ public class GridOperator {
         return at.get();
     }
 
-    public int getGridSize() {
-        return gridSize;
+    public int getGridSizeX() {
+        return gridSizeX;
+    }
+
+    public int getGridSizeY() {
+        return gridSizeY;
     }
 
     public boolean isValidLocation(final Location loc) {
-        return loc.getX() >= 0 && loc.getX() < gridSize && loc.getY() >= 0 && loc.getY() < gridSize;
+        return loc.getX() >= 0 && loc.getX() < gridSizeX && loc.getY() >= 0 && loc.getY() < gridSizeY;
     }
 
 }

@@ -16,9 +16,9 @@ public class SpawnCreeps extends CreepAgent {
         }
 
         if (i++ % 3 == 0) {
-            return new IceCreep(3 + stepCounter / 15);
+            return new IceCreep(3 + stepCounter / 10);
         } else {
-            return new FireCreep(3 + stepCounter / 15);
+            return new FireCreep(3 + stepCounter / 10);
         }
 
     }

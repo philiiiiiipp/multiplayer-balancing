@@ -25,7 +25,7 @@ public class SessionManager {
 
     public SessionManager(final GridOperator gridOperator) {
         this.gridOperator = gridOperator;
-        this.SESSION_PROPERTIES_FILENAME = "game2048_" + gridOperator.getGridSize() + ".properties";
+        this.SESSION_PROPERTIES_FILENAME = "game2048_" + gridOperator.getGridSizeX() + ".properties";
     }
 
     public void saveSession(final Map<Location, Tile> gameGrid, final Integer score, final Long time) {

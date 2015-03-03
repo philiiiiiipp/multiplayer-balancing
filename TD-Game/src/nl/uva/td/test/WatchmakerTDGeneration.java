@@ -8,6 +8,8 @@ import nl.uva.td.experiment.watchmaker.IntArrayMutation;
 import nl.uva.td.experiment.watchmaker.TowerIntArrayCrossover;
 import nl.uva.td.experiment.watchmaker.TowerPlacement;
 import nl.uva.td.experiment.watchmaker.WatchmakerExperiment;
+import nl.uva.td.game.map.GameField;
+import nl.uva.td.game.map.Parser;
 import nl.uva.td.visual.Game2048;
 
 import org.uncommons.maths.random.MersenneTwisterRNG;
@@ -24,23 +26,22 @@ import org.uncommons.watchmaker.framework.termination.GenerationCount;
 
 public class WatchmakerTDGeneration {
 
-    private static final int sGameFieldSize = 16;
-
-    private static final String sField = "OOOOSO\n" + "OOOOXO\n" + "OOXXXO\n" + "OOXOOO\n" + "OOXXXO\n" + "OOOOEO";
-
     public static void main(final String[] args) {
+        String fieldName = "Standard3";
 
-        CandidateFactory<int[]> factory = new TowerPlacement(6);
+        GameField gameField = Parser.parseFile(fieldName);
+
+        CandidateFactory<int[]> factory = new TowerPlacement(10);
 
         // Create a pipeline that applies cross-over then mutation.
         List<EvolutionaryOperator<int[]>> operators = new LinkedList<EvolutionaryOperator<int[]>>();
 
-        operators.add(new IntArrayMutation(3, sGameFieldSize));
+        operators.add(new IntArrayMutation(3, gameField.getTowerFields().size()));
         operators.add(new TowerIntArrayCrossover());
 
         EvolutionaryOperator<int[]> pipeline = new EvolutionPipeline<int[]>(operators);
 
-        WatchmakerExperiment fitnessEvaluator = new WatchmakerExperiment(new SpawnCreeps());
+        WatchmakerExperiment fitnessEvaluator = new WatchmakerExperiment(new SpawnCreeps(), fieldName);
         SelectionStrategy<Object> selection = new RouletteWheelSelection();
         Random rng = new MersenneTwisterRNG();
 
@@ -68,7 +69,7 @@ public class WatchmakerTDGeneration {
             System.out.print(i + " ,");
         }
 
-        Game2048.show(result);
+        Game2048.show(result, fieldName);
     }
 
 }

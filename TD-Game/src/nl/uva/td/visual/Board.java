@@ -81,13 +81,15 @@ public class Board extends Group {
     private final Label lblTime = new Label();
     private Timeline timerPause;
 
-    private final int gridWidth;
+    private final int mGridWidth;
+    private final int mGridHeight;
     private final GridOperator gridOperator;
     private final SessionManager sessionManager;
 
     public Board(final GridOperator grid, final GameField gameField) {
         this.gridOperator = grid;
-        gridWidth = CELL_SIZE * grid.getGridSize() + BORDER_WIDTH * 2;
+        mGridWidth = CELL_SIZE * grid.getGridSizeY() + BORDER_WIDTH * 2;
+        mGridHeight = CELL_SIZE * grid.getGridSizeX() + BORDER_WIDTH * 2;
         sessionManager = new SessionManager(gridOperator);
 
         createScore();
@@ -131,14 +133,14 @@ public class Board extends Group {
         vScores.getChildren().addAll(hScores, vFill);
 
         hTop.getChildren().addAll(lblTitle, lblSubtitle, hFill, vScores);
-        hTop.setMinSize(gridWidth, TOP_HEIGHT);
-        hTop.setPrefSize(gridWidth, TOP_HEIGHT);
-        hTop.setMaxSize(gridWidth, TOP_HEIGHT);
+        hTop.setMinSize(mGridWidth, TOP_HEIGHT);
+        hTop.setPrefSize(mGridWidth, TOP_HEIGHT);
+        hTop.setMaxSize(mGridWidth, TOP_HEIGHT);
 
         vGame.getChildren().add(hTop);
 
         HBox hTime = new HBox();
-        hTime.setMinSize(gridWidth, GAP_HEIGHT);
+        hTime.setMinSize(mGridWidth, GAP_HEIGHT);
         hTime.setAlignment(Pos.BOTTOM_RIGHT);
         lblTime.getStyleClass().addAll("game-label", "game-time");
         lblTime.textProperty().bind(clock);
@@ -204,12 +206,12 @@ public class Board extends Group {
 
         HBox hBottom = new HBox();
         hBottom.getStyleClass().add("game-backGrid");
-        hBottom.setMinSize(gridWidth, gridWidth);
-        hBottom.setPrefSize(gridWidth, gridWidth);
-        hBottom.setMaxSize(gridWidth, gridWidth);
+        hBottom.setMinSize(mGridWidth, mGridHeight);
+        hBottom.setPrefSize(mGridWidth, mGridHeight);
+        hBottom.setMaxSize(mGridWidth, mGridHeight);
 
         // Clip hBottom to keep the dropshadow effects within the hBottom
-        Rectangle rect = new Rectangle(gridWidth, gridWidth);
+        Rectangle rect = new Rectangle(mGridWidth, mGridHeight);
         hBottom.setClip(rect);
         hBottom.getChildren().add(gridGroup);
 
@@ -250,15 +252,15 @@ public class Board extends Group {
 
     private void initGameProperties() {
 
-        overlay.setMinSize(gridWidth, gridWidth);
+        overlay.setMinSize(mGridWidth, mGridHeight);
         overlay.setAlignment(Pos.CENTER);
         overlay.setTranslateY(TOP_HEIGHT + GAP_HEIGHT);
 
         overlay.getChildren().setAll(lOvrText);
 
         buttonsOverlay.setAlignment(Pos.CENTER);
-        buttonsOverlay.setTranslateY(TOP_HEIGHT + GAP_HEIGHT + gridWidth / 2);
-        buttonsOverlay.setMinSize(gridWidth, gridWidth / 2);
+        buttonsOverlay.setTranslateY(TOP_HEIGHT + GAP_HEIGHT + mGridHeight / 2);
+        buttonsOverlay.setMinSize(mGridWidth, mGridHeight / 2);
         buttonsOverlay.setSpacing(10);
 
         bTry.getStyleClass().add("game-button");
@@ -544,8 +546,8 @@ public class Board extends Group {
     }
 
     public void saveRecord() {
-        RecordManager recordManager = new RecordManager(gridOperator.getGridSize());
-        recordManager.saveRecord(gameScoreProperty.getValue());
+        // RecordManager recordManager = new RecordManager(gridOperator.getGridSize());
+        // recordManager.saveRecord(gameScoreProperty.getValue());
     }
 
     private void restoreRecord() {

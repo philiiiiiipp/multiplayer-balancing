@@ -54,7 +54,7 @@ public class GameManager extends Group {
     private final GridOperator gridOperator;
 
     public GameManager(final GameField gameField) {
-        this(GridOperator.DEFAULT_GRID_SIZE, gameField);
+        this(gameField.getGameField().length, gameField);
     }
 
     /**
@@ -70,7 +70,7 @@ public class GameManager extends Group {
     public GameManager(final int gridSize, final GameField gameField) {
         this.gameGrid = new HashMap<>();
 
-        gridOperator = new GridOperator(gridSize);
+        gridOperator = new GridOperator(gameField.getGameField().length, gameField.getGameField()[0].length);
         board = new Board(gridOperator, gameField);
         this.getChildren().add(board);
 
@@ -243,45 +243,45 @@ public class GameManager extends Group {
         final int tilesWereMoved = gridOperator.traverseGrid((x, y) -> {
             Location thisloc = new Location(x, y);
             Location farthestLocation = findFarthestLocation(thisloc, direction); // farthest
-            // available
-            // location
-            Optional<Tile> opTile = optionalTile(thisloc);
+                // available
+                // location
+                Optional<Tile> opTile = optionalTile(thisloc);
 
-            AtomicInteger result = new AtomicInteger();
-            Location nextLocation = farthestLocation.offset(direction); // calculates to a
-            // possible merge
-            optionalTile(nextLocation).filter(t -> t.isMergeable(opTile) && !t.isMerged()).ifPresent(t -> {
-                Tile tile = opTile.get();
-                t.merge(tile);
-                t.toFront();
-                gameGrid.put(nextLocation, t);
-                gameGrid.replace(thisloc, null);
+                AtomicInteger result = new AtomicInteger();
+                Location nextLocation = farthestLocation.offset(direction); // calculates to a
+                // possible merge
+                optionalTile(nextLocation).filter(t -> t.isMergeable(opTile) && !t.isMerged()).ifPresent(t -> {
+                    Tile tile = opTile.get();
+                    t.merge(tile);
+                    t.toFront();
+                    gameGrid.put(nextLocation, t);
+                    gameGrid.replace(thisloc, null);
 
-                parallelTransition.getChildren().add(animateExistingTile(tile, t.getLocation()));
-                parallelTransition.getChildren().add(animateMergedTile(t));
-                mergedToBeRemoved.add(tile);
+                    parallelTransition.getChildren().add(animateExistingTile(tile, t.getLocation()));
+                    parallelTransition.getChildren().add(animateMergedTile(t));
+                    mergedToBeRemoved.add(tile);
 
-                board.addPoints(t.getValue());
+                    board.addPoints(t.getValue());
 
-                if (t.getValue() == FINAL_VALUE_TO_WIN) {
-                    board.setGameWin(true);
+                    if (t.getValue() == FINAL_VALUE_TO_WIN) {
+                        board.setGameWin(true);
+                    }
+                    result.set(1);
+                });
+                if (result.get() == 0 && opTile.isPresent() && !farthestLocation.equals(thisloc)) {
+                    Tile tile = opTile.get();
+                    parallelTransition.getChildren().add(animateExistingTile(tile, farthestLocation));
+
+                    gameGrid.put(farthestLocation, tile);
+                    gameGrid.replace(thisloc, null);
+
+                    tile.setLocation(farthestLocation);
+
+                    result.set(1);
                 }
-                result.set(1);
+
+                return result.get();
             });
-            if (result.get() == 0 && opTile.isPresent() && !farthestLocation.equals(thisloc)) {
-                Tile tile = opTile.get();
-                parallelTransition.getChildren().add(animateExistingTile(tile, farthestLocation));
-
-                gameGrid.put(farthestLocation, tile);
-                gameGrid.replace(thisloc, null);
-
-                tile.setLocation(farthestLocation);
-
-                result.set(1);
-            }
-
-            return result.get();
-        });
 
         board.animateScore();
 
@@ -416,11 +416,11 @@ public class GameManager extends Group {
         scaleTransition.setInterpolator(Interpolator.EASE_OUT);
         scaleTransition.setOnFinished(e -> {
             // after last movement on full grid, check if there are movements available
-            if (this.gameGrid.values().parallelStream().noneMatch(Objects::isNull)
-                    && mergeMovementsAvailable() == 0) {
-                board.setGameOver(true);
-            }
-        });
+                if (this.gameGrid.values().parallelStream().noneMatch(Objects::isNull)
+                        && mergeMovementsAvailable() == 0) {
+                    board.setGameOver(true);
+                }
+            });
         return scaleTransition;
     }
 

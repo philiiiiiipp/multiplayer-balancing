@@ -1,5 +1,8 @@
 package nl.uva.td.game.map;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +12,20 @@ public class Parser {
 
     public static final String END_FIELD = "E";
 
+    public static GameField parse() {
+        return parseFile("Standard");
+    }
+
     /**
      * O decodes a tower-placement field X is a way field where the creeps walk S is the start field
      * for the creeps E is the end field for the creeps
      */
-    private static final String sField = "OOOSO\n" + "OXXXO\n" + "OXOOO\n" + "OXXXO\n" + "OOOEO";
-
-    public static GameField parse() {
-        return parse(sField);
+    public static GameField parseFile(final String path) {
+        try {
+            return parse(new String(Files.readAllBytes(Paths.get(path))));
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /**
@@ -26,9 +35,9 @@ public class Parser {
      *            The game field string to be parsed, null will use the default game field
      * @return The parsed game field object
      */
-    public static GameField parse(String gameFieldString) {
+    public static GameField parse(final String gameFieldString) {
         if (gameFieldString == null) {
-            gameFieldString = sField;
+            return parse();
         }
 
         String[] splittedField = gameFieldString.split("\n");

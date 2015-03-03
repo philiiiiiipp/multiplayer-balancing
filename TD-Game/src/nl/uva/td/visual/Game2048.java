@@ -37,9 +37,8 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
 
     private GameManager mGameManager;
 
-    private static int[] AI_LIST = { 4, 1, 2, 1, 1, 1, 7, 1, 8, 1, 6, 1 };
-
-    static final boolean ASD = false;
+    private static String FIELD_NAME = "Standard3";
+    private static int[] AI_LIST = { 13, 1, 12, 1, 11, 1, 18, 1, 15, 1, 20, 1 };
 
     @Override
     public void init() {
@@ -47,7 +46,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         // The font may be used and redistributed under the terms of the Apache License, Version
         // 2.0.
 
-        GameField gameField = Parser.parse();
+        GameField gameField = Parser.parseFile(FIELD_NAME);
 
         CreepAgent creepAgent = new SpawnCreeps();
 
@@ -125,12 +124,10 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
             }
         });
 
-        if (ASD == true) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -168,8 +165,9 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         scene.setOnSwipeDown(e -> gameManager.move(Direction.DOWN));
     }
 
-    public static void show(final int[] positions) {
+    public static void show(final int[] positions, final String fieldName) {
         AI_LIST = positions;
+        FIELD_NAME = fieldName;
         launch();
     }
 
