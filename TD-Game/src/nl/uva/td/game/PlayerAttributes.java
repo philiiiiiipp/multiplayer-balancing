@@ -4,9 +4,9 @@ public class PlayerAttributes {
 
     private int mLives;
 
-    private int mGold;
+    private double mGold;
 
-    public PlayerAttributes(final int lives, final int gold) {
+    public PlayerAttributes(final int lives, final double gold) {
         mLives = lives;
         mGold = gold;
     }
@@ -19,11 +19,11 @@ public class PlayerAttributes {
         mLives = lives;
     }
 
-    public int getGold() {
+    public double getGold() {
         return mGold;
     }
 
-    public void setGold(final int gold) {
+    public void setGold(final double gold) {
         mGold = gold;
     }
 }

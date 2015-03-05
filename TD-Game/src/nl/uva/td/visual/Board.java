@@ -380,7 +380,8 @@ public class Board extends Group {
         if (gameMovePoints.get() != 0) {
 
             final Timeline timeline = new Timeline();
-            lblPoints.setText("+" + gameMovePoints.getValue().toString());
+            lblPoints.setText(gameMovePoints.getValue() < 0 ? gameMovePoints.getValue().toString() : "+"
+                    + gameMovePoints.getValue().toString());
             lblPoints.setOpacity(1);
             double posX = vScore.localToScene(vScore.getWidth() / 2d, 0).getX();
             lblPoints.setTranslateX(0);
@@ -397,6 +398,7 @@ public class Board extends Group {
             timeline.getKeyFrames().add(kfY);
 
             timeline.play();
+            gameMovePoints.set(0);
         }
 
         if (gameMoveLives.get() != 0) {
@@ -462,16 +464,21 @@ public class Board extends Group {
     }
 
     public void setPoints(final int points) {
-        gameMovePoints.set(points);
+        gameMovePoints.set(points - gameScoreProperty.get());
+        gameScoreProperty.set(points);
     }
 
     public int getPoints() {
-        return gameMovePoints.get();
+        return gameScoreProperty.get();
     }
 
     public void addPoints(final int points) {
         gameMovePoints.set(gameMovePoints.get() + points);
         gameScoreProperty.set(gameScoreProperty.get() + points);
+    }
+
+    public int getLives() {
+        return gameLivesProperty.get();
     }
 
     public void removeLives(final int lives) {

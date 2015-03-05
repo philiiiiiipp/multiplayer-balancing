@@ -55,7 +55,7 @@ public class Parser {
                 switch (fieldID) {
 
                 case TowerField.ID:
-                    TowerField towerField = new TowerField(row, column);
+                    TowerField towerField = new TowerField(row, column, towerFields.size());
                     towerFields.add(towerField);
                     gameField[row][column] = towerField;
                     break;

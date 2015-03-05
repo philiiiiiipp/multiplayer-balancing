@@ -12,13 +12,16 @@ public class Score {
 
     private final int mLivesLeft;
 
+    private final double mGold;
+
     public Score(final double steps, final double lastStepTowerPoints, final double totalTowerPoints,
-            final int lastStepLivesLost, final int livesLeft) {
+            final int lastStepLivesLost, final int livesLeft, final double gold) {
         mTotalSteps = steps;
         mLastStepTowerPoints = lastStepTowerPoints;
         mTotalTowerPoints = totalTowerPoints;
         mLastStepLivesLost = lastStepLivesLost;
         mLivesLeft = livesLeft;
+        mGold = gold;
     }
 
     /**
@@ -64,6 +67,10 @@ public class Score {
      */
     public int getLivesLeft() {
         return mLivesLeft;
+    }
+
+    public int getGold() {
+        return (int) mGold;
     }
 
 }

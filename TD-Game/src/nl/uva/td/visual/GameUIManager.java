@@ -139,22 +139,13 @@ public class GameUIManager extends Group {
 
     public void updateCreeps(final GameField gameField, final Score score) {
 
-        board.setPoints(0);
-        board.addPoints((int) score.getLastStepTowerPoints());
-        board.removeLives(score.getLastStepLivesLost());
+        if (board.getPoints() != score.getGold()) {
+            board.setPoints(score.getGold());
+        }
 
-        // for (int a = 0; a < gameField.getGameField().length; ++a) {
-        // for (int b = 0; b < gameField.getGameField()[a].length; ++b) {
-        // System.out.print(gameField.getGameField()[a][b]);
-        // }
-        // System.out.println();
-        // }
-        // System.out.println();
-        // System.out.println();
-        // System.out.println();
-        // System.out.println();
-        // System.out.println();
-        // System.out.println();
+        if (board.getLives() != score.getLivesLeft()) {
+            board.removeLives(board.getLives() - score.getLivesLeft());
+        }
 
         gridOperator.traverseGrid((x, y) -> {
 

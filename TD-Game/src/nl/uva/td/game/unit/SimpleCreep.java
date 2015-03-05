@@ -5,7 +5,7 @@ import nl.uva.td.game.tower.Tower;
 public class SimpleCreep extends Creep {
 
     public SimpleCreep(final double health) {
-        super(health);
+        super(health, 10);
     }
 
     @Override

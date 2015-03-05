@@ -67,7 +67,7 @@ public class WatchmakerExperiment implements FitnessEvaluator<int[]> {
 
         TowerAgent towerAgent = new ListTowerPlacement(towerTypes, towerPlacements);
 
-        GameState gameManager = new GameState(mCreepAgent, towerAgent, gameField, false);
+        GameState gameManager = null; // new GameState(mCreepAgent, towerAgent, gameField, false);
         sCreationTime += System.currentTimeMillis() - current;
 
         current = System.currentTimeMillis();

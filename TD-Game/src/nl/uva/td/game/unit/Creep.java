@@ -12,12 +12,15 @@ public abstract class Creep {
 
     private double mMaxHealth;
 
+    private final double mCost;
+
     private CreepField mCurrentField;
 
     private final List<Tower> mRegisteredTowers = new LinkedList<Tower>();
 
-    public Creep(final double health) {
+    public Creep(final double health, final double cost) {
         mHealth = mMaxHealth = health - 1;
+        mCost = cost;
     }
 
     /**
@@ -99,6 +102,24 @@ public abstract class Creep {
      */
     public double getMaxHealth() {
         return mMaxHealth;
+    }
+
+    /**
+     * The cost of this creep
+     * 
+     * @return The cost of this creep
+     */
+    public double getCost() {
+        return mCost;
+    }
+
+    /**
+     * Get the increase in salary this creep does
+     *
+     * @return The increase in salary
+     */
+    public double getSalaryIncrease() {
+        return mCost * 0.1;
     }
 
     @Override

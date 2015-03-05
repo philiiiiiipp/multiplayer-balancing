@@ -6,10 +6,14 @@ public class TowerField extends Field {
 
     public static final String ID = "O";
 
+    private final int mGridID;
+
     private Tower mTower;
 
-    public TowerField(final int row, final int column) {
+    public TowerField(final int row, final int column, final int gridID) {
         super(Type.TOWER_FIELD, row, column);
+
+        mGridID = gridID;
     }
 
     /**
@@ -38,6 +42,10 @@ public class TowerField extends Field {
     public void clear() {
         super.clear();
         mTower = null;
+    }
+
+    public int getGridID() {
+        return mGridID;
     }
 
     @Override

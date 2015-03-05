@@ -1,9 +1,9 @@
 package nl.uva.td.game;
 
 import nl.uva.td.experiment.Score;
+import nl.uva.td.game.map.GameField;
 
 public interface GameUpdateSubscriber {
 
-    public void update(final Score score);
-
+    void update(Score score, GameField gameField, int subscriberID);
 }

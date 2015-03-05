@@ -68,6 +68,7 @@ public abstract class Tower {
 
                 if (creepField.hasCreeps()) {
                     mLockedOnCreep = creepField.getCreep();
+                    break;
                 }
             }
         }
@@ -188,7 +189,7 @@ public abstract class Tower {
 
     /**
      * Get the cost to build this tower
-     * 
+     *
      * @return The cost to build this tower
      */
     public double getCost() {

@@ -8,7 +8,7 @@ public class FireCreep extends Creep {
     private final double mResistance = 0.2;
 
     public FireCreep(final double health) {
-        super(health);
+        super(health, 10);
     }
 
     @Override

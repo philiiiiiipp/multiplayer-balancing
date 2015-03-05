@@ -1,5 +1,6 @@
 package nl.uva.td.game.map;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nl.uva.td.game.tower.Tower;
@@ -16,6 +17,9 @@ public class GameField {
     /** All possible tower placement fields */
     private final List<TowerField> mTowerFields;
 
+    /** A list of all currently free tower fields */
+    private final List<TowerField> mFreeTowerFields;
+
     /** All creep walking fields, including start and end */
     private final List<CreepField> mCreepFields;
 
@@ -28,12 +32,14 @@ public class GameField {
         mStartField = startField;
         mEndField = endField;
         mTowerFields = towerFields;
+        mFreeTowerFields = new ArrayList<TowerField>(mTowerFields);
         mCreepFields = creepFields;
         mGameField = gameField;
     }
 
     public void addCreepToTheGame(final Creep creep) {
         creep.setCurrentField(mStartField);
+        mStartField.addCreep(creep);
     }
 
     /**
@@ -49,6 +55,9 @@ public class GameField {
     public boolean addTowerToTheGame(final Tower nextTower, final int nextTowerPosition) {
         if (mTowerFields.get(nextTowerPosition).getTower() == null) {
             mTowerFields.get(nextTowerPosition).placeTower(nextTower);
+
+            mFreeTowerFields.remove(mTowerFields.get(nextTowerPosition));
+
             return true;
         }
 
@@ -57,6 +66,10 @@ public class GameField {
 
     public List<TowerField> getTowerFields() {
         return mTowerFields;
+    }
+
+    public List<TowerField> getFreeTowerFields() {
+        return mFreeTowerFields;
     }
 
     public List<CreepField> getCreepFields() {

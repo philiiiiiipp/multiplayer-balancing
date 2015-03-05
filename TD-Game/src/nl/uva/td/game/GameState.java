@@ -30,26 +30,44 @@ public class GameState extends GameUpdateHUB {
         super(gameField, showUI);
     }
 
-    public void step(final Decision myDecision, final Decision enemyDecision, final PlayerAttributes myAttributes) {
+    public StepResult step(final Decision myDecision, final Decision enemyDecision,
+            final PlayerAttributes myAttributes, final PlayerAttributes enemyAttributes) {
+        StepResult result = new StepResult();
+
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+
         // Place towers first
         for (TowerPlacement towerToPlace : myDecision.wantsToPlaceTowers()) {
 
             if (mGameField.addTowerToTheGame(towerToPlace.getTower(), towerToPlace.getTowerPosition())) {
                 if (myAttributes.getGold() >= towerToPlace.getTower().getCost()) {
                     mTowerList.add(towerToPlace.getTower());
+                    myAttributes.setGold(myAttributes.getGold() - towerToPlace.getTower().getCost());
                 } else {
-                    System.err.println("You dont have the cash!");
+                    System.err.println("You dont have the cash to place that tower!");
                 }
             } else {
                 System.err.println("Tried to place tower where a tower already exists?");
             }
         }
 
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+
         // Place creep
         for (Creep creepToPlace : enemyDecision.wantsToPlaceCreeps()) {
-            mGameField.addCreepToTheGame(creepToPlace);
-            mCreeps.add(creepToPlace);
+            if (enemyAttributes.getGold() >= creepToPlace.getCost()) {
+
+                result.addExtraSalary(creepToPlace.getSalaryIncrease());
+                enemyAttributes.setGold(enemyAttributes.getGold() - creepToPlace.getCost());
+
+                mGameField.addCreepToTheGame(creepToPlace);
+                mCreeps.add(creepToPlace);
+            } else {
+                System.err.println("You dont have the cash to place that creep!");
+            }
         }
+
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
 
         // Shoot
         for (Tower tower : mTowerList) {
@@ -59,6 +77,8 @@ public class GameState extends GameUpdateHUB {
                 mCreeps.removeAll(killedCreep);
             }
         }
+
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
 
         // Walk
         Iterator<Creep> creepIterator = mCreeps.iterator();
@@ -71,6 +91,9 @@ public class GameState extends GameUpdateHUB {
                 creepIterator.remove();
             }
         }
+
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+        return result;
     }
 
     public Score dryRun() {
@@ -100,7 +123,7 @@ public class GameState extends GameUpdateHUB {
             }
 
             super.updateUI(new Score(stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
-                    playerTotalHealth));
+                    playerTotalHealth, 0));
 
             // Place creep
             Creep nextCreep = mCreepAgent.nextCreep(stepCounter);
@@ -110,7 +133,7 @@ public class GameState extends GameUpdateHUB {
             }
 
             super.updateUI(new Score(stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
-                    playerTotalHealth));
+                    playerTotalHealth, 0));
 
             // Shoot
             for (Tower tower : towers) {
@@ -128,7 +151,7 @@ public class GameState extends GameUpdateHUB {
                 }
             }
 
-            super.updateUI(new Score(stepCounter, 0, totalTowerPoints, lastStepLivesLost, playerTotalHealth));
+            super.updateUI(new Score(stepCounter, 0, totalTowerPoints, lastStepLivesLost, playerTotalHealth, 0));
 
             totalTowerPoints += lastStepTowerPoints;
 
@@ -146,12 +169,12 @@ public class GameState extends GameUpdateHUB {
             }
 
             super.updateUI(new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost,
-                    playerTotalHealth));
+                    playerTotalHealth, 0));
             lastStepTowerPoints = 0;
             lastStepLivesLost = 0;
         }
 
-        return new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost, playerTotalHealth);
+        return new Score(++stepCounter, lastStepTowerPoints, totalTowerPoints, lastStepLivesLost, playerTotalHealth, 0);
     }
 
     @Override
