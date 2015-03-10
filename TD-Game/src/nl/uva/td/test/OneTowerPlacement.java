@@ -1,7 +1,7 @@
 package nl.uva.td.test;
 
 import nl.uva.td.game.TowerAgent;
-import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.faction.tower.Tower;
 
 public class OneTowerPlacement extends TowerAgent {
 

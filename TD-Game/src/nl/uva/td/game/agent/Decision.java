@@ -3,7 +3,7 @@ package nl.uva.td.game.agent;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.uva.td.game.unit.Creep;
+import nl.uva.td.game.faction.unit.Creep;
 
 public class Decision {
 

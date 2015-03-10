@@ -5,15 +5,11 @@ import java.util.List;
 
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
-import nl.uva.td.game.agent.TowerPlacement;
+import nl.uva.td.game.faction.human.creep.Footmen;
+import nl.uva.td.game.faction.human.creep.Knight;
+import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.TowerField;
-import nl.uva.td.game.tower.FireTower;
-import nl.uva.td.game.tower.IceTower;
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.unit.Creep;
-import nl.uva.td.game.unit.FireCreep;
-import nl.uva.td.game.unit.IceCreep;
 import nl.uva.td.util.Util;
 
 /**
@@ -23,7 +19,11 @@ import nl.uva.td.util.Util;
  * @author philipp
  *
  */
-public class SimpleAgent implements Agent {
+public class SimpleElementalAgent extends Agent {
+
+    public SimpleElementalAgent() {
+        super("SimpleElementalAgent");
+    }
 
     @Override
     public Decision makeDecision(final GameField myMap, final GameField enemyMap, final PlayerAttributes myAttributes,
@@ -37,24 +37,23 @@ public class SimpleAgent implements Agent {
         boolean donePlacing = false;
         List<TowerField> freeTowerFields = new ArrayList<TowerField>(myMap.getFreeTowerFields());
 
-        while (!donePlacing) {
-            Tower tower = (Util.RND.nextBoolean() ? new FireTower() : new IceTower());
-
-            if (tower.getCost() <= towerGold && myMap.getFreeTowerFields().size() != 0) {
-                TowerField nextTowerField = Util.removeRandomObject(freeTowerFields);
-                decision.addTowerPlacement(new TowerPlacement(nextTowerField.getGridID(), tower));
-
-                towerGold -= tower.getCost();
-            } else {
-                donePlacing = true;
-            }
-        }
+        // while (!donePlacing) {
+        // Tower tower = (Util.RND.nextBoolean() ? new FireTower() : new IceTower());
+        //
+        // if (tower.getCost() <= towerGold && myMap.getFreeTowerFields().size() != 0) {
+        // TowerField nextTowerField = Util.removeRandomObject(freeTowerFields);
+        // decision.addTowerPlacement(new TowerPlacement(nextTowerField.getGridID(), tower));
+        //
+        // towerGold -= tower.getCost();
+        // } else {
+        // donePlacing = true;
+        // }
+        // }
 
         creepGold += towerGold;
         donePlacing = false;
         while (!donePlacing) {
-            Creep nextCreep = (Util.RND.nextBoolean() ? new FireCreep(3 + elapsedSteps / 10) : new IceCreep(
-                    3 + elapsedSteps / 10));
+            Creep nextCreep = (Util.RND.nextBoolean() ? new Footmen(3) : new Knight(3));
 
             if (nextCreep.getCost() <= creepGold) {
                 decision.addCreep(nextCreep);
@@ -62,6 +61,8 @@ public class SimpleAgent implements Agent {
             } else {
                 donePlacing = true;
             }
+
+            donePlacing = true;
         }
 
         return decision;

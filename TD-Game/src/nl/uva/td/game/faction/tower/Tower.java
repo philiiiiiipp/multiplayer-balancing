@@ -1,14 +1,14 @@
-package nl.uva.td.game.tower;
+package nl.uva.td.game.faction.tower;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import nl.uva.td.game.Attribute;
+import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.CreepField;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.TowerField;
-import nl.uva.td.game.unit.Creep;
 
 public abstract class Tower {
 
@@ -47,6 +47,20 @@ public abstract class Tower {
         mCost = cost;
     }
 
+    protected Creep findCreepInRange() {
+        // find a new creep
+        Iterator<CreepField> creepFieldIterator = mFieldsInRange.iterator();
+        while (creepFieldIterator.hasNext()) {
+            CreepField creepField = creepFieldIterator.next();
+
+            if (creepField.hasCreeps()) {
+                return creepField.getCreep();
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Tells the tower to shot at a creep in range
      *
@@ -62,20 +76,28 @@ public abstract class Tower {
 
         if (mLockedOnCreep == null) {
             // find a new creep
-            Iterator<CreepField> creepFieldIterator = mFieldsInRange.iterator();
-            while (creepFieldIterator.hasNext() && mLockedOnCreep == null) {
-                CreepField creepField = creepFieldIterator.next();
-
-                if (creepField.hasCreeps()) {
-                    mLockedOnCreep = creepField.getCreep();
-                    break;
-                }
-            }
+            mLockedOnCreep = findCreepInRange();
         }
 
         if (mLockedOnCreep != null) {
             // Fire on that creep
-            return mLockedOnCreep.getCurrentField().dealDamage(mDamage, this);
+            if (mSplash) {
+                return mLockedOnCreep.getCurrentField().dealDamage(mDamage, this);
+            } else {
+                if (mLockedOnCreep.acceptDamage(mDamage, this)) {
+                    // creep died
+
+                    mLockedOnCreep.getCurrentField().removeCreep(mLockedOnCreep);
+                    Set<Creep> killedCreeps = new HashSet<Creep>();
+                    killedCreeps.add(mLockedOnCreep);
+                    mLockedOnCreep = null;
+
+                    return killedCreeps;
+                }
+
+                return null;
+            }
+
         } else {
             // No creep in sight
             return null;

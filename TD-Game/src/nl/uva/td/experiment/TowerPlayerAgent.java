@@ -1,8 +1,8 @@
 package nl.uva.td.experiment;
 
 import nl.uva.td.game.TowerAgent;
-import nl.uva.td.game.tower.SimpleTower;
-import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.faction.tower.SimpleTower;
+import nl.uva.td.game.faction.tower.Tower;
 
 public class TowerPlayerAgent extends TowerAgent {
 

@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.unit.Creep;
+import nl.uva.td.game.faction.tower.Tower;
+import nl.uva.td.game.faction.unit.Creep;
 
 public class CreepField extends Field {
 
@@ -32,6 +32,9 @@ public class CreepField extends Field {
 
     /** The next field on the creep way */
     private CreepField mNextField;
+
+    /** The previous field on the creep way */
+    private CreepField mPreviousField;
 
     public CreepField(final Type type, final int row, final int column) {
         super(Field.Type.CREEP_FIELD, row, column);
@@ -103,6 +106,16 @@ public class CreepField extends Field {
     }
 
     /**
+     * Get all currently on this field standing creeps
+     * 
+     * @return A list of all creeps on this field
+     */
+    public Set<Creep> getCreeps() {
+        return mCreeps;
+
+    }
+
+    /**
      * Removes the creep from this field
      *
      * @param creep
@@ -129,6 +142,24 @@ public class CreepField extends Field {
      */
     public CreepField getNextField() {
         return mNextField;
+    }
+
+    /**
+     * The previous field before this one, or null if there are no more
+     *
+     * @return The previous field
+     */
+    public CreepField getPreviousField() {
+        return mPreviousField;
+    }
+
+    /**
+     * Set the previous field of this field
+     *
+     * @param previousField
+     */
+    public void setPreviousField(final CreepField previousField) {
+        mPreviousField = previousField;
     }
 
     /**

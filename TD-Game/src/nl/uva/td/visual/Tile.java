@@ -17,7 +17,18 @@ public class Tile extends Label {
     private final static String LOW_HEALTH = "creep-tile-low-health";
 
     private final static String ICE_TOWER = "ice_tower-tile-placed";
-    private final static String FIRE_TOWER = "fire_tower-tile-placed";
+    private final static String FIRE_TOWER = "ice_tower-tile-placed"; // "fire_tower-tile-placed";
+    private final static String ARCHER_TOWER = "ice_tower-tile-placed"; // "archer_tower-tile-placed";
+    private final static String CHAIN_LIGHTNING_TOWER = "ice_tower-tile-placed"; // "chain_lightning_tower-tile-placed";
+    private final static String SHOCK_TOWER = "ice_tower-tile-placed"; // "shock_tower-tile-placed";
+    private final static String PARASITE_TOWER = "ice_tower-tile-placed"; // "parasite_tower-tile-placed";
+
+    public final static double ICE_TOWER_NUM = -1;
+    public final static double FIRE_TOWER_NUM = -2;
+    public final static double ARCHER_TOWER_NUM = -3;
+    public final static double CHAIN_LIGHTNING_TOWER_NUM = -4;
+    public final static double SHOCK_TOWER_NUM = -5;
+    public final static double PARASITE_TOWER_NUM = -6;
 
     private final double mMaxValue;
     private double mHealth;
@@ -61,12 +72,24 @@ public class Tile extends Label {
         } else if (fitness >= 0) {
 
             getStyleClass().addAll("game-label", LOW_HEALTH);
-        } else if (fitness == -1) {
+        } else if (fitness == ICE_TOWER_NUM) {
             getStyleClass().addAll("game-label", ICE_TOWER);
-            setText("T");
-        } else if (fitness == -2) {
+            setText("Ice");
+        } else if (fitness == FIRE_TOWER_NUM) {
             getStyleClass().addAll("game-label", FIRE_TOWER);
-            setText("T");
+            setText("Fire");
+        } else if (fitness == ARCHER_TOWER_NUM) {
+            getStyleClass().addAll("game-label", ARCHER_TOWER);
+            setText("Archer");
+        } else if (fitness == CHAIN_LIGHTNING_TOWER_NUM) {
+            getStyleClass().addAll("game-label", CHAIN_LIGHTNING_TOWER);
+            setText("Light");
+        } else if (fitness == SHOCK_TOWER_NUM) {
+            getStyleClass().addAll("game-label", SHOCK_TOWER);
+            setText("Shock");
+        } else if (fitness == PARASITE_TOWER_NUM) {
+            getStyleClass().addAll("game-label", PARASITE_TOWER);
+            setText("Para");
         } else {
             // This shows a mistake
             getStyleClass().addAll("game-label", TOP_HEALTH);

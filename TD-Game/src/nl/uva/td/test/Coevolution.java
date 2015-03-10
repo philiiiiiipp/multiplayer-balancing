@@ -10,14 +10,14 @@ import nl.uva.td.experiment.watchmaker.TowerPlacementCandidate;
 import nl.uva.td.experiment.watchmaker.WatchmakerExperiment;
 import nl.uva.td.game.CreepAgent;
 import nl.uva.td.game.TowerAgent;
+import nl.uva.td.game.faction.human.creep.Footmen;
+import nl.uva.td.game.faction.human.creep.Knight;
+import nl.uva.td.game.faction.human.tower.FireTower;
+import nl.uva.td.game.faction.human.tower.IceTower;
+import nl.uva.td.game.faction.tower.Tower;
+import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
-import nl.uva.td.game.tower.FireTower;
-import nl.uva.td.game.tower.IceTower;
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.unit.Creep;
-import nl.uva.td.game.unit.FireCreep;
-import nl.uva.td.game.unit.IceCreep;
 
 import org.uncommons.maths.random.MersenneTwisterRNG;
 import org.uncommons.watchmaker.framework.CandidateFactory;
@@ -90,9 +90,9 @@ public class Coevolution {
 
                 switch (towerType) {
                 case FIRE:
-                    return new FireCreep(3 + stepCounter / 10);
+                    return new Footmen(3 + stepCounter / 10);
                 case ICE:
-                    return new IceCreep(3 + stepCounter / 10);
+                    return new Knight(3 + stepCounter / 10);
 
                 default:
                     throw new RuntimeException("Could not find the tower type");

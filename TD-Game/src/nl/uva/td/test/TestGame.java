@@ -9,12 +9,12 @@ import nl.uva.td.game.GameState;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.agent.TowerPlacement;
+import nl.uva.td.game.faction.human.tower.IceTower;
+import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
 import nl.uva.td.game.map.TowerField;
-import nl.uva.td.game.tower.SimpleTower;
-import nl.uva.td.game.unit.Creep;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,10 +44,10 @@ public class TestGame {
 
         List<TowerPlacement> towerPlacements = new LinkedList<TowerPlacement>();
         for (Integer position : Arrays.asList(0, 3, 5, 7, 12, 15)) {
-            towerPlacements.add(new TowerPlacement(position, new SimpleTower()));
+            towerPlacements.add(new TowerPlacement(position, new IceTower()));
         }
 
-        GameState gameManager = new GameState(gameField, false);
+        GameState gameManager = new GameState(gameField, false, "Test");
         gameManager.step(new Decision(towerPlacements, new ArrayList<Creep>()), new Decision(), new PlayerAttributes(
                 10, Double.MAX_VALUE), new PlayerAttributes(10, Double.MAX_VALUE));
 

@@ -4,11 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.uva.td.game.TowerAgent;
-import nl.uva.td.game.tower.FireTower;
-import nl.uva.td.game.tower.IceTower;
-import nl.uva.td.game.tower.SimpleTower;
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.tower.Tower.Type;
+import nl.uva.td.game.faction.human.tower.FireTower;
+import nl.uva.td.game.faction.human.tower.IceTower;
+import nl.uva.td.game.faction.tower.Tower;
+import nl.uva.td.game.faction.tower.Tower.Type;
 
 public class ListTowerPlacement extends TowerAgent {
 
@@ -49,7 +48,7 @@ public class ListTowerPlacement extends TowerAgent {
     public static List<Tower> generateSimpleTowerList(final List<Integer> positionList) {
         List<Tower> towerList = new LinkedList<Tower>();
         for (int position = 0; position < positionList.size(); ++position) {
-            towerList.add(new SimpleTower());
+            towerList.add(new IceTower());
         }
 
         return towerList;

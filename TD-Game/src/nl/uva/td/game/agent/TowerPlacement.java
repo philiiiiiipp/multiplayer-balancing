@@ -1,6 +1,6 @@
 package nl.uva.td.game.agent;
 
-import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.faction.tower.Tower;
 
 public class TowerPlacement {
 

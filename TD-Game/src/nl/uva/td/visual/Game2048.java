@@ -46,7 +46,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         sInstance = this;
     }
 
-    public void showMore(final GameUpdateHUB mGameState) {
+    public void showMore(final GameUpdateHUB mGameState, final String aiName) {
         Platform.runLater(new Runnable() {
 
             @Override
@@ -84,7 +84,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
                 Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
                 double factor = Math.min(visualBounds.getWidth() / (gameBounds.getWidth() + MARGIN),
                         visualBounds.getHeight() / (gameBounds.getHeight() + MARGIN));
-                primaryStage.setTitle("Tower Defence AI");
+                primaryStage.setTitle(aiName);
                 primaryStage.setScene(scene);
                 primaryStage.setMinWidth(gameBounds.getWidth() / 2d);
                 primaryStage.setMinHeight(gameBounds.getHeight() / 2d);
@@ -114,7 +114,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         });
 
         try {
-            Thread.sleep(100);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

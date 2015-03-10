@@ -1,6 +1,6 @@
 package nl.uva.td.game;
 
-import nl.uva.td.game.unit.Creep;
+import nl.uva.td.game.faction.unit.Creep;
 
 public abstract class CreepAgent {
 

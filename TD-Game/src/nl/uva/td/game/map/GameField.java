@@ -3,8 +3,8 @@ package nl.uva.td.game.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.unit.Creep;
+import nl.uva.td.game.faction.tower.Tower;
+import nl.uva.td.game.faction.unit.Creep;
 
 public class GameField {
 

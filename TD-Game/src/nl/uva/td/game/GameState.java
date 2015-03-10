@@ -9,9 +9,9 @@ import java.util.Set;
 import nl.uva.td.experiment.Score;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.agent.TowerPlacement;
+import nl.uva.td.game.faction.tower.Tower;
+import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.GameField;
-import nl.uva.td.game.tower.Tower;
-import nl.uva.td.game.unit.Creep;
 
 public class GameState extends GameUpdateHUB {
 
@@ -26,15 +26,13 @@ public class GameState extends GameUpdateHUB {
     private final List<Tower> mTowerList = new LinkedList<Tower>();
     private final HashSet<Creep> mCreeps = new HashSet<Creep>();
 
-    public GameState(final GameField gameField, final boolean showUI) {
-        super(gameField, showUI);
+    public GameState(final GameField gameField, final boolean showUI, final String aiName) {
+        super(gameField, showUI, aiName);
     }
 
     public StepResult step(final Decision myDecision, final Decision enemyDecision,
             final PlayerAttributes myAttributes, final PlayerAttributes enemyAttributes) {
         StepResult result = new StepResult();
-
-        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
 
         // Place towers first
         for (TowerPlacement towerToPlace : myDecision.wantsToPlaceTowers()) {
@@ -51,6 +49,7 @@ public class GameState extends GameUpdateHUB {
             }
         }
 
+        System.out.println("Towers placed");
         super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
 
         // Place creep
@@ -67,6 +66,7 @@ public class GameState extends GameUpdateHUB {
             }
         }
 
+        System.out.println("Creeps placed");
         super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
 
         // Shoot
@@ -78,6 +78,7 @@ public class GameState extends GameUpdateHUB {
             }
         }
 
+        System.out.println("Shooted");
         super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
 
         // Walk
@@ -92,7 +93,9 @@ public class GameState extends GameUpdateHUB {
             }
         }
 
+        System.out.println("Walked");
         super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+
         return result;
     }
 

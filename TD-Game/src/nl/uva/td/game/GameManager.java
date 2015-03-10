@@ -2,9 +2,9 @@ package nl.uva.td.game;
 
 import nl.uva.td.ai.Agent;
 import nl.uva.td.game.agent.Decision;
+import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
-import nl.uva.td.game.unit.Creep;
 import nl.uva.td.visual.TDGameWrapper;
 
 public class GameManager {
@@ -33,8 +33,8 @@ public class GameManager {
             new TDGameWrapper().start();
         }
 
-        GameState playerOneGameState = new GameState(playerOneMap, SHOW_UI);
-        GameState playerTwoGameState = new GameState(playerTwoMap, SHOW_UI);
+        GameState playerOneGameState = new GameState(playerOneMap, SHOW_UI, playerOne.getName());
+        GameState playerTwoGameState = new GameState(playerTwoMap, !SHOW_UI, playerTwo.getName());
 
         int additionalSalaryPlayerOne = 0;
         int additionalSalaryPlayerTwo = 0;

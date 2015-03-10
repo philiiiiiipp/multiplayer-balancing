@@ -6,9 +6,9 @@ import nl.uva.td.experiment.Score;
 import nl.uva.td.game.CreepAgent;
 import nl.uva.td.game.GameState;
 import nl.uva.td.game.TowerAgent;
+import nl.uva.td.game.faction.tower.Tower;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
-import nl.uva.td.game.tower.Tower;
 import nl.uva.td.test.ListTowerPlacement;
 
 import org.uncommons.watchmaker.framework.FitnessEvaluator;

@@ -1,9 +1,9 @@
 package nl.uva.td.test;
 
 import nl.uva.td.game.CreepAgent;
-import nl.uva.td.game.unit.Creep;
-import nl.uva.td.game.unit.FireCreep;
-import nl.uva.td.game.unit.IceCreep;
+import nl.uva.td.game.faction.human.creep.Footmen;
+import nl.uva.td.game.faction.human.creep.Knight;
+import nl.uva.td.game.faction.unit.Creep;
 
 public class SpawnCreeps extends CreepAgent {
 
@@ -16,9 +16,9 @@ public class SpawnCreeps extends CreepAgent {
         }
 
         if (i++ % 3 == 0) {
-            return new IceCreep(3 + stepCounter / 10);
+            return new Knight(3 + stepCounter / 10);
         } else {
-            return new FireCreep(3 + stepCounter / 10);
+            return new Footmen(3 + stepCounter / 10);
         }
 
     }

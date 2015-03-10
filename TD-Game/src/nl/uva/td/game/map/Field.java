@@ -3,7 +3,7 @@ package nl.uva.td.game.map;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.uva.td.game.tower.Tower;
+import nl.uva.td.game.faction.tower.Tower;
 
 /** Represents a field inside the game **/
 public abstract class Field {

@@ -25,12 +25,16 @@ import javafx.beans.property.BooleanProperty;
 import javafx.scene.Group;
 import javafx.util.Duration;
 import nl.uva.td.experiment.Score;
+import nl.uva.td.game.faction.alien.tower.ChainLightningTower;
+import nl.uva.td.game.faction.alien.tower.ParasiteTower;
+import nl.uva.td.game.faction.alien.tower.ShockTower;
+import nl.uva.td.game.faction.human.tower.ArcherTower;
+import nl.uva.td.game.faction.human.tower.FireTower;
+import nl.uva.td.game.faction.human.tower.IceTower;
 import nl.uva.td.game.map.CreepField;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.TowerField;
-import nl.uva.td.game.tower.FireTower;
-import nl.uva.td.game.tower.IceTower;
 
 /**
  *
@@ -180,9 +184,17 @@ public class GameUIManager extends Group {
                         Tile tile = null;
 
                         if (towerField.getTower() instanceof FireTower) {
-                            tile = Tile.newTile(-2, 1);
+                            tile = Tile.newTile(Tile.FIRE_TOWER_NUM, 1);
                         } else if (towerField.getTower() instanceof IceTower) {
-                            tile = Tile.newTile(-1, 1);
+                            tile = Tile.newTile(Tile.ICE_TOWER_NUM, 1);
+                        } else if (towerField.getTower() instanceof ArcherTower) {
+                            tile = Tile.newTile(Tile.ARCHER_TOWER_NUM, 1);
+                        } else if (towerField.getTower() instanceof ChainLightningTower) {
+                            tile = Tile.newTile(Tile.CHAIN_LIGHTNING_TOWER_NUM, 1);
+                        } else if (towerField.getTower() instanceof ShockTower) {
+                            tile = Tile.newTile(Tile.SHOCK_TOWER_NUM, 1);
+                        } else if (towerField.getTower() instanceof ParasiteTower) {
+                            tile = Tile.newTile(Tile.PARASITE_TOWER_NUM, 1);
                         } else {
                             throw new RuntimeException("Nono");
                         }
@@ -208,7 +220,7 @@ public class GameUIManager extends Group {
         // Animates score and lives
         board.animateScore();
 
-        if (score.getLivesLeft() == 0) {
+        if (score.getLivesLeft() <= 0) {
             board.setGameWin(true);
         }
     }
@@ -234,45 +246,45 @@ public class GameUIManager extends Group {
         final int tilesWereMoved = gridOperator.traverseGrid((x, y) -> {
             Location thisloc = new Location(x, y);
             Location farthestLocation = findFarthestLocation(thisloc, direction); // farthest
-                // available
-                // location
-                Optional<Tile> opTile = optionalTile(thisloc);
+            // available
+            // location
+            Optional<Tile> opTile = optionalTile(thisloc);
 
-                AtomicInteger result = new AtomicInteger();
-                Location nextLocation = farthestLocation.offset(direction); // calculates to a
-                // possible merge
-                optionalTile(nextLocation).filter(t -> t.isMergeable(opTile) && !t.isMerged()).ifPresent(t -> {
-                    Tile tile = opTile.get();
-                    t.merge(tile);
-                    t.toFront();
-                    gameGrid.put(nextLocation, t);
-                    gameGrid.replace(thisloc, null);
+            AtomicInteger result = new AtomicInteger();
+            Location nextLocation = farthestLocation.offset(direction); // calculates to a
+            // possible merge
+            optionalTile(nextLocation).filter(t -> t.isMergeable(opTile) && !t.isMerged()).ifPresent(t -> {
+                Tile tile = opTile.get();
+                t.merge(tile);
+                t.toFront();
+                gameGrid.put(nextLocation, t);
+                gameGrid.replace(thisloc, null);
 
-                    parallelTransition.getChildren().add(animateExistingTile(tile, t.getLocation()));
-                    parallelTransition.getChildren().add(animateMergedTile(t));
-                    mergedToBeRemoved.add(tile);
+                parallelTransition.getChildren().add(animateExistingTile(tile, t.getLocation()));
+                parallelTransition.getChildren().add(animateMergedTile(t));
+                mergedToBeRemoved.add(tile);
 
-                    board.addPoints(t.getValue());
+                board.addPoints(t.getValue());
 
-                    if (t.getValue() == FINAL_VALUE_TO_WIN) {
-                        board.setGameWin(true);
-                    }
-                    result.set(1);
-                });
-                if (result.get() == 0 && opTile.isPresent() && !farthestLocation.equals(thisloc)) {
-                    Tile tile = opTile.get();
-                    parallelTransition.getChildren().add(animateExistingTile(tile, farthestLocation));
-
-                    gameGrid.put(farthestLocation, tile);
-                    gameGrid.replace(thisloc, null);
-
-                    tile.setLocation(farthestLocation);
-
-                    result.set(1);
+                if (t.getValue() == FINAL_VALUE_TO_WIN) {
+                    board.setGameWin(true);
                 }
-
-                return result.get();
+                result.set(1);
             });
+            if (result.get() == 0 && opTile.isPresent() && !farthestLocation.equals(thisloc)) {
+                Tile tile = opTile.get();
+                parallelTransition.getChildren().add(animateExistingTile(tile, farthestLocation));
+
+                gameGrid.put(farthestLocation, tile);
+                gameGrid.replace(thisloc, null);
+
+                tile.setLocation(farthestLocation);
+
+                result.set(1);
+            }
+
+            return result.get();
+        });
 
         board.animateScore();
 
@@ -407,11 +419,11 @@ public class GameUIManager extends Group {
         scaleTransition.setInterpolator(Interpolator.EASE_OUT);
         scaleTransition.setOnFinished(e -> {
             // after last movement on full grid, check if there are movements available
-                if (this.gameGrid.values().parallelStream().noneMatch(Objects::isNull)
-                        && mergeMovementsAvailable() == 0) {
-                    board.setGameOver(true);
-                }
-            });
+            if (this.gameGrid.values().parallelStream().noneMatch(Objects::isNull)
+                    && mergeMovementsAvailable() == 0) {
+                board.setGameOver(true);
+            }
+        });
         return scaleTransition;
     }
 

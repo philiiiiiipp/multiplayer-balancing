@@ -107,7 +107,7 @@ public class Parser {
         }
 
         // Put together the path for the creeps to walk
-        CreepField currentField = startField, lastField = startField;
+        CreepField currentField = startField, lastField = null;
         while (currentField != null) {
 
             if (isNextCreepField(currentField.getNorth(), lastField)) {
@@ -123,6 +123,7 @@ public class Parser {
                 currentField.setNextField((CreepField) currentField.getWest());
             }
 
+            currentField.setPreviousField(lastField);
             lastField = currentField;
             currentField = currentField.getNextField();
         }
