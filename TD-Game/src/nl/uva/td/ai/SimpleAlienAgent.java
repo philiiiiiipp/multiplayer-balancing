@@ -8,7 +8,7 @@ import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.agent.TowerPlacement;
 import nl.uva.td.game.faction.alien.creep.Minion;
 import nl.uva.td.game.faction.alien.creep.Overseer;
-import nl.uva.td.game.faction.alien.tower.ChainLightningTower;
+import nl.uva.td.game.faction.alien.tower.ShockTower;
 import nl.uva.td.game.faction.tower.Tower;
 import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.GameField;
@@ -43,7 +43,7 @@ public class SimpleAlienAgent extends Agent {
         List<TowerField> freeTowerFields = new ArrayList<TowerField>(myMap.getFreeTowerFields());
 
         while (!donePlacing) {
-            Tower tower = new ChainLightningTower();
+            Tower tower = new ShockTower();
 
             if (tower.getCost() <= towerGold && myMap.getFreeTowerFields().size() != 0) {
                 TowerField nextTowerField = Util.removeRandomObject(freeTowerFields);

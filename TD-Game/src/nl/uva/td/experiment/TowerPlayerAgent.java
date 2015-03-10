@@ -1,7 +1,7 @@
 package nl.uva.td.experiment;
 
 import nl.uva.td.game.TowerAgent;
-import nl.uva.td.game.faction.tower.SimpleTower;
+import nl.uva.td.game.faction.human.tower.IceTower;
 import nl.uva.td.game.faction.tower.Tower;
 
 public class TowerPlayerAgent extends TowerAgent {
@@ -10,7 +10,7 @@ public class TowerPlayerAgent extends TowerAgent {
 
     @Override
     public Tower nextTower(final int stepCounter) {
-        return new SimpleTower();
+        return new IceTower();
     }
 
     @Override

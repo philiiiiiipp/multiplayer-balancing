@@ -107,7 +107,7 @@ public class CreepField extends Field {
 
     /**
      * Get all currently on this field standing creeps
-     * 
+     *
      * @return A list of all creeps on this field
      */
     public Set<Creep> getCreeps() {
@@ -189,10 +189,12 @@ public class CreepField extends Field {
 
     @Override
     public String toString() {
-        if (mCreeps.size() == 0) {
-            return "0";
-        }
+        return "" + mCreeps.size();
 
-        return mCreeps.iterator().next().toString();
+        // if (mCreeps.size() == 0) {
+        // return "0";
+        // }
+        //
+        // return mCreeps.iterator().next().toString();
     }
 }

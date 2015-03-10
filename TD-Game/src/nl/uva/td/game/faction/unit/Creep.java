@@ -1,15 +1,16 @@
 package nl.uva.td.game.faction.unit;
 
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import nl.uva.td.game.faction.tower.MovementChange;
-import nl.uva.td.game.faction.tower.Parasite;
 import nl.uva.td.game.faction.tower.Tower;
 import nl.uva.td.game.map.CreepField;
 
 public abstract class Creep {
+
+    private static final int REQUIRED_MOVEMENT_FOR_A_TILE = 1;
 
     private double mHealth;
 
@@ -25,9 +26,7 @@ public abstract class Creep {
 
     private final boolean mFlying;
 
-    private final List<MovementChange> mMovementChanges = new LinkedList<MovementChange>();
-
-    private boolean mHasParasite = false;
+    private final Set<MovementChange> mMovementChanges = new HashSet<MovementChange>();
 
     public Creep(final double health, final double movement, final double cost) {
         this(health, movement, cost, false);
@@ -102,7 +101,9 @@ public abstract class Creep {
 
                 mCurrentField = mCurrentField.getNextField();
                 mCurrentField.addCreep(this);
-            } while (++mCurrentMovementCycle <= 0);
+
+                mCurrentMovementCycle += REQUIRED_MOVEMENT_FOR_A_TILE;
+            } while (mCurrentMovementCycle <= 0);
 
             return false;
         } else {
@@ -193,17 +194,12 @@ public abstract class Creep {
         return mMovementPerTurn;
     }
 
-    public boolean hasParasite() {
-        return mHasParasite;
+    public boolean hasMovementChange(final MovementChange change) {
+        return mMovementChanges.contains(change);
     }
 
-    public void setParasite(final boolean hasParasite) {
-        mHasParasite = hasParasite;
-    }
-
-    public void putParasite() {
-        mHasParasite = true;
-        mMovementChanges.add(new Parasite(this));
+    public void putMovementChange(final MovementChange change) {
+        mMovementChanges.add(change);
     }
 
     /**
