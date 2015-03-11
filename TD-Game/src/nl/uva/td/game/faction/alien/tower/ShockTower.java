@@ -26,22 +26,29 @@ public class ShockTower extends Tower {
 
         Iterator<CreepField> creepFieldIterator = mFieldsInRange.iterator();
         Shock shock = new Shock();
-        while (creepFieldIterator.hasNext()) {
+        Creep lastCheckedCreep = null;
+
+        // If all creeps in range are shocked we shock one again else shock an 'unshocked' one
+        L: while (creepFieldIterator.hasNext()) {
             CreepField creepField = creepFieldIterator.next();
 
             for (Creep creep : creepField.getCreeps()) {
+                lastCheckedCreep = creep;
+
                 if (!creep.hasMovementChange(shock)) {
-                    // First shock
-                    creep.putMovementChange(shock);
-
-                    // Now put damage
-                    if (creep.acceptDamage(mDamage, this)) {
-                        result = new HashSet<Creep>();
-                        result.add(creep);
-                    }
-
-                    return result;
+                    break L;
                 }
+            }
+        }
+
+        if (lastCheckedCreep != null) {
+            // First shock
+            lastCheckedCreep.putMovementChange(shock);
+
+            // Now put damage
+            if (lastCheckedCreep.acceptDamage(mDamage, this)) {
+                result = new HashSet<Creep>();
+                result.add(lastCheckedCreep);
             }
         }
 

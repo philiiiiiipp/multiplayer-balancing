@@ -5,15 +5,13 @@ import nl.uva.td.game.faction.unit.Creep;
 
 public class Horse extends Creep {
 
-    public Horse(double health, double movement, double cost) {
-        super(health, movement, cost);
-        // TODO Auto-generated constructor stub
+    public Horse() {
+        super(11, 0.8, 40);
     }
 
     @Override
-    protected double modifyDamage(double dmg, Tower tower) {
-        // TODO Auto-generated method stub
-        return 0;
+    protected double modifyDamage(final double dmg, final Tower tower) {
+        return dmg;
     }
 
 }

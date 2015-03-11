@@ -10,7 +10,7 @@ import nl.uva.td.game.map.CreepField;
 
 public abstract class Creep {
 
-    private static final int REQUIRED_MOVEMENT_FOR_A_TILE = 1;
+    public static final int REQUIRED_MOVEMENT_FOR_A_TILE = 1;
 
     private double mHealth;
 
