@@ -72,6 +72,10 @@ public abstract class Creep {
      */
     protected abstract double modifyDamage(final double dmg, final Tower tower);
 
+    public double getScore() {
+        return mHealth * mMovementPerTurn;
+    }
+
     /**
      * Moves the creep one field forward
      *

@@ -44,7 +44,7 @@ public abstract class Tower {
         mSplash = splash;
         mDamage = damage;
         mRange = range;
-        mCost = cost;
+        mCost = cost + 30;
     }
 
     protected Creep findCreepInRange() {

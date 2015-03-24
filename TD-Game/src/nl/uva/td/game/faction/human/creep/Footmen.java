@@ -8,8 +8,8 @@ public class Footmen extends Creep {
 
     private final double mResistance = 0.2;
 
-    public Footmen(final double health) {
-        super(health, 1, 10);
+    public Footmen() {
+        super(2, 0.5, 10);
     }
 
     @Override

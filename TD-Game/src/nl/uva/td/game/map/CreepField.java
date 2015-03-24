@@ -24,6 +24,12 @@ public class CreepField extends Field {
 
     }
 
+    /**
+     * The position of this field on the creep way. The higher the number, the further away from the
+     * start
+     */
+    private int mDistanceFromStart = 0;
+
     /** The type of creep field: START,END,NONE */
     private final Type mType;
 
@@ -173,12 +179,40 @@ public class CreepField extends Field {
     }
 
     /**
+     * Set the distance of this field from the starting field
+     *
+     * @param distance
+     *            The distance of this field from the starting field
+     */
+    public void setDistanceFromStart(final int distance) {
+        mDistanceFromStart = distance;
+    }
+
+    /**
+     * Get the distance of this field from the starting field
+     *
+     * @return The distance of this field from the starting field
+     */
+    public int getDistanceFromStart() {
+        return mDistanceFromStart;
+    }
+
+    /**
      * Determines if this field is the end field
      *
      * @return true if it's the final goal field, false if not
      */
     public boolean isEnd() {
         return mType == Type.END;
+    }
+
+    public double getScore() {
+        double score = 0;
+        for (Creep creep : mCreeps) {
+            score += creep.getScore();
+        }
+
+        return score;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.List;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.agent.TowerPlacement;
+import nl.uva.td.game.faction.alien.creep.Dragon;
 import nl.uva.td.game.faction.alien.creep.Minion;
 import nl.uva.td.game.faction.alien.creep.Overseer;
 import nl.uva.td.game.faction.human.tower.IceTower;
@@ -25,21 +26,20 @@ import nl.uva.td.util.Util;
 public class SimpleAlienAgent extends Agent {
 
     public SimpleAlienAgent() {
-        super("SimpleSpeedAgent");
+        super("SimpleAlienAgent");
     }
 
     public boolean donePlacing = false;
 
     @Override
     public Decision makeDecision(final GameField myMap, final GameField enemyMap, final PlayerAttributes myAttributes,
-            final PlayerAttributes enemyAttributes, final int elapsedSteps) {
+            final PlayerAttributes enemyAttributes, final int elapsedSteps, final Agent enemyAgent) {
         Decision decision = new Decision();
 
         double myGold = myAttributes.getGold();
         double towerGold = myGold / 2;
         double creepGold = towerGold;
 
-        // boolean donePlacing = false;
         List<TowerField> freeTowerFields = new ArrayList<TowerField>(myMap.getFreeTowerFields());
 
         while (!donePlacing) {
@@ -53,21 +53,30 @@ public class SimpleAlienAgent extends Agent {
             } else {
                 donePlacing = true;
             }
-
-            donePlacing = true;
         }
 
         creepGold += towerGold;
-        donePlacing = true;
+        donePlacing = false;
         while (!donePlacing) {
-            Creep nextCreep = (Util.RND.nextBoolean() ? new Minion(3 + elapsedSteps / 10) : new Overseer(
-                    3 + elapsedSteps / 10));
+            Creep nextCreep = null;
+
+            switch (Util.RND.nextInt(3)) {
+            case 0:
+                nextCreep = new Minion();
+                break;
+            case 1:
+                nextCreep = new Overseer();
+                break;
+            case 2:
+                nextCreep = new Dragon();
+                break;
+            }
 
             if (nextCreep.getCost() <= creepGold) {
                 decision.addCreep(nextCreep);
                 creepGold -= nextCreep.getCost();
             } else {
-                nextCreep = new Overseer(3 + elapsedSteps / 10);
+                nextCreep = new Minion();
 
                 if (nextCreep.getCost() <= creepGold) {
                     decision.addCreep(nextCreep);

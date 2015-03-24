@@ -16,7 +16,7 @@ public class ChainLightningTower extends Tower {
     private final static int MAXIMUM_JUMP_LENGTH = 3;
 
     public ChainLightningTower() {
-        super(false, 1, 2, 10);
+        super(false, 1, 2, 30);
     }
 
     /**

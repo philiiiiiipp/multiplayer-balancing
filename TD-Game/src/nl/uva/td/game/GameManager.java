@@ -9,13 +9,13 @@ import nl.uva.td.visual.TDGameWrapper;
 
 public class GameManager {
 
-    private static final int STARTING_LIVES = 10;
+    public static final int STARTING_LIVES = 10;
 
-    private static final int STARTING_GOLD = 100;
+    public static final int STARTING_GOLD = 100;
 
-    private static final double SALARY = 20;
+    public static final double BASE_SALARY = 20;
 
-    private static final int SALARY_FREQUENCY = 5;
+    public static final int SALARY_FREQUENCY = 5;
 
     private static final String MAP_FILE = "Standard2";
 
@@ -42,9 +42,9 @@ public class GameManager {
         while (playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
 
             Decision playerOnesDecision = playerOne.makeDecision(playerOneMap, playerTwoMap, playerOneAttributes,
-                    playerTwoAttributes, step);
+                    playerTwoAttributes, step, playerTwo);
             Decision playerTwosDecision = playerTwo.makeDecision(playerTwoMap, playerOneMap, playerTwoAttributes,
-                    playerOneAttributes, step);
+                    playerOneAttributes, step, playerOne);
 
             StepResult stepResultPlayerOne = playerOneGameState.step(playerOnesDecision, playerTwosDecision,
                     playerOneAttributes, playerTwoAttributes);
@@ -57,8 +57,8 @@ public class GameManager {
             additionalSalaryPlayerTwo += stepResultPlayerOne.getExtraSalary();
 
             if (step++ != 0 && step % SALARY_FREQUENCY == 0) {
-                playerOneAttributes.setGold(playerOneAttributes.getGold() + SALARY + additionalSalaryPlayerOne);
-                playerTwoAttributes.setGold(playerTwoAttributes.getGold() + SALARY + additionalSalaryPlayerTwo);
+                playerOneAttributes.setGold(playerOneAttributes.getGold() + BASE_SALARY + additionalSalaryPlayerOne);
+                playerTwoAttributes.setGold(playerTwoAttributes.getGold() + BASE_SALARY + additionalSalaryPlayerTwo);
             }
         }
     }

@@ -8,8 +8,8 @@ public class Knight extends Creep {
 
     private final double mResistance = 0.2;
 
-    public Knight(final double health) {
-        super(health, 1, 10);
+    public Knight() {
+        super(6, 0.3, 25);
     }
 
     @Override

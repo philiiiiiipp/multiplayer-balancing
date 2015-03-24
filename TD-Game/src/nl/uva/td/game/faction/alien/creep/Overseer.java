@@ -5,8 +5,8 @@ import nl.uva.td.game.faction.unit.Creep;
 
 public class Overseer extends Creep {
 
-    public Overseer(final double health) {
-        super(health, 0.3, 5);
+    public Overseer() {
+        super(9, 0.2, 10);
     }
 
     @Override

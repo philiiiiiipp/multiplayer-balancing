@@ -13,7 +13,8 @@ public abstract class Agent {
     }
 
     public abstract Decision makeDecision(final GameField yourMap, final GameField enemyMap,
-            final PlayerAttributes yourAttributes, final PlayerAttributes enemyAttributes, final int elapsedSteps);
+            final PlayerAttributes yourAttributes, final PlayerAttributes enemyAttributes, final int elapsedSteps,
+            Agent enemyAgent);
 
     public String getName() {
         return mName;

@@ -5,8 +5,8 @@ import nl.uva.td.game.faction.unit.Creep;
 
 public class Minion extends Creep {
 
-    public Minion(final double health) {
-        super(health, 0.8, 10);
+    public Minion() {
+        super(1, 0.3, 6);
     }
 
     @Override
