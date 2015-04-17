@@ -2,7 +2,7 @@ package nl.uva.td.game;
 
 import nl.uva.td.experiment.Score;
 import nl.uva.td.game.map.GameField;
-import nl.uva.td.visual.TextUalization;
+import nl.uva.td.visual.Game2048;
 
 public abstract class GameUpdateHUB extends Thread {
 
@@ -16,25 +16,25 @@ public abstract class GameUpdateHUB extends Thread {
 
         if (showUI) {
 
-            mSubscriber = new TextUalization();
+            // mSubscriber = new TextUalization();
 
-            // while (Game2048.sInstance == null) {
-            // try {
-            // Thread.sleep(100);
-            // } catch (InterruptedException e) {
-            // e.printStackTrace();
-            // }
-            // }
-            //
-            // Game2048.sInstance.showMore(this, aiName);
-            //
-            // while (mSubscriber == null) {
-            // try {
-            // Thread.sleep(100);
-            // } catch (InterruptedException e) {
-            // e.printStackTrace();
-            // }
-            // }
+            while (Game2048.sInstance == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Game2048.sInstance.showMore(this, aiName);
+
+            while (mSubscriber == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

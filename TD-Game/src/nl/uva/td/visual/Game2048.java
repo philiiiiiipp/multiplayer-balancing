@@ -46,6 +46,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         sInstance = this;
     }
 
+    @Override
     public void showMore(final GameUpdateHUB mGameState, final String aiName) {
         Platform.runLater(new Runnable() {
 
@@ -114,7 +115,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         });
 
         try {
-            Thread.sleep(200);
+            Thread.sleep(80);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

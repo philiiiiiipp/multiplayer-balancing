@@ -11,11 +11,11 @@ import nl.uva.td.game.faction.unit.Creep;
 import nl.uva.td.game.map.CreepField;
 
 public class IceTower extends Tower {
-
+    public static final int ID = 2;
     public static final Type TYPE = Type.ICE;
 
     public IceTower() {
-        super(false, 1, 1, 30);
+        super(false, 1, 1, 30, ID);
         mAttributes.add(Attribute.ICE);
     }
 
@@ -57,5 +57,10 @@ public class IceTower extends Tower {
         }
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Ice";
     }
 }

@@ -40,11 +40,15 @@ public abstract class Tower {
     /** The attributes of this tower, e.g. ICE / FIRE ... */
     protected final Set<Attribute> mAttributes = new HashSet<Attribute>();
 
-    public Tower(final boolean splash, final double damage, final int range, final double cost) {
+    /** The unique identifier of this tower */
+    protected final int mID;
+
+    public Tower(final boolean splash, final double damage, final int range, final double cost, final int id) {
         mSplash = splash;
         mDamage = damage;
         mRange = range;
         mCost = cost + 30;
+        mID = id;
     }
 
     protected Creep findCreepInRange() {
@@ -207,6 +211,15 @@ public abstract class Tower {
      */
     public boolean hasAttribute(final Attribute attribute) {
         return mAttributes.contains(attribute);
+    }
+
+    /**
+     * Get the unique tower type identifier
+     *
+     * @return A specification which tower this is
+     */
+    public int getID() {
+        return mID;
     }
 
     /**

@@ -2,13 +2,29 @@ package nl.uva.td.game;
 
 public class PlayerAttributes {
 
+    public enum UpgradeType {
+        NONE,
+        HEALTH,
+        MOVEMENT,
+        AMOUNT
+    }
+
+    private static final double HEALTH_INCREASE_PER_UPDATE = 0.2;
+
+    private static final double MOVEMENT_INCREASE_PER_UPDATE = 0.1;
+
+    private static final double CREEP_AMOUNT_INCREASE_PER_UPDATE = 0.5;
+
     private int mLives;
 
-    private double mGold;
+    private double mAmountOfCreeps = 1;
 
-    public PlayerAttributes(final int lives, final double gold) {
+    private double mHealth = 1;
+
+    private double mMovement = 1;
+
+    public PlayerAttributes(final int lives) {
         mLives = lives;
-        mGold = gold;
     }
 
     public int getLives() {
@@ -19,11 +35,43 @@ public class PlayerAttributes {
         mLives = lives;
     }
 
-    public double getGold() {
-        return mGold;
+    public void upgrade(final UpgradeType type) {
+        switch (type) {
+        case HEALTH:
+            upgradeHealth();
+            break;
+        case MOVEMENT:
+            upgradeMovement();
+            break;
+        case AMOUNT:
+            upgradeAmount();
+            break;
+        default:
+            throw new RuntimeException("Unsupported Upgrade type");
+        }
     }
 
-    public void setGold(final double gold) {
-        mGold = gold;
+    private void upgradeHealth() {
+        mHealth += HEALTH_INCREASE_PER_UPDATE;
+    }
+
+    private void upgradeMovement() {
+        mMovement += MOVEMENT_INCREASE_PER_UPDATE;
+    }
+
+    private void upgradeAmount() {
+        mAmountOfCreeps += CREEP_AMOUNT_INCREASE_PER_UPDATE;
+    }
+
+    public double getHealth() {
+        return mHealth;
+    }
+
+    public double getMovement() {
+        return mMovement;
+    }
+
+    public int getAmountOfCreeps() {
+        return (int) mAmountOfCreeps;
     }
 }

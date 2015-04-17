@@ -56,4 +56,13 @@ public class TowerField extends Field {
             return "O";
         }
     }
+
+    @Override
+    public Score fieldValue(final Field other) {
+        if (mTower == null) {
+            return Score.NONE;
+        }
+
+        return Score.values()[mTower.getID() + 1];
+    }
 }

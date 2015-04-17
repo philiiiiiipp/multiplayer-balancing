@@ -10,8 +10,10 @@ import nl.uva.td.game.map.CreepField;
 
 public class ParasiteTower extends Tower {
 
+    public static final int ID = 1;
+
     public ParasiteTower() {
-        super(false, 0, 1, 30);
+        super(false, 0, 1, 30, ID);
     }
 
     /**
@@ -36,5 +38,10 @@ public class ParasiteTower extends Tower {
         }
 
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Parasite";
     }
 }

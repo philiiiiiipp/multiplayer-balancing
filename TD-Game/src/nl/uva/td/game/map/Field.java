@@ -8,6 +8,14 @@ import nl.uva.td.game.faction.tower.Tower;
 /** Represents a field inside the game **/
 public abstract class Field {
 
+    /** The score of field **/
+    public enum Score {
+        NONE,
+        LOWER,
+        EQUALS,
+        HIGHER
+    }
+
     /** The type of field **/
     public enum Type {
         CREEP_FIELD,
@@ -165,6 +173,8 @@ public abstract class Field {
     public Type getType() {
         return mType;
     }
+
+    public abstract Score fieldValue(Field other);
 
     @Override
     public String toString() {

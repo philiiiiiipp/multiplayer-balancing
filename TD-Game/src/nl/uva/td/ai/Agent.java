@@ -1,22 +1,77 @@
 package nl.uva.td.ai;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import nl.uva.td.game.GameManager.Player;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
+import nl.uva.td.game.faction.Race;
 import nl.uva.td.game.map.GameField;
 
 public abstract class Agent {
 
+    protected final Player mPlayer;
+
     protected final String mName;
 
-    public Agent(final String name) {
+    protected final Race mRace;
+
+    private final List<Decision> mLastDecisionChain = new LinkedList<Decision>();
+
+    public Agent(final String name, final Player player, final Race race) {
         mName = name;
+        mPlayer = player;
+        mRace = race;
     }
 
-    public abstract Decision makeDecision(final GameField yourMap, final GameField enemyMap,
+    public final void start() {
+        mLastDecisionChain.clear();
+        startInternal();
+    }
+
+    protected abstract void startInternal();
+
+    public final Decision makeDecision(final GameField yourMap, final GameField enemyMap,
             final PlayerAttributes yourAttributes, final PlayerAttributes enemyAttributes, final int elapsedSteps,
-            Agent enemyAgent);
+            final Agent enemyAgent, final boolean maximising) {
+
+        Decision decision = makeInternalDecision(yourMap, enemyMap, yourAttributes, enemyAttributes, elapsedSteps,
+                enemyAgent, maximising);
+
+        mLastDecisionChain.add(decision);
+        return decision;
+    }
+
+    protected abstract Decision makeInternalDecision(final GameField yourMap, final GameField enemyMap,
+            final PlayerAttributes yourAttributes, final PlayerAttributes enemyAttributes, final int elapsedSteps,
+            final Agent enemyAgent, final boolean maximising);
+
+    public final void end(final Player winner, final boolean fixed) {
+        endInternal(winner, fixed);
+    }
+
+    protected abstract void endInternal(Player winner, boolean fixed);
+
+    public abstract void reset();
+
+    public abstract void printStatistics();
 
     public String getName() {
         return mName;
     }
+
+    public Player getPlayer() {
+        return mPlayer;
+    }
+
+    public Race getRace() {
+        return mRace;
+    }
+
+    public List<Decision> getLastDecisionChain() {
+        return mLastDecisionChain;
+    }
+
+    public void resetFixedPolicy() {}
 }

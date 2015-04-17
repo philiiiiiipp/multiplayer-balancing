@@ -11,8 +11,10 @@ import nl.uva.td.game.map.CreepField;
 
 public class ShockTower extends Tower {
 
+    public static final int ID = 2;
+
     public ShockTower() {
-        super(false, 0.2, 1, 30);
+        super(false, 0.2, 1, 30, ID);
     }
 
     /**
@@ -53,5 +55,10 @@ public class ShockTower extends Tower {
         }
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Shock";
     }
 }

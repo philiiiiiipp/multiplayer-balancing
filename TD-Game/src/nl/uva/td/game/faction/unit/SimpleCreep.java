@@ -4,8 +4,8 @@ import nl.uva.td.game.faction.tower.Tower;
 
 public class SimpleCreep extends Creep {
 
-    public SimpleCreep(final double health) {
-        super(health, 1, 10, false);
+    public SimpleCreep(final double health, final double movement) {
+        super(health, movement, 10, false);
     }
 
     @Override

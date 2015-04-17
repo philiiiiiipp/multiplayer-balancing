@@ -216,6 +216,31 @@ public class CreepField extends Field {
     }
 
     @Override
+    public Score fieldValue(final Field other) {
+        // We can assume here that other is in fact a CreepField, because the map is the same
+        double otherScore = ((CreepField) other).getScore();
+        double myScore = getScore();
+
+        if (otherScore == 0) {
+            if (myScore == 0) {
+                return Score.EQUALS;
+            } else {
+                return Score.HIGHER;
+            }
+        }
+
+        double comparrison = myScore / otherScore;
+
+        if (comparrison < 0.9) {
+            return Score.LOWER;
+        } else if (comparrison > 1.1) {
+            return Score.HIGHER;
+        } else {
+            return Score.EQUALS;
+        }
+    }
+
+    @Override
     public void clear() {
         super.clear();
         mCreeps.clear();

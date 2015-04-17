@@ -6,26 +6,17 @@ import java.util.List;
 import nl.uva.td.game.GameManager.Player;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
-import nl.uva.td.game.faction.alien.AlienRace;
+import nl.uva.td.game.faction.Race;
 import nl.uva.td.game.map.GameField;
 
-/**
- * Simple agent implementation which will build towers for half the money and send creeps for the
- * other half or the rest of the tower money
- *
- * @author philipp
- *
- */
-public class SimpleAlienAgent extends Agent {
-
-    public boolean donePlacing = false;
+public class SimpleAgent extends Agent {
 
     private final List<Integer> mActionList = new ArrayList<Integer>();
 
     private int mPosition = 0;
 
-    public SimpleAlienAgent(final Player player, final String actionString) {
-        super("SimpleAlienAgent", player, new AlienRace());
+    public SimpleAgent(final Player player, final Race race, final String actionString) {
+        super("SimpleAgent " + player + " " + race.getName(), player, race);
 
         String[] actions = actionString.split(";");
         for (String action : actions) {
@@ -33,17 +24,10 @@ public class SimpleAlienAgent extends Agent {
         }
     }
 
-    public SimpleAlienAgent(final Player player) {
-        super("SimpleAlienAgent", player, new AlienRace());
+    public SimpleAgent(final Player player, final Race race) {
+        super("SimpleAgent " + player + " " + race.getName(), player, race);
 
-        mActionList.add(10 - 6);
-        mActionList.add(10 - 3);
-        mActionList.add(10);
-        mActionList.add(10 + 3);
-        mActionList.add(11 + 6);
-        mActionList.add(11 + 9);
-        mActionList.add(10 + 12);
-        mActionList.add(10 + 15);
+        mActionList.add(26);
         for (int i = 0; i < 55; ++i) {
             mActionList.add(1);
         }
@@ -65,6 +49,7 @@ public class SimpleAlienAgent extends Agent {
         } else {
             return new Decision(mActionList.get(mPosition++), mRace);
         }
+
     }
 
     @Override

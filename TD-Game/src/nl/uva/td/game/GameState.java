@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import nl.uva.td.experiment.Score;
+import nl.uva.td.game.PlayerAttributes.UpgradeType;
 import nl.uva.td.game.agent.Decision;
-import nl.uva.td.game.agent.TowerPlacement;
 import nl.uva.td.game.faction.tower.Tower;
 import nl.uva.td.game.faction.unit.Creep;
+import nl.uva.td.game.faction.unit.SimpleCreep;
 import nl.uva.td.game.map.GameField;
 
 public class GameState extends GameUpdateHUB {
@@ -30,44 +31,34 @@ public class GameState extends GameUpdateHUB {
         super(gameField, showUI, aiName);
     }
 
-    public StepResult step(final Decision myDecision, final Decision enemyDecision,
-            final PlayerAttributes myAttributes, final PlayerAttributes enemyAttributes) {
-        StepResult result = new StepResult();
+    public void step(final Decision myDecision, final Decision enemyDecision, final PlayerAttributes myAttributes,
+            final PlayerAttributes enemyAttributes) {
 
-        // Place towers first
-        for (TowerPlacement towerToPlace : myDecision.wantsToPlaceTowers()) {
-
-            if (mGameField.addTowerToTheGame(towerToPlace.getTower(), towerToPlace.getTowerPosition())) {
-                if (myAttributes.getGold() >= towerToPlace.getTower().getCost()) {
-                    mTowerList.add(towerToPlace.getTower());
-                    myAttributes.setGold(myAttributes.getGold() - towerToPlace.getTower().getCost());
-                } else {
-                    System.err.println("You dont have the cash to place that tower!");
-                }
+        // Did I want to place a tower or upgrade my creeps?
+        if (myDecision.wantsToPlaceTower() != null) {
+            if (mGameField.addTowerToTheGame(myDecision.wantsToPlaceTower().getTower(), myDecision.wantsToPlaceTower()
+                    .getTowerPosition())) {
+                mTowerList.add(myDecision.wantsToPlaceTower().getTower());
             } else {
-                System.err.println("Tried to place tower where a tower already exists?");
+                throw new RuntimeException("Tries to place a tower where a tower already exists");
+
             }
+        } else if (myDecision.wantsToUpdateCreep() != UpgradeType.NONE) {
+            myAttributes.upgrade(myDecision.wantsToUpdateCreep());
         }
 
-        System.out.println("Towers placed");
-        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+        // Enemy wants to place creeps?
+        if (enemyDecision.wantsToPlaceCreeps()) {
+            for (int i = 0; i < enemyAttributes.getAmountOfCreeps(); ++i) {
+                SimpleCreep creep = new SimpleCreep(enemyAttributes.getHealth(), enemyAttributes.getMovement());
 
-        // Place creep
-        for (Creep creepToPlace : enemyDecision.wantsToPlaceCreeps()) {
-            if (enemyAttributes.getGold() >= creepToPlace.getCost()) {
-
-                result.addExtraSalary(creepToPlace.getSalaryIncrease());
-                enemyAttributes.setGold(enemyAttributes.getGold() - creepToPlace.getCost());
-
-                mGameField.addCreepToTheGame(creepToPlace);
-                mCreeps.add(creepToPlace);
-            } else {
-                System.err.println("You dont have the cash to place that creep!");
+                mGameField.addCreepToTheGame(creep);
+                mCreeps.add(creep);
             }
+
         }
 
-        System.out.println("Creeps placed");
-        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), 0));
 
         // Shoot
         for (Tower tower : mTowerList) {
@@ -78,8 +69,7 @@ public class GameState extends GameUpdateHUB {
             }
         }
 
-        System.out.println("Shooted");
-        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), 0));
 
         // Walk
         Iterator<Creep> creepIterator = mCreeps.iterator();
@@ -92,11 +82,7 @@ public class GameState extends GameUpdateHUB {
                 creepIterator.remove();
             }
         }
-
-        System.out.println("Walked");
-        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), myAttributes.getGold()));
-
-        return result;
+        super.updateUI(new Score(0, 0, 0, 0, myAttributes.getLives(), 0));
     }
 
     public Score dryRun() {
