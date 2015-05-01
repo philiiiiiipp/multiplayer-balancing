@@ -75,9 +75,9 @@ public class Decision {
         if (mWantsToPlaceCreep) {
             return "C ;";
         } else if (mWantsToUpgradeCreep != UpgradeType.NONE) {
-            return mWantsToUpgradeCreep + ";";
+            return mWantsToUpgradeCreep.toString().substring(0, 2) + ";";
         } else {
-            return "" + mTowerPlacement.getTower() + " at " + mTowerPlacement.getTowerPosition() + ";";
+            return "" + mTowerPlacement.getTower().toString().charAt(0) + mTowerPlacement.getTowerPosition() + ";";
         }
     }
 

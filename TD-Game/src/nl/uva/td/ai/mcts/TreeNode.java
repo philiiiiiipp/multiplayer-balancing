@@ -24,6 +24,13 @@ public class TreeNode {
     /** The visitation count n_i of this tree node **/
     private int mVisitationCout = 0;
 
+    /** The depth in the tree **/
+    private final int mDepth;
+
+    public TreeNode(final int depth) {
+        mDepth = depth;
+    }
+
     /**
      * Add a child node
      *
@@ -103,7 +110,7 @@ public class TreeNode {
 
     /**
      * Create a string containing all info of this node
-     * 
+     *
      * @param race
      *            The race this node belongs to
      * @return All available information to this node
@@ -119,7 +126,7 @@ public class TreeNode {
     }
 
     /**
-     * Increases the action counter for the specific action by 1 and sets it as last used action
+     * Increases the action counter for the specific action by 1
      *
      * @param action
      *            The given action to increase the counter for
@@ -181,5 +188,14 @@ public class TreeNode {
      */
     public void setRewardForAction(final int action, final double reward) {
         mActionReward.put(action, reward);
+    }
+
+    /**
+     * The depth in the tree counted from 0
+     *
+     * @return The depth in the tree
+     */
+    public int getDepth() {
+        return mDepth;
     }
 }

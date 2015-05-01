@@ -12,13 +12,13 @@ public class ChainLightningTower extends Tower {
     public static final int ID = 0;
 
     /** The maximum amount of jumps the lightning bolt does */
-    private final static int CHAIN_JUMPS = 4;
+    private final static int CHAIN_JUMPS = 5;
 
     /** The maximum amount of fields which can be between two creeps */
     private final static int MAXIMUM_JUMP_LENGTH = 3;
 
     public ChainLightningTower() {
-        super(false, 2, 2, 30, ID);
+        super(false, 2, 1, 30, ID);
     }
 
     /**
@@ -63,6 +63,18 @@ public class ChainLightningTower extends Tower {
             return killedCreeps;
         }
 
+        // First look if there are creeps on the current position
+        if (currentField.hasCreeps()) {
+            Creep shootingAtCreep = currentField.getCreep();
+            if (shootingAtCreep.acceptDamage(mDamage, this)) {
+                shootingAtCreep.died();
+                killedCreeps.add(shootingAtCreep);
+            }
+
+            return lightningJump(currentField, killedCreeps, remainingJumps - 1);
+        }
+
+        // Then try to jump forward
         CreepField jumpedToField = currentField;
         for (int forward = 0; forward < MAXIMUM_JUMP_LENGTH; forward++) {
             jumpedToField = jumpedToField.getNextField();
@@ -83,6 +95,7 @@ public class ChainLightningTower extends Tower {
             }
         }
 
+        // And backward
         jumpedToField = currentField;
         for (int backWard = 0; backWard < MAXIMUM_JUMP_LENGTH; backWard++) {
             jumpedToField = jumpedToField.getPreviousField();

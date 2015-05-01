@@ -2,6 +2,7 @@ package nl.uva.td.util;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Util {
 
@@ -17,4 +18,15 @@ public class Util {
         return list.remove(position);
     }
 
+    public static void print(final List<Object> list) {
+        for (Object o : list) {
+            System.out.print(o);
+        }
+    }
+
+    public static void print(final Set<Object> list) {
+        for (Object o : list) {
+            System.out.print(o);
+        }
+    }
 }

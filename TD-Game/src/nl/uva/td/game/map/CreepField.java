@@ -198,6 +198,24 @@ public class CreepField extends Field {
     }
 
     /**
+     * Get the type of this field
+     * 
+     * @return The creep field type
+     */
+    public Type getCreepFieldType() {
+        return mType;
+    }
+
+    /**
+     * Determines if this field is the start field
+     *
+     * @return true if it's the start field, false if not
+     */
+    public boolean isStart() {
+        return mType == Type.START;
+    }
+
+    /**
      * Determines if this field is the end field
      *
      * @return true if it's the final goal field, false if not

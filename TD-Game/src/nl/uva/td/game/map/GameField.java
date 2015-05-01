@@ -37,15 +37,15 @@ public class GameField {
         mGameField = gameField;
     }
 
-    // public GameField(final GameField other) {
-    //
-    // mStartField = other.mStartField;
-    // mEndField = other.mEndField;
-    // mTowerFields = new ArrayList<TowerField>(other.mTowerFields);
-    // mFreeTowerFields = new ArrayList<TowerField>(other.mFreeTowerFields);
-    // mCreepFields = other.mCreepFields;
-    // mGameField = other.mGameField;
-    // }
+    public GameField(final GameField other) {
+
+        mStartField = other.mStartField;
+        mEndField = other.mEndField;
+        mTowerFields = new ArrayList<TowerField>(other.mTowerFields);
+        mFreeTowerFields = new ArrayList<TowerField>(other.mFreeTowerFields);
+        mCreepFields = other.mCreepFields;
+        mGameField = other.mGameField;
+    }
 
     public void addCreepToTheGame(final Creep creep) {
         creep.setCurrentField(mStartField);

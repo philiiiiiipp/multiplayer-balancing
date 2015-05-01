@@ -1,6 +1,7 @@
 package nl.uva.td.ai;
 
 import nl.uva.td.game.GameManager.Player;
+import nl.uva.td.game.GameResult;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
@@ -31,7 +32,7 @@ public class SimpleHumanAgent extends Agent {
     }
 
     @Override
-    public void endInternal(final Player winner, final boolean fixed) {
+    public void endInternal(final GameResult winner, final boolean fixed) {
         // TODO Auto-generated method stub
 
     }

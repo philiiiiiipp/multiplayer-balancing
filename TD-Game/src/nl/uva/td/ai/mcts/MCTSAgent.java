@@ -1,11 +1,15 @@
 package nl.uva.td.ai.mcts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 import nl.uva.td.ai.Agent;
+import nl.uva.td.ai.Policy;
+import nl.uva.td.game.GameManager;
 import nl.uva.td.game.GameManager.Player;
+import nl.uva.td.game.GameResult;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
@@ -19,7 +23,7 @@ public class MCTSAgent extends Agent {
 
     public static final double WIN_REWARD = 5;
 
-    public static final double LOOSER_REWARD = 0;
+    public static final double LOOSER_REWARD = 0.5;
 
     public static final double DRAW_REWARD = LOOSER_REWARD;
 
@@ -56,9 +60,11 @@ public class MCTSAgent extends Agent {
 
     private final int mTotalAmountOfTowerFields;
 
-    private int mFixedPolicyActionCounter = 0;
+    private Policy mLastSuccessfullStrategie = null;
 
-    private final List<List<Integer>> mSuccessfullActions = new ArrayList<List<Integer>>();
+    private final HashSet<String> mUsedStrategies = new HashSet<String>();
+    private String mCurrentStrategie = "";
+    private long mSameStrategieCounter = 0;
 
     public MCTSAgent(final Race race, final int totalActionAmount, final Player player) {
         super("MCTS Agent", player, race);
@@ -84,16 +90,12 @@ public class MCTSAgent extends Agent {
             final Agent enemyAgent, final boolean fixed) {
 
         if (fixed) {
-            int fixedAction = -1;
-            if (!mSuccessfullActions.isEmpty()
-                    && mSuccessfullActions.get(mSuccessfullActions.size() - 1).size() > mFixedPolicyActionCounter) {
-                fixedAction = mSuccessfullActions.get(mSuccessfullActions.size() - 1).get(mFixedPolicyActionCounter);
-            } else {
-                fixedAction = 0;
+            if (mLastSuccessfullStrategie == null) {
+                // Standard decision type is 0
+                return new Decision(0, mRace);
             }
 
-            mFixedPolicyActionCounter++;
-            return new Decision(fixedAction, mRace);
+            return new Decision(mLastSuccessfullStrategie.getNextAction(), mRace);
         }
 
         final TreeNode currentNode = mSearchTree.getCurrentNode();
@@ -106,6 +108,7 @@ public class MCTSAgent extends Agent {
             mActionHistoryRandomWalk.add(actionToTake);
         }
 
+        mCurrentStrategie += actionToTake + ";";
         return new Decision(actionToTake, mRace);
     }
 
@@ -133,7 +136,7 @@ public class MCTSAgent extends Agent {
                     return doWidening();
                 } else {
                     // normal selection
-                    double actionValue = -1;
+                    double actionValue = Double.NEGATIVE_INFINITY;
                     int mostPromissing = -1;
                     for (int action : currentNode.getListOfPerformedActions()) {
                         if (actionIsValid(action) && currentNode.getScoreOfAction(action) > actionValue) {
@@ -273,20 +276,31 @@ public class MCTSAgent extends Agent {
     }
 
     @Override
-    public void endInternal(final Player winner, final boolean fixed) {
+    public void endInternal(final GameResult gameResult, final boolean fixed) {
         if (fixed) {
             // This is a fixed policy. So don't update, just reset
-            mFixedPolicyActionCounter = 0;
+            if (mLastSuccessfullStrategie != null) {
+                mLastSuccessfullStrategie.reset();
+            }
+
             return;
         }
 
+        if (mUsedStrategies.contains(mCurrentStrategie)) {
+            mSameStrategieCounter++;
+        } else {
+            mUsedStrategies.add(mCurrentStrategie);
+        }
+        mCurrentStrategie = "";
+
         double reward = 0;
-        if (didIWin(winner)) {
-            reward = WIN_REWARD;
-        } else if (isDraw(winner)) {
+        if (didIWin(gameResult.getWinner())) {
+            reward = WIN_REWARD * gameResult.getMultiplier();// GameManager.MAX_STEPS -
+            // gameResult.getSteps();
+        } else if (isDraw(gameResult.getWinner())) {
             reward = DRAW_REWARD;
         } else {
-            reward = LOOSER_REWARD;
+            reward = gameResult.getSteps() - GameManager.MAX_STEPS;
         }
 
         for (int historyPosition = 0; historyPosition < mStateHistory.size(); ++historyPosition) {
@@ -304,23 +318,19 @@ public class MCTSAgent extends Agent {
         mStateHistory.clear();
         mRandomWalk = RandomWalkPhase.OUT;
 
-        if (winner == mPlayer) {
+        if (gameResult.getWinner() == mPlayer) {
             // I won
             List<Integer> successfullActionList = new ArrayList<Integer>();
             successfullActionList.addAll(mActionHistory);
             successfullActionList.addAll(mActionHistoryRandomWalk);
-            mSuccessfullActions.add(successfullActionList);
-        } else if (winner == Player.NONE) {
+            mLastSuccessfullStrategie = new Policy(successfullActionList, mRace);
+        } else if (gameResult.getWinner() == Player.NONE) {
             // Draw
             draw++;
-            mActionHistory.clear();
-            mActionHistoryRandomWalk.clear();
-        } else {
-            // Lost
-            mActionHistory.clear();
-            mActionHistoryRandomWalk.clear();
         }
 
+        mActionHistory.clear();
+        mActionHistoryRandomWalk.clear();
         mSearchTree.reset();
         resetEmptyTowerFields();
     }
@@ -363,7 +373,9 @@ public class MCTSAgent extends Agent {
 
     @Override
     public void resetFixedPolicy() {
-        mFixedPolicyActionCounter = 0;
+        if (mLastSuccessfullStrategie != null) {
+            mLastSuccessfullStrategie.reset();
+        }
     }
 
     @Override
@@ -372,15 +384,16 @@ public class MCTSAgent extends Agent {
 
         System.out.println("---- Search Tree Statisctics ----");
         System.out.println("Race: " + mRace + "\t Player: " + mPlayer);
-        System.out.println("Node count: " + mSearchTree.getNodeCount());
-        System.out.println(" Draw: " + draw);
+        System.out.println("Node count: " + mSearchTree.getNodeCount() + "\t Max Depth: " + mSearchTree.getMaxDepth());
+        System.out.println(" Draw: " + draw + "\t Same: " + mSameStrategieCounter);
         System.out.print(root.nodeInfo(mRace));
 
     }
 
     @Override
     public void reset() {
-        mFixedPolicyActionCounter = 0;
+        resetFixedPolicy();
+
         mActionHistory.clear();
         mActionHistoryRandomWalk.clear();
         mSearchTree.reset();

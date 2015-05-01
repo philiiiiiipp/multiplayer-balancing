@@ -46,6 +46,12 @@ public abstract class Field {
     /** The column number of the field */
     protected final int mColumn;
 
+    public Field(final Field other) {
+        mType = other.mType;
+        mRow = other.mRow;
+        mColumn = other.mColumn;
+    }
+
     public Field(final Type type, final int row, final int column) {
         mType = type;
         mRow = row;

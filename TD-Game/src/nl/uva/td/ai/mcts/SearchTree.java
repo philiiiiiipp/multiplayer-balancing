@@ -18,6 +18,8 @@ public class SearchTree {
     /** The total amount of nodes in this search tree **/
     private long mNodeCounter = 0;
 
+    private long mCurrentDeepestDepth = 0;
+
     /**
      * Initialise the search tree with the root node
      *
@@ -25,7 +27,7 @@ public class SearchTree {
      *            The root node
      */
     public void initialise() {
-        mRootNode = mCurrentNode = new TreeNode();
+        mRootNode = mCurrentNode = new TreeNode(0);
         mNodeCounter = 0;
         mInitialised = true;
     }
@@ -73,7 +75,11 @@ public class SearchTree {
      *            The resulting state from the tree building step
      */
     public void completeTreeBuilding() {
-        TreeNode treeNode = new TreeNode();
+        TreeNode treeNode = new TreeNode(mCurrentNode.getDepth() + 1);
+
+        if (treeNode.getDepth() > mCurrentDeepestDepth) {
+            mCurrentDeepestDepth = treeNode.getDepth();
+        }
 
         mCurrentNode.addChild(mActionForTreeBuilding, treeNode);
         mNodeCounter++;
@@ -136,6 +142,15 @@ public class SearchTree {
         mRootNode = mCurrentNode = null;
         mActionForTreeBuilding = -1;
         mInitialised = false;
+    }
+
+    /**
+     * Get the current deepest depth this search tree has nodes
+     *
+     * @return The deepest depth of this search tree
+     */
+    public long getMaxDepth() {
+        return mCurrentDeepestDepth;
     }
 
     @Override

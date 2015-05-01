@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.uva.td.game.GameManager.Player;
+import nl.uva.td.game.GameResult;
 import nl.uva.td.game.PlayerAttributes;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
@@ -47,11 +48,15 @@ public abstract class Agent {
             final PlayerAttributes yourAttributes, final PlayerAttributes enemyAttributes, final int elapsedSteps,
             final Agent enemyAgent, final boolean maximising);
 
-    public final void end(final Player winner, final boolean fixed) {
+    public final void end(final GameResult winner, final boolean fixed) {
         endInternal(winner, fixed);
     }
 
-    protected abstract void endInternal(Player winner, boolean fixed);
+    protected abstract void endInternal(GameResult winner, boolean fixed);
+
+    public boolean hasMoreFixedStrategies() {
+        return false;
+    }
 
     public abstract void reset();
 

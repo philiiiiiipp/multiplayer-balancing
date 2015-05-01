@@ -1,6 +1,7 @@
 package nl.uva.td.game;
 
 import nl.uva.td.ai.Agent;
+import nl.uva.td.ai.Policy;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
@@ -14,7 +15,7 @@ public class GameManager {
         PLAYER_TWO
     }
 
-    public static final int STARTING_LIVES = 10;
+    public static final int STARTING_LIVES = 5;
 
     public static final int STARTING_GOLD = 100;
 
@@ -22,7 +23,9 @@ public class GameManager {
 
     public static final int SALARY_FREQUENCY = 5;
 
-    public static final String MAP_FILE = "Standard4";
+    public static final String MAP_FILE = "2x2";
+
+    public static final int MAX_STEPS = 100;
 
     private static final boolean SHOW_UI = false;
 
@@ -34,7 +37,7 @@ public class GameManager {
 
     private static long sTimer = 0;
 
-    public static Player run(final Agent playerOne, final Agent playerTwo, final boolean fixPlayerOne,
+    public static GameResult run(final Agent playerOne, final Agent playerTwo, final boolean fixPlayerOne,
             final boolean fixPlayerTwo) {
         PlayerAttributes playerOneAttributes = new PlayerAttributes(STARTING_LIVES);
         PlayerAttributes playerTwoAttributes = new PlayerAttributes(STARTING_LIVES);
@@ -51,8 +54,11 @@ public class GameManager {
         GameState playerOneGameState = new GameState(playerOneMap, SHOW_UI, playerOne.getName());
         GameState playerTwoGameState = new GameState(playerTwoMap, SHOW_UI, playerTwo.getName());
 
+        String a = "";
+        String b = "";
+
         int step = 0;
-        while (step < 200 && playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
+        while (step <= MAX_STEPS && playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
 
             startTimer();
             Decision playerOnesDecision = playerOne.makeDecision(playerOneMap, playerTwoMap, playerOneAttributes,
@@ -62,6 +68,9 @@ public class GameManager {
 
             sDecisionTime += stopTimer();
 
+            a += ";" + playerOnesDecision.getDecisionNumber();
+            b += ";" + playerTwosDecision.getDecisionNumber();
+
             startTimer();
             playerOneGameState.step(playerOnesDecision, playerTwosDecision, playerOneAttributes, playerTwoAttributes);
             playerTwoGameState.step(playerTwosDecision, playerOnesDecision, playerTwoAttributes, playerOneAttributes);
@@ -70,22 +79,56 @@ public class GameManager {
         }
 
         if (playerOneAttributes.getLives() <= 0 && playerTwoAttributes.getLives() <= 0) {
-            return Player.NONE;
+            return new GameResult(Player.NONE, step);
         } else if (playerOneAttributes.getLives() <= 0) {
-            return playerTwo.getPlayer();
+            return new GameResult(playerTwo.getPlayer(), step);
         } else if (playerTwoAttributes.getLives() <= 0) {
-
-            System.out.println("Creep Stats");
-            System.out.println(playerOne.getPlayer() + " " + playerOne.getRace());
-            printCreepStats(playerOneAttributes);
-            System.out.println("----");
-
-            System.out.println(playerTwo.getPlayer() + " " + playerTwo.getRace());
-            printCreepStats(playerTwoAttributes);
-            return playerOne.getPlayer();
+            //
+            // System.out.println("Creep Stats");
+            // System.out.println(playerOne.getPlayer() + " " + playerOne.getRace());
+            // printCreepStats(playerOneAttributes);
+            // System.out.println("----");
+            //
+            // System.out.println(playerTwo.getPlayer() + " " + playerTwo.getRace());
+            // printCreepStats(playerTwoAttributes);
+            System.out.println(a);
+            System.out.println(b);
+            return new GameResult(playerOne.getPlayer(), step);
         } else {
-            // More than 100step -> Draw
-            return Player.NONE;
+            // More than MAX_STEPS steps -> Draw
+            return new GameResult(Player.NONE, step);
+        }
+    }
+
+    public static GameResult run(final Policy playerOne, final Policy playerTwo) {
+        PlayerAttributes playerOneAttributes = new PlayerAttributes(STARTING_LIVES);
+        PlayerAttributes playerTwoAttributes = new PlayerAttributes(STARTING_LIVES);
+
+        GameField playerOneMap = Parser.parseFile(MAP_FILE);
+        GameField playerTwoMap = Parser.parseFile(MAP_FILE);
+
+        GameState playerOneGameState = new GameState(playerOneMap, false, "");
+        GameState playerTwoGameState = new GameState(playerTwoMap, false, "");
+
+        int step = 0;
+        while (step <= MAX_STEPS && playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
+            Decision playerOnesDecision = new Decision(playerOne.getNextAction(), playerOne.getRace());
+            Decision playerTwosDecision = new Decision(playerTwo.getNextAction(), playerTwo.getRace());
+
+            playerOneGameState.step(playerOnesDecision, playerTwosDecision, playerOneAttributes, playerTwoAttributes);
+            playerTwoGameState.step(playerTwosDecision, playerOnesDecision, playerTwoAttributes, playerOneAttributes);
+            step++;
+        }
+
+        if (playerOneAttributes.getLives() <= 0 && playerTwoAttributes.getLives() <= 0) {
+            return new GameResult(Player.NONE, step);
+        } else if (playerOneAttributes.getLives() <= 0) {
+            return new GameResult(Player.PLAYER_TWO, step);
+        } else if (playerTwoAttributes.getLives() <= 0) {
+            return new GameResult(Player.PLAYER_ONE, step);
+        } else {
+            // More than MAX_STEPS steps -> Draw
+            return new GameResult(Player.NONE, step);
         }
     }
 
