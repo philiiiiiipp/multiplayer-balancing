@@ -73,11 +73,11 @@ public class Decision {
     public String toString() {
 
         if (mWantsToPlaceCreep) {
-            return "C ;";
+            return "C__";
         } else if (mWantsToUpgradeCreep != UpgradeType.NONE) {
-            return mWantsToUpgradeCreep.toString().substring(0, 2) + ";";
+            return mWantsToUpgradeCreep.toString().substring(0, 2) + "_";
         } else {
-            return "" + mTowerPlacement.getTower().toString().charAt(0) + mTowerPlacement.getTowerPosition() + ";";
+            return "" + mTowerPlacement.getTower().toString().charAt(0) + mTowerPlacement.getTowerPosition() + "_";
         }
     }
 

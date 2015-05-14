@@ -35,6 +35,20 @@ public class Policy {
     }
 
     @Override
+    public boolean equals(final Object o) {
+        if (o instanceof Policy) {
+            return this.toString().equals(o.toString());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
+
+    @Override
     public String toString() {
         String result = "";
 
