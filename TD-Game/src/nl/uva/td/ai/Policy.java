@@ -1,5 +1,6 @@
 package nl.uva.td.ai;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.uva.td.game.agent.Decision;
@@ -12,6 +13,15 @@ public class Policy {
     private final List<Integer> mPolicy;
 
     private int mCurrentPolicyPosition = 0;
+
+    public Policy(final Race race, final List<Decision> decisions) {
+        mPolicy = new LinkedList<Integer>();
+        mRace = race;
+
+        for (Decision decision : decisions) {
+            mPolicy.add(decision.getDecisionNumber());
+        }
+    }
 
     public Policy(final List<Integer> policy, final Race race) {
         mPolicy = policy;

@@ -12,9 +12,6 @@ public class SearchTree {
     /** The current evaluated node **/
     private TreeNode mCurrentNode;
 
-    /** The action which got chosen in the tree building phase **/
-    private int mActionForTreeBuilding;
-
     /** The total amount of nodes in this search tree **/
     private long mNodeCounter = 0;
 
@@ -58,34 +55,22 @@ public class SearchTree {
     }
 
     /**
-     * Save the action used for tree building
-     *
-     * @param treeBuildingAction
-     *            The tree building action
-     */
-    public void saveTreeBuildingAction(final int treeBuildingAction) {
-        mActionForTreeBuilding = treeBuildingAction;
-    }
-
-    /**
      * Completes the tree building step in appending the state and action to the current tree node
      * and updating the current node to the new one
      *
      * @param currentState
      *            The resulting state from the tree building step
      */
-    public void completeTreeBuilding() {
+    public void completeTreeBuilding(final int treeBuildingAction) {
         TreeNode treeNode = new TreeNode(mCurrentNode.getDepth() + 1);
 
         if (treeNode.getDepth() > mCurrentDeepestDepth) {
             mCurrentDeepestDepth = treeNode.getDepth();
         }
 
-        mCurrentNode.addChild(mActionForTreeBuilding, treeNode);
+        mCurrentNode.addChild(treeBuildingAction, treeNode);
         mNodeCounter++;
-        performActionOnCurrentNode(mActionForTreeBuilding);
-
-        mActionForTreeBuilding = -1;
+        performActionOnCurrentNode(treeBuildingAction);
     }
 
     /**
@@ -140,7 +125,6 @@ public class SearchTree {
      */
     public void clear() {
         mRootNode = mCurrentNode = null;
-        mActionForTreeBuilding = -1;
         mInitialised = false;
     }
 

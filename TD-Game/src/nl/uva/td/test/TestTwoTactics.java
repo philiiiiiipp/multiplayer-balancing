@@ -21,22 +21,24 @@ public class TestTwoTactics {
         int playerOne = 0;
         int playerTwo = 0;
 
-        int length = 6;
+        int maxLength = 5;
         int counter = 0;
-        for (int a = 0; a <= length; a++) {
-            for (int b = length - a; b >= 0; b--) {
-                int c = (length - a) - b;
+        for (int length = 1; length <= maxLength; ++length) {
+            for (int a = 0; a <= length; a++) {
+                for (int b = length - a; b >= 0; b--) {
+                    int c = (length - a) - b;
 
-                for (int i = 0; i < a; i++) {
-                    System.out.print(1 + ",");
+                    for (int i = 0; i < a; i++) {
+                        System.out.print(1 + ",");
+                    }
+                    for (int i = 0; i < b; i++) {
+                        System.out.print(2 + ",");
+                    }
+                    for (int i = 0; i < c; i++) {
+                        System.out.print(3 + ",");
+                    }
+                    System.out.println(++counter);
                 }
-                for (int i = 0; i < b; i++) {
-                    System.out.print(2 + ",");
-                }
-                for (int i = 0; i < c; i++) {
-                    System.out.print(3 + ",");
-                }
-                System.out.println(++counter);
             }
         }
 

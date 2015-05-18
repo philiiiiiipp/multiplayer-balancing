@@ -62,10 +62,6 @@ public class PolicyDependencyGraph {
             success = success || mPolicyDependencies.get(p).getBeats().remove(new GameInfo(policy, 0));
             success = success || mPolicyDependencies.get(p).getDraws().remove(new GameInfo(policy, 0));
             success = success || mPolicyDependencies.get(p).getLoses().remove(new GameInfo(policy, 0));
-
-            if (!success) {
-                System.out.println("####++++++++ ERRROROROROROROOROR +++++++++####");
-            }
         }
     }
 

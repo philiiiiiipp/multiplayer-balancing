@@ -115,11 +115,24 @@ public class TreeNode {
      *            The race this node belongs to
      * @return All available information to this node
      */
-    public String nodeInfo(final Race race) {
+    public String nodeInfo(final Race race, final List<List<Integer>> upgradeList) {
         String result = "";
         for (Integer action : mActionReward.keySet()) {
-            Decision decision = new Decision(action, race);
-            result += decision + "\t" + getScoreOfAction(action) + "\n";
+            if (action == 0) {
+                Decision decision = new Decision(action, race);
+                result += decision + "\t" + getScoreOfAction(action) + "\n";
+            } else if (action > upgradeList.size()) {
+                Decision decision = new Decision(action - upgradeList.size() + 3, race);
+                result += decision + "\t" + getScoreOfAction(action) + "\n";
+            } else {
+                // List<Integer> upgrades = upgradeList.get(action - 1);
+                // for (Integer upgrade : upgrades) {
+                // Decision decision = new Decision(upgrade, race);
+                // result += decision;
+                // }
+                // result += "\t" + getScoreOfAction(action) + "\n";
+            }
+
         }
 
         return result;

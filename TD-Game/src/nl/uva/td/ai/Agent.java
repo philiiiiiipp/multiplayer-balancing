@@ -18,7 +18,7 @@ public abstract class Agent {
 
     protected final Race mRace;
 
-    private final List<Decision> mLastDecisionChain = new LinkedList<Decision>();
+    protected final List<Decision> mLastDecisionChain = new LinkedList<Decision>();
 
     public Agent(final String name, final Player player, final Race race) {
         mName = name;
@@ -76,6 +76,10 @@ public abstract class Agent {
 
     public List<Decision> getLastDecisionChain() {
         return mLastDecisionChain;
+    }
+
+    public Policy getLastUsedPolicy() {
+        return new Policy(mRace, mLastDecisionChain);
     }
 
     public void resetFixedPolicy() {}

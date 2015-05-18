@@ -31,31 +31,6 @@ public class MCTSTacticsFinder {
     private static final PolicyDependencyGraph sPlayerTwo = new PolicyDependencyGraph();
 
     public static void main(final String[] args) {
-        int var = 1000000; // for bytes. you can change here to print in MB or KB as you wish
-        System.out.println("************************* PRINTING MEMORY USAGE - BEGIN **************");
-
-        Runtime runtime = Runtime.getRuntime();
-
-        /* Total number of processors or cores available to the JVM */
-        System.out.println("Available processors (cores): " + runtime.availableProcessors());
-
-        /* This will return Long.MAX_VALUE if there is no preset limit */
-        long maxMemory = runtime.maxMemory();
-        /* Maximum amount of memory the JVM will attempt to use */
-        System.out.println("Maximum memory : " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory / var));
-
-        /* Total memory currently available to the JVM */
-        long totalMemory = runtime.totalMemory() / var;
-        System.out.println("Total memory available to JVM : " + totalMemory);
-
-        /* Total amount of free memory available to the JVM */
-        long freeMemory = runtime.freeMemory() / var;
-        System.out.println("Free memory : " + freeMemory);
-
-        // Calculate the used memory
-        long usedMemory = totalMemory - freeMemory;
-        System.out.println("Used memory : " + usedMemory);
-
         GameField playerOneMap = Parser.parseFile(GameManager.MAP_FILE);
         Race race = new HumanRace();
         Agent agentOne = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount() + 4,
@@ -105,7 +80,7 @@ public class MCTSTacticsFinder {
                 printInfo(agentOne, agentTwo, result, ++trys);
             } while (result.getWinner() != agentOne.getPlayer());
 
-            if (getPolicyGraph(agentOne.getPlayer()).getPolicies().size() > 3)
+            if (getPolicyGraph(agentOne.getPlayer()).getPolicies().size() > 2)
                 getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
 
             System.err.println("##### -----> " + result.getSteps());
@@ -247,7 +222,7 @@ public class MCTSTacticsFinder {
             if (trys % 158000 == 0) {
                 System.out.println(" " + trys);
 
-                if (trys % (158000 * 20) == 0) {
+                if (trys % (158000 * 1) == 0) {
                     GameManager.printStatistics();
                     agentOne.printStatistics();
                     System.out.println();

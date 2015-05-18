@@ -54,9 +54,6 @@ public class GameManager {
         GameState playerOneGameState = new GameState(playerOneMap, SHOW_UI, playerOne.getName());
         GameState playerTwoGameState = new GameState(playerTwoMap, SHOW_UI, playerTwo.getName());
 
-        String a = "";
-        String b = "";
-
         int step = 0;
         while (step <= MAX_STEPS && playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
 
@@ -67,9 +64,6 @@ public class GameManager {
                     playerOneAttributes, step, playerOne, fixPlayerTwo);
 
             sDecisionTime += stopTimer();
-
-            a += ";" + playerOnesDecision.getDecisionNumber();
-            b += ";" + playerTwosDecision.getDecisionNumber();
 
             startTimer();
             playerOneGameState.step(playerOnesDecision, playerTwosDecision, playerOneAttributes, playerTwoAttributes);
@@ -83,16 +77,6 @@ public class GameManager {
         } else if (playerOneAttributes.getLives() <= 0) {
             return new GameResult(playerTwo.getPlayer(), step);
         } else if (playerTwoAttributes.getLives() <= 0) {
-            //
-            // System.out.println("Creep Stats");
-            // System.out.println(playerOne.getPlayer() + " " + playerOne.getRace());
-            // printCreepStats(playerOneAttributes);
-            // System.out.println("----");
-            //
-            // System.out.println(playerTwo.getPlayer() + " " + playerTwo.getRace());
-            // printCreepStats(playerTwoAttributes);
-            System.out.println(a);
-            System.out.println(b);
             return new GameResult(playerOne.getPlayer(), step);
         } else {
             // More than MAX_STEPS steps -> Draw

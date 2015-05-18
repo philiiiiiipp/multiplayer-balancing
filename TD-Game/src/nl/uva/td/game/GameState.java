@@ -41,7 +41,6 @@ public class GameState extends GameUpdateHUB {
                 mTowerList.add(myDecision.wantsToPlaceTower().getTower());
             } else {
                 throw new RuntimeException("Tries to place a tower where a tower already exists");
-
             }
         } else if (myDecision.wantsToUpdateCreep() != UpgradeType.NONE) {
             myAttributes.upgrade(myDecision.wantsToUpdateCreep());
