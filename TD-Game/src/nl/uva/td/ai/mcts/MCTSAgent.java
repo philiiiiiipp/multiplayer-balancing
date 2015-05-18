@@ -34,7 +34,7 @@ public class MCTSAgent extends Agent {
     private final SearchTree mSearchTree;
 
     /** Progressive widening threshold */
-    public static final int T = 10;
+    public static final int T = 4;
 
     /** The total amount of available actions */
     private final int mTotalActionAmount;
@@ -162,6 +162,7 @@ public class MCTSAgent extends Agent {
                     mCurrentActionPackage = doWidening();
 
                 } else {
+
                     // normal selection
                     double actionValue = Double.NEGATIVE_INFINITY;
                     int mostPromissing = -1;
@@ -215,6 +216,7 @@ public class MCTSAgent extends Agent {
         int desiredAction = randomWalk();
         int startingAction = desiredAction;
         boolean onlyUpwards = false;
+
         // Account for the Upgrade simplifier
         if (desiredAction > 0) {
             // We want to upgrade

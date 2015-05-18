@@ -56,7 +56,7 @@ public class MCTSTacticsFinder {
 
                 result = GameManager.run(agentOne, agentTwo, fixPlayerOne, fixPlayerTwo);
 
-                if (result.getWinner() == agentOne.getPlayer()) {
+                if (result.getWinner() == agentOne.getPlayer() || result.getWinner() == Player.NONE) {
                     // MCTS won against the last strategy!
                     PolicyQuality quality = calculateChainResult(agentOne, agentTwo);
 
