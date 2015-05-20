@@ -2,6 +2,7 @@ package nl.uva.td.game.faction.tower;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import nl.uva.td.game.Attribute;
@@ -18,7 +19,7 @@ public abstract class Tower {
     }
 
     /** A list of all creeps in range of this tower */
-    protected Set<CreepField> mFieldsInRange = new HashSet<CreepField>();
+    protected Set<CreepField> mFieldsInRange = new LinkedHashSet<CreepField>();
 
     protected Creep mLockedOnCreep;
 

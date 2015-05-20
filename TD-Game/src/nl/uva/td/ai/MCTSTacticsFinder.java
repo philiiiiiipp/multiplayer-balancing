@@ -56,13 +56,15 @@ public class MCTSTacticsFinder {
 
                 result = GameManager.run(agentOne, agentTwo, fixPlayerOne, fixPlayerTwo);
 
-                if (result.getWinner() == agentOne.getPlayer() || result.getWinner() == Player.NONE) {
+                if (result.getWinner() != agentTwo.getPlayer()) {
                     // MCTS won against the last strategy!
-                    PolicyQuality quality = calculateChainResult(agentOne, agentTwo);
+                    PolicyQuality quality = calculatePolicyQuality(agentOne, agentTwo);
 
                     result.setMultiplier(quality.getBeats().size());
                     agentOne.end(result, fixPlayerOne);
                     agentTwo.end(result, fixPlayerTwo);
+
+                    //
 
                     if (!quality.isGoodQuality()) {
                         result.setWinner(Player.NONE);
@@ -71,6 +73,7 @@ public class MCTSTacticsFinder {
                             PolicyDependencyGraph graph = getPolicyGraph(agentOne.getPlayer());
                             graph.addPolicy(getLastPolicy(agentOne), quality, getPolicyGraph(agentTwo.getPlayer()));
                         }
+                        result.setWinner(agentOne.getPlayer());
                     }
                 } else {
                     agentOne.end(result, fixPlayerOne);
@@ -111,23 +114,19 @@ public class MCTSTacticsFinder {
         return new Policy(getLastDecisionChain(agent), agent.getRace());
     }
 
-    private static void improvesQuality(final Agent agentOne, final Agent agentTwo) {
+    private static PolicyQuality calculatePolicyQuality(final Agent agentOne, final Agent agentTwo) {
         List<Integer> decisionChain = getLastDecisionChain(agentOne);
 
         Policy policyAgentOne = new Policy(decisionChain, agentOne.getRace());
         PolicyDependencyGraph agentTwoPolicies = getPolicyGraph(agentTwo.getPlayer());
 
         PolicyQuality policyQuality = new PolicyQuality();
-        int winCounter = 0;
-        int drawCounter = 0;
         for (Policy p : agentTwoPolicies.getPolicies()) {
             GameResult result = GameManager.run(policyAgentOne, p);
 
             if (result.getWinner() == Player.PLAYER_ONE) {
-                winCounter++;
                 policyQuality.beats(new GameInfo(p, result.getSteps()));
             } else if (result.getWinner() == Player.NONE) {
-                drawCounter++;
                 policyQuality.draws(new GameInfo(p, result.getSteps()));
             } else {
                 policyQuality.loses(new GameInfo(p, result.getSteps()));
@@ -137,9 +136,7 @@ public class MCTSTacticsFinder {
             policyAgentOne.reset();
         }
 
-        System.out.println(winCounter + "/" + agentTwoPolicies.getPolicies().size() + " " + drawCounter + "/"
-                + agentTwoPolicies.getPolicies().size() + " " + (winCounter + drawCounter) + "/"
-                + agentTwoPolicies.getPolicies().size());
+        return policyQuality;
     }
 
     private static List<Integer> getLastDecisionChain(final Agent agentOne) {
@@ -149,37 +146,6 @@ public class MCTSTacticsFinder {
         }
 
         return decisionChain;
-    }
-
-    private static PolicyQuality calculateChainResult(final Agent agentOne, final Agent agentTwo) {
-        List<Integer> decisionChain = new LinkedList<Integer>();
-        for (Decision d : agentOne.getLastDecisionChain()) {
-            decisionChain.add(d.getDecisionNumber());
-        }
-
-        Policy policyAgentOne = new Policy(decisionChain, agentOne.getRace());
-        PolicyDependencyGraph agentTwoPolicies = getPolicyGraph(agentTwo.getPlayer());
-
-        PolicyQuality policyQuality = new PolicyQuality();
-        int winCounter = 0;
-        int drawCounter = 0;
-        for (Policy p : agentTwoPolicies.getPolicies()) {
-            GameResult result = GameManager.run(policyAgentOne, p);
-
-            if (result.getWinner() == Player.PLAYER_ONE) {
-                winCounter++;
-                policyQuality.beats(new GameInfo(p, result.getSteps()));
-            } else if (result.getWinner() == Player.NONE) {
-                drawCounter++;
-                policyQuality.draws(new GameInfo(p, result.getSteps()));
-            } else {
-                policyQuality.loses(new GameInfo(p, result.getSteps()));
-            }
-
-            p.reset();
-            policyAgentOne.reset();
-        }
-        return policyQuality;
     }
 
     private static PolicyDependencyGraph getPolicyGraph(final Player player) {
@@ -202,10 +168,6 @@ public class MCTSTacticsFinder {
             playerOneTactic += playerOne.getLastDecisionChain().get(i);
             playerTwoTactic += playerTwo.getLastDecisionChain().get(i);
         }
-        // for (int i = 0; i < playerOne.getLastDecisionChain().size(); ++i) {
-        // playerOneTactic += playerOne.getLastDecisionChain().get(i).getDecisionNumber() + ";";
-        // playerTwoTactic += playerTwo.getLastDecisionChain().get(i).getDecisionNumber() + ";";
-        // }
 
         System.out.println("Search: " + playerOne.getRace().getName() + ": " + playerOneTactic);
         System.out.println("Fixed:  " + playerTwo.getRace().getName() + ": " + playerTwoTactic);

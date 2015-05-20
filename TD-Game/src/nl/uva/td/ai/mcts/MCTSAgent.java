@@ -1,5 +1,7 @@
 package nl.uva.td.ai.mcts;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -19,6 +21,7 @@ import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
 import nl.uva.td.game.map.Field;
 import nl.uva.td.game.map.GameField;
+import nl.uva.td.util.FileManager;
 import nl.uva.td.util.Util;
 
 public class MCTSAgent extends Agent {
@@ -57,9 +60,6 @@ public class MCTSAgent extends Agent {
     /** The state history of the current tree walk **/
     private final List<TreeNode> mStateHistory = new LinkedList<TreeNode>();
 
-    /** The action history of the current random tree walk **/
-    // private final List<Integer> mActionHistoryRandomWalk = new LinkedList<Integer>();
-
     /** The list of empty tower positions in the current game on my field **/
     private final List<Integer> mEmptyTowerPositions;
 
@@ -71,7 +71,7 @@ public class MCTSAgent extends Agent {
 
     private ActionPackage mCurrentActionPackage;
 
-    private int mRunningUpgradeListPosition;
+    private Policy mHumanWrittenPolicy;
 
     private final HashSet<String> mUsedStrategies = new HashSet<String>();
     private String mCurrentStrategie = "";
@@ -112,9 +112,40 @@ public class MCTSAgent extends Agent {
         }
     }
 
+    int counter = 0;
+    static boolean human = false;
+
     @Override
     protected void startInternal() {
+        if (counter++ % 5000 != 0) {
+            return;
+        }
 
+        File f = new File("newpolicy");
+        if (f.exists() && !f.isDirectory()) {
+            String contents = "";
+            try {
+                contents = FileManager.getFileContents(f);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                f.delete();
+            }
+
+            String[] actions = contents.split(";");
+            List<Integer> actionList = new ArrayList<Integer>();
+            for (String action : actions) {
+                try {
+                    actionList.add(Integer.parseInt(action));
+                } catch (Exception e) {
+
+                }
+            }
+
+            human = true;
+            mHumanWrittenPolicy = new Policy(actionList, mRace);
+        }
     }
 
     @Override
@@ -125,11 +156,26 @@ public class MCTSAgent extends Agent {
         if (fixed) {
             if (mLastSuccessfullStrategie == null) {
                 // Standard decision type is 0
+
+                if (human) {
+                    System.out.println("" + 0);
+                }
+
                 return new Decision(0, mRace);
             }
+            int action = mLastSuccessfullStrategie.getNextAction();
+            if (human) {
+                System.out.println("" + action);
+            }
+            return new Decision(action, mRace);
+        } else if (mHumanWrittenPolicy != null) {
+            int action = mHumanWrittenPolicy.getNextAction();
 
-            return new Decision(mLastSuccessfullStrategie.getNextAction(), mRace);
+            System.out.print(action + ":");
+
+            return new Decision(action, mRace);
         }
+
         final int actionToTake = treeWalk();
 
         mCurrentStrategie += actionToTake + ";";
@@ -343,6 +389,14 @@ public class MCTSAgent extends Agent {
             }
 
             return;
+        }
+
+        if (mHumanWrittenPolicy != null) {
+            System.out.println();
+            System.out.println("Human written Policy executed!");
+            System.out.println("Did I win? " + (gameResult.getWinner() == mPlayer));
+            mHumanWrittenPolicy = null;
+            human = false;
         }
 
         if (mUsedStrategies.contains(mCurrentStrategie)) {

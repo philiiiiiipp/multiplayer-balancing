@@ -111,11 +111,13 @@ public class PolicyQuality implements Comparable<PolicyQuality> {
 
                 // After this we can assume mDraws contains the same elements as o.mDraws
                 // If I generally beat everything faster, then I am better.
+                // Otherwise both are equally good. Which means we should remove one of them
                 int mySteps = countSteps(mBeats);
                 int otherSteps = countSteps(o.mBeats);
                 if (mySteps < otherSteps) {
                     return 1;
                 } else if (mySteps == otherSteps) {
+                    // Both equally good, but one has to go!
                     return 0;
                 } else {
                     return -1;

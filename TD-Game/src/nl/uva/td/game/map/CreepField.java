@@ -2,6 +2,7 @@ package nl.uva.td.game.map;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import nl.uva.td.game.faction.tower.Tower;
@@ -34,7 +35,7 @@ public class CreepField extends Field {
     private final Type mType;
 
     /** All creeps currently standing on this field */
-    private final Set<Creep> mCreeps = new HashSet<Creep>();
+    private final Set<Creep> mCreeps = new LinkedHashSet<Creep>();
 
     /** The next field on the creep way */
     private CreepField mNextField;
@@ -199,7 +200,7 @@ public class CreepField extends Field {
 
     /**
      * Get the type of this field
-     * 
+     *
      * @return The creep field type
      */
     public Type getCreepFieldType() {
