@@ -28,7 +28,7 @@ public class MCTSAgent extends Agent {
 
     public static final double INITIAL_REWARD = 0.5;
 
-    public static final double WIN_REWARD = 5;
+    public static final double WIN_REWARD = 50000;
 
     public static final double LOOSER_REWARD = 0.5;
 
@@ -37,7 +37,7 @@ public class MCTSAgent extends Agent {
     private final SearchTree mSearchTree;
 
     /** Progressive widening threshold */
-    public static final int T = 4;
+    public static final int T = 10;
 
     /** The total amount of available actions */
     private final int mTotalActionAmount;
@@ -65,9 +65,9 @@ public class MCTSAgent extends Agent {
 
     private final int mTotalAmountOfTowerFields;
 
-    private Policy mLastSuccessfullStrategie = null;
+    private Policy mPreviouslyUsedPolicy = null;
 
-    private final List<List<Integer>> mUpgradeList = new ArrayList<List<Integer>>();
+    private final List<List<Integer>> mUpgradeList;
 
     private ActionPackage mCurrentActionPackage;
 
@@ -83,27 +83,7 @@ public class MCTSAgent extends Agent {
         mSearchTree = new SearchTree();
         mSearchTree.initialise();
 
-        int maxLength = ActionPackage.MAX_ACTION_PACKAGE_LENGTH;
-        for (int length = 1; length <= maxLength; ++length) {
-            for (int a = 0; a <= length; a++) {
-                for (int b = length - a; b >= 0; b--) {
-                    int c = (length - a) - b;
-
-                    List<Integer> upgradeList = new ArrayList<Integer>();
-                    for (int i = 0; i < a; i++) {
-                        upgradeList.add(1);
-                    }
-                    for (int i = 0; i < b; i++) {
-                        upgradeList.add(2);
-                    }
-                    for (int i = 0; i < c; i++) {
-                        upgradeList.add(3);
-                    }
-
-                    mUpgradeList.add(upgradeList);
-                }
-            }
-        }
+        mUpgradeList = ActionPackage.generateUpdateList();
 
         mTotalAmountOfTowerFields = (totalActionAmount - 1 - race.getAvailableTowerAmount()) / 3;
         mEmptyTowerPositions = new ArrayList<Integer>(mTotalAmountOfTowerFields);
@@ -116,8 +96,8 @@ public class MCTSAgent extends Agent {
     static boolean human = false;
 
     @Override
-    protected void startInternal() {
-        if (counter++ % 5000 != 0) {
+    protected void startInternal(final boolean fixed) {
+        if (fixed || counter++ % 5000 != 0) {
             return;
         }
 
@@ -154,7 +134,7 @@ public class MCTSAgent extends Agent {
             final Agent enemyAgent, final boolean fixed) {
 
         if (fixed) {
-            if (mLastSuccessfullStrategie == null) {
+            if (mPreviouslyUsedPolicy == null) {
                 // Standard decision type is 0
 
                 if (human) {
@@ -163,7 +143,7 @@ public class MCTSAgent extends Agent {
 
                 return new Decision(0, mRace);
             }
-            int action = mLastSuccessfullStrategie.getNextAction();
+            int action = mPreviouslyUsedPolicy.getNextAction();
             if (human) {
                 System.out.println("" + action);
             }
@@ -384,8 +364,8 @@ public class MCTSAgent extends Agent {
     public void endInternal(final GameResult gameResult, final boolean fixed) {
         if (fixed) {
             // This is a fixed policy. So don't update, just reset
-            if (mLastSuccessfullStrategie != null) {
-                mLastSuccessfullStrategie.reset();
+            if (mPreviouslyUsedPolicy != null) {
+                mPreviouslyUsedPolicy.reset();
             }
 
             return;
@@ -411,7 +391,7 @@ public class MCTSAgent extends Agent {
             reward = WIN_REWARD * gameResult.getMultiplier();// GameManager.MAX_STEPS -
             // gameResult.getSteps();
         } else if (isDraw(gameResult.getWinner())) {
-            reward = DRAW_REWARD;
+            reward = DRAW_REWARD * gameResult.getMultiplier();
         } else {
             reward = gameResult.getSteps() - GameManager.MAX_STEPS;
         }
@@ -433,9 +413,10 @@ public class MCTSAgent extends Agent {
 
         if (gameResult.getWinner() == mPlayer) {
             // I won
-            mLastSuccessfullStrategie = getLastUsedPolicy();
+            mPreviouslyUsedPolicy = getLastUsedPolicy();
         } else if (gameResult.getWinner() == Player.NONE) {
             // Draw
+            mPreviouslyUsedPolicy = getLastUsedPolicy();
             draw++;
         }
 
@@ -481,10 +462,14 @@ public class MCTSAgent extends Agent {
         return !didIWin(winner) && !isDraw(winner);
     }
 
+    public void setPreviouslyUsedPolicy(final Policy policy) {
+        mPreviouslyUsedPolicy = policy;
+    }
+
     @Override
     public void resetFixedPolicy() {
-        if (mLastSuccessfullStrategie != null) {
-            mLastSuccessfullStrategie.reset();
+        if (mPreviouslyUsedPolicy != null) {
+            mPreviouslyUsedPolicy.reset();
         }
     }
 

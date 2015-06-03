@@ -3,7 +3,14 @@ package nl.uva.td.ai;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PolicyQuality implements Comparable<PolicyQuality> {
+public class PolicyQuality {
+
+    public enum Relation {
+        BETTER,
+        EQUALS,
+        WORSE,
+        NON_DETERMINABLE
+    }
 
     private final HashSet<GameInfo> mBeats = new HashSet<GameInfo>();
 
@@ -82,8 +89,7 @@ public class PolicyQuality implements Comparable<PolicyQuality> {
         return result;
     }
 
-    @Override
-    public int compareTo(final PolicyQuality o) {
+    public Relation compareTo(final PolicyQuality o) {
         if (mBeats.containsAll(o.mBeats)) {
 
             // Beats more -> Better.
@@ -92,11 +98,11 @@ public class PolicyQuality implements Comparable<PolicyQuality> {
                 // Are all draw runs are in there too?
                 for (GameInfo gameInfo : o.mDraws) {
                     if (!mBeats.contains(gameInfo) && !mDraws.contains(gameInfo)) {
-                        return 0;
+                        return Relation.NON_DETERMINABLE;
                     }
                 }
 
-                return 1;
+                return Relation.BETTER;
             }
 
             // After here we can assume mBeats contains the same elements as o.mBeats
@@ -106,7 +112,7 @@ public class PolicyQuality implements Comparable<PolicyQuality> {
                 // Draws more -> Better.
                 if (mDraws.size() > o.mDraws.size()) {
                     // More draws, including all previous ones
-                    return 1;
+                    return Relation.BETTER;
                 }
 
                 // After this we can assume mDraws contains the same elements as o.mDraws
@@ -115,19 +121,19 @@ public class PolicyQuality implements Comparable<PolicyQuality> {
                 int mySteps = countSteps(mBeats);
                 int otherSteps = countSteps(o.mBeats);
                 if (mySteps < otherSteps) {
-                    return 1;
+                    return Relation.BETTER;
                 } else if (mySteps == otherSteps) {
                     // Both equally good, but one has to go!
-                    return 0;
+                    return Relation.EQUALS;
                 } else {
-                    return -1;
+                    return Relation.WORSE;
                 }
             }
 
             if (o.mDraws.containsAll(mDraws)) {
-                return -1;
+                return Relation.WORSE;
             } else {
-                return 0;
+                return Relation.NON_DETERMINABLE;
             }
 
         } else {
@@ -136,14 +142,14 @@ public class PolicyQuality implements Comparable<PolicyQuality> {
                 // Are all draw runs in there too?
                 for (GameInfo gameInfo : mDraws) {
                     if (!o.mBeats.contains(gameInfo) && !o.mDraws.contains(gameInfo)) {
-                        return 0;
+                        return Relation.NON_DETERMINABLE;
                     }
                 }
 
-                return -1;
+                return Relation.WORSE;
             }
 
-            return 0;
+            return Relation.NON_DETERMINABLE;
         }
     }
 

@@ -12,11 +12,12 @@ import nl.uva.td.game.map.Parser;
 
 public class TestTwoTactics {
 
-    private static String sTacticAlien = "7;4;3;0;0;1;1;1;3;1;3;1;2;1;1;1;3;1;0;1;1;0;0;0";
+    private static String sTacticAlien = "2;4;1;1;1;1;2;1;1;1;0;1;1;1;1;1;0;0;0;1;1;2;";
 
-    private static String sTacticHuman = "5;8;3;1;1;0;3;1;2;1;1;3;3;3;1;3;1;3;1;3;0;0;0;0";
+    private static String sTacticHuman = "8;3;3;3;3;3;1;1;1;3;3;5;1;1;1;3;3;";
 
     public static void main(final String[] args) {
+
         int draw = 0;
         int playerOne = 0;
         int playerTwo = 0;
@@ -31,8 +32,8 @@ public class TestTwoTactics {
             boolean fixPlayerOne = false;
             boolean fixPlayerTwo = true;
 
-            agentOne.start();
-            agentTwo.start();
+            agentOne.start(fixPlayerOne);
+            agentTwo.start(fixPlayerTwo);
 
             result = GameManager.run(agentOne, agentTwo, fixPlayerOne, fixPlayerTwo);
 

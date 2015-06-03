@@ -66,6 +66,6 @@ public class Policy {
             result += new Decision(action, mRace);
         }
 
-        return result;
+        return result + mRace.getName();
     }
 }

@@ -15,7 +15,7 @@ public class GameManager {
         PLAYER_TWO
     }
 
-    public static final int STARTING_LIVES = 5;
+    public static final int STARTING_LIVES = 1;
 
     public static final int STARTING_GOLD = 100;
 

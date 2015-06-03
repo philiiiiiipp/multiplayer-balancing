@@ -12,7 +12,7 @@ public class ChainLightningTower extends Tower {
     public static final int ID = 0;
 
     /** The maximum amount of jumps the lightning bolt does */
-    private final static int CHAIN_JUMPS = 5;
+    private final static int CHAIN_JUMPS = 4;
 
     /** The maximum amount of fields which can be between two creeps */
     private final static int MAXIMUM_JUMP_LENGTH = 3;

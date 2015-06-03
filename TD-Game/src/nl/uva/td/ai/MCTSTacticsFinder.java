@@ -41,18 +41,19 @@ public class MCTSTacticsFinder {
                 Player.PLAYER_TWO);
 
         // Agent agentTwo = new SimpleAgent(Player.PLAYER_TWO, new AlienRace(),
-        // GOOD_ALIEN_TACTIC_1);
+        // "2;4;0;1;7;1;1;1;1;1;1;1;1;1;2;1;0;0;0;0;3;");
 
         long tic = System.currentTimeMillis();
         int trys = 0;
         GameResult result = null;
         boolean fixPlayerOne = false;
         boolean fixPlayerTwo = true;
-        for (int i = 0; i < 200000; ++i) {
+        int runs = 0;
+        for (int i = 0; i < 1000; ++i) {
             System.out.println("#########################################");
             do {
-                agentOne.start();
-                agentTwo.start();
+                agentOne.start(fixPlayerOne);
+                agentTwo.start(fixPlayerTwo);
 
                 result = GameManager.run(agentOne, agentTwo, fixPlayerOne, fixPlayerTwo);
 
@@ -60,20 +61,21 @@ public class MCTSTacticsFinder {
                     // MCTS won against the last strategy!
                     PolicyQuality quality = calculatePolicyQuality(agentOne, agentTwo);
 
-                    result.setMultiplier(quality.getBeats().size());
+                    // TODO What if we have a draw but we beat many of the other policies? This
+                    // policy is pretty good then.
+                    result.setMultiplier(quality.getBeats().size() == 0 ? 1 : quality.getBeats().size());
                     agentOne.end(result, fixPlayerOne);
                     agentTwo.end(result, fixPlayerTwo);
 
-                    //
+                    // Evaluate if the found policy is good.
+                    if (i != 0) {
+                        PolicyDependencyGraph graph = getPolicyGraph(agentOne.getPlayer());
+                        graph.addPolicy(getLastPolicy(agentOne), quality, getPolicyGraph(agentTwo.getPlayer()));
+                    }
 
-                    if (!quality.isGoodQuality()) {
-                        result.setWinner(Player.NONE);
-                    } else {
-                        if (i != 0) {
-                            PolicyDependencyGraph graph = getPolicyGraph(agentOne.getPlayer());
-                            graph.addPolicy(getLastPolicy(agentOne), quality, getPolicyGraph(agentTwo.getPlayer()));
-                        }
-                        result.setWinner(agentOne.getPlayer());
+                    if (quality.isGoodQuality()) {
+                        // This will stop the loop if the quality is good enough
+                        // result.setWinner(agentOne.getPlayer());
                     }
                 } else {
                     agentOne.end(result, fixPlayerOne);
@@ -83,12 +85,13 @@ public class MCTSTacticsFinder {
                 printInfo(agentOne, agentTwo, result, ++trys);
             } while (result.getWinner() != agentOne.getPlayer());
 
-            if (getPolicyGraph(agentOne.getPlayer()).getPolicies().size() > 2)
-                getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
+            // if (runs++ % 5 == 0) {
+            // getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
+            // }
+
+            // getPolicyGraph(agentOne.getPlayer()).getPolicies().size() > 15
 
             System.err.println("##### -----> " + result.getSteps());
-
-            getPolicyGraph(agentOne.getPlayer()).info();
 
             System.out.println();
             printLastTactic(agentOne, agentTwo);
@@ -104,6 +107,23 @@ public class MCTSTacticsFinder {
             agentTwo = tmp;
         }
 
+        // int a = getPolicyGraph(agentOne.getPlayer()).test(getPolicyGraph(agentTwo.getPlayer()));
+        // int b = getPolicyGraph(agentTwo.getPlayer()).test(getPolicyGraph(agentOne.getPlayer()));
+        //
+        // if (a != b) {
+        // System.out.println("err");
+        // }
+
+        boolean donePruning = false;
+        while (!donePruning) {
+            donePruning = !getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
+            donePruning = !getPolicyGraph(agentTwo.getPlayer()).prune(getPolicyGraph(agentOne.getPlayer()))
+                    || donePruning;
+
+            System.out.println("pruned");
+        }
+
+        getPolicyGraph(agentOne.getPlayer()).info();
         tic = System.currentTimeMillis() - tic;
         GameManager.printStatistics();
         System.out.println("Total: " + tic / 1000 + "s");
@@ -158,7 +178,9 @@ public class MCTSTacticsFinder {
 
     private static void printLastTactic(final Agent playerOne, final Agent playerTwo) {
         String playerOneTactic = "";
+        String playerOneTacticInts = "";
         String playerTwoTactic = "";
+        String playerTwoTacticInts = "";
 
         if (playerOne.getLastDecisionChain().size() != playerTwo.getLastDecisionChain().size()) {
             throw new RuntimeException("Must be the same size");
@@ -166,11 +188,15 @@ public class MCTSTacticsFinder {
 
         for (int i = 0; i < playerOne.getLastDecisionChain().size(); ++i) {
             playerOneTactic += playerOne.getLastDecisionChain().get(i);
+            playerOneTacticInts += playerOne.getLastDecisionChain().get(i).getDecisionNumber() + ";";
             playerTwoTactic += playerTwo.getLastDecisionChain().get(i);
+            playerTwoTacticInts += playerTwo.getLastDecisionChain().get(i).getDecisionNumber() + ";";
         }
 
         System.out.println("Search: " + playerOne.getRace().getName() + ": " + playerOneTactic);
+        System.out.println(playerOneTacticInts);
         System.out.println("Fixed:  " + playerTwo.getRace().getName() + ": " + playerTwoTactic);
+        System.out.println(playerTwoTacticInts);
         System.out.println("Steps: " + playerOne.getLastDecisionChain().size());
         playerOne.printStatistics();
         System.out.println("---------------------------------");
@@ -184,7 +210,7 @@ public class MCTSTacticsFinder {
             if (trys % 158000 == 0) {
                 System.out.println(" " + trys);
 
-                if (trys % (158000 * 1) == 0) {
+                if (trys % (158000 * 40) == 0) {
                     GameManager.printStatistics();
                     agentOne.printStatistics();
                     System.out.println();

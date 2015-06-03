@@ -26,12 +26,12 @@ public abstract class Agent {
         mRace = race;
     }
 
-    public final void start() {
+    public final void start(final boolean fixed) {
         mLastDecisionChain.clear();
-        startInternal();
+        startInternal(fixed);
     }
 
-    protected abstract void startInternal();
+    protected abstract void startInternal(final boolean fixed);
 
     public final Decision makeDecision(final GameField yourMap, final GameField enemyMap,
             final PlayerAttributes yourAttributes, final PlayerAttributes enemyAttributes, final int elapsedSteps,

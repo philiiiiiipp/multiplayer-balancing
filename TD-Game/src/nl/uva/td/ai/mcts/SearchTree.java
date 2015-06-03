@@ -15,7 +15,7 @@ public class SearchTree {
     /** The total amount of nodes in this search tree **/
     private long mNodeCounter = 0;
 
-    private long mCurrentDeepestDepth = 0;
+    private int mCurrentDeepestDepth = 0;
 
     /**
      * Initialise the search tree with the root node

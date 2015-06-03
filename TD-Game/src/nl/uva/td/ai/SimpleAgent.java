@@ -71,7 +71,7 @@ public class SimpleAgent extends Agent {
     }
 
     @Override
-    protected void startInternal() {
+    protected void startInternal(final boolean fixed) {
         // TODO Auto-generated method stub
 
     }

@@ -13,7 +13,7 @@ public class Frozen extends MovementChange {
     private static final int ID = 0;
 
     /** The duration this parasite affects the creep */
-    private static final int FROZEN_DURATION = 2;
+    private static final int FROZEN_DURATION = 3;
 
     /** The percentage of hindrance the freezing does */
     private static final double FROZEN_HINDRANCE = 0.9;
