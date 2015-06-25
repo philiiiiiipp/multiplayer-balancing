@@ -9,7 +9,7 @@ public class PlayerAttributes {
         AMOUNT
     }
 
-    private static final double HEALTH_INCREASE_PER_UPDATE = 0.2;
+    private static final double HEALTH_INCREASE_PER_UPDATE = 0.4;
 
     private static final double MOVEMENT_INCREASE_PER_UPDATE = 0.1;
 

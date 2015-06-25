@@ -36,6 +36,10 @@ public class Policy {
         return 0;
     }
 
+    public List<Integer> getActionList() {
+        return mPolicy;
+    }
+
     public Race getRace() {
         return mRace;
     }

@@ -1,9 +1,19 @@
 package nl.uva.td.ai;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import nl.uva.td.ai.PolicyQuality.Relation;
+import nl.uva.td.ai.mcts.BruteForceAgent;
+import nl.uva.td.ai.mcts.BruteForceStepAgent;
 import nl.uva.td.ai.mcts.MCTSAgent;
+import nl.uva.td.ai.quality.ActionNode;
 import nl.uva.td.game.GameManager;
 import nl.uva.td.game.GameManager.Player;
 import nl.uva.td.game.GameResult;
@@ -31,8 +41,88 @@ public class MCTSTacticsFinder {
     private static final PolicyDependencyGraph sPlayerTwo = new PolicyDependencyGraph();
 
     public static void main(final String[] args) {
+        // createFighters();
+        fight();
+    }
+
+    public static void fight() {
+        long tic = System.currentTimeMillis();
+        List<Policy> humanPolicyList = readFromFile(new HumanRace());
+        List<Policy> alienPolicyList = readFromFile(new AlienRace());
+
+        ActionNode currentNode = new ActionNode(0, Race.Type.ALIEN);
+        final ActionNode startingNode = currentNode;
+
+        for (Policy humanPolicy : humanPolicyList) {
+
+            for (Policy alienPolicy : alienPolicyList) {
+
+                GameResult result = GameManager.run(humanPolicy, alienPolicy);
+                PolicyQuality.Relation relation = Relation.EQUALS;
+
+                if (result.getWinner() == Player.PLAYER_ONE) {
+                    relation = Relation.BETTER;
+                } else if (result.getWinner() == Player.PLAYER_TWO) {
+                    relation = Relation.WORSE;
+                }
+
+                humanPolicy.reset();
+                alienPolicy.reset();
+
+                for (int step = 0; step < result.getSteps(); ++step) {
+                    currentNode = addOrReturnNode(currentNode, humanPolicy.getNextAction(), humanPolicy.getRace()
+                            .getType());
+
+                    if (relation == Relation.BETTER) {
+                        currentNode.winCounter++;
+                    } else if (relation == Relation.EQUALS) {
+                        currentNode.drawCounter++;
+                    } else {
+                        currentNode.loseCounter++;
+                    }
+
+                    currentNode = addOrReturnNode(currentNode, alienPolicy.getNextAction(), alienPolicy.getRace()
+                            .getType());
+
+                    if (relation == Relation.BETTER) {
+                        currentNode.loseCounter++;
+                    } else if (relation == Relation.EQUALS) {
+                        currentNode.drawCounter++;
+                    } else {
+                        currentNode.winCounter++;
+                    }
+                }
+
+                currentNode = startingNode;
+                humanPolicy.reset();
+                alienPolicy.reset();
+            }
+        }
+
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("neo4jdb-action-nodes" + ".txt", "UTF-8");
+        } catch (Exception e1) {}
+        startingNode.buildNodeJOutput(writer);
+
+        writer.close();
+        System.out.println((System.currentTimeMillis() - tic) / 1000 + "s");
+    }
+
+    public static ActionNode addOrReturnNode(final ActionNode currentNode, final int action, final Race.Type raceType) {
+        if (currentNode.children.containsKey(action)) {
+            return currentNode.children.get(action);
+        }
+
+        ActionNode node = new ActionNode(action, raceType);
+        currentNode.children.put(action, node);
+        return node;
+    }
+
+    public static void createFighters() {
         GameField playerOneMap = Parser.parseFile(GameManager.MAP_FILE);
         Race race = new HumanRace();
+
         Agent agentOne = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount() + 4,
                 Player.PLAYER_ONE);
 
@@ -40,104 +130,132 @@ public class MCTSTacticsFinder {
         Agent agentTwo = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount() + 4,
                 Player.PLAYER_TWO);
 
-        // Agent agentTwo = new SimpleAgent(Player.PLAYER_TWO, new AlienRace(),
-        // "2;4;0;1;7;1;1;1;1;1;1;1;1;1;2;1;0;0;0;0;3;");
-
         long tic = System.currentTimeMillis();
         int trys = 0;
+        int amountOfReocuringPolicies = 0;
+
         GameResult result = null;
         boolean fixPlayerOne = false;
         boolean fixPlayerTwo = true;
-        int runs = 0;
-        for (int i = 0; i < 1000; ++i) {
-            System.out.println("#########################################");
+
+        Set<Policy> humanPolicies = new HashSet<Policy>();
+        Set<Policy> alienPolicies = new HashSet<Policy>();
+
+        final int amountOfCounterPolicySearches = 1000;
+
+        for (int i = 0; i < amountOfCounterPolicySearches; ++i) {
+
             do {
                 agentOne.start(fixPlayerOne);
                 agentTwo.start(fixPlayerTwo);
 
                 result = GameManager.run(agentOne, agentTwo, fixPlayerOne, fixPlayerTwo);
 
-                if (result.getWinner() != agentTwo.getPlayer()) {
-                    // MCTS won against the last strategy!
-                    PolicyQuality quality = calculatePolicyQuality(agentOne, agentTwo);
+                if (result.getWinner() == agentOne.getPlayer()) {
 
-                    // TODO What if we have a draw but we beat many of the other policies? This
-                    // policy is pretty good then.
-                    result.setMultiplier(quality.getBeats().size() == 0 ? 1 : quality.getBeats().size());
                     agentOne.end(result, fixPlayerOne);
                     agentTwo.end(result, fixPlayerTwo);
 
-                    // Evaluate if the found policy is good.
-                    if (i != 0) {
-                        PolicyDependencyGraph graph = getPolicyGraph(agentOne.getPlayer());
-                        graph.addPolicy(getLastPolicy(agentOne), quality, getPolicyGraph(agentTwo.getPlayer()));
+                    if (agentOne.getRace().getName() == AlienRace.NAME) {
+                        alienPolicies.add(agentOne.getLastUsedPolicy());
+                    } else {
+                        humanPolicies.add(agentOne.getLastUsedPolicy());
                     }
 
-                    if (quality.isGoodQuality()) {
-                        // This will stop the loop if the quality is good enough
-                        // result.setWinner(agentOne.getPlayer());
-                    }
                 } else {
                     agentOne.end(result, fixPlayerOne);
                     agentTwo.end(result, fixPlayerTwo);
                 }
-
-                printInfo(agentOne, agentTwo, result, ++trys);
             } while (result.getWinner() != agentOne.getPlayer());
-
-            // if (runs++ % 5 == 0) {
-            // getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
-            // }
-
-            // getPolicyGraph(agentOne.getPlayer()).getPolicies().size() > 15
-
-            System.err.println("##### -----> " + result.getSteps());
-
-            System.out.println();
-            printLastTactic(agentOne, agentTwo);
 
             agentTwo.reset();
             agentOne.resetFixedPolicy();
 
-            System.out.println("Tries needed until better Policy " + trys);
-            System.out.println();
             trys = 0;
             Agent tmp = agentOne;
             agentOne = agentTwo;
             agentTwo = tmp;
         }
 
-        // int a = getPolicyGraph(agentOne.getPlayer()).test(getPolicyGraph(agentTwo.getPlayer()));
-        // int b = getPolicyGraph(agentTwo.getPlayer()).test(getPolicyGraph(agentOne.getPlayer()));
-        //
-        // if (a != b) {
-        // System.out.println("err");
-        // }
+        saveToFile(alienPolicies, new AlienRace());
+        saveToFile(humanPolicies, new HumanRace());
+    }
 
-        boolean donePruning = false;
-        while (!donePruning) {
-            donePruning = !getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
-            donePruning = !getPolicyGraph(agentTwo.getPlayer()).prune(getPolicyGraph(agentOne.getPlayer()))
-                    || donePruning;
+    public static List<Policy> readFromFile(final Race race) {
+        String raceTactics = null;
 
-            System.out.println("pruned");
+        try {
+            raceTactics = new String(Files.readAllBytes(Paths.get(race.getName() + ".txt")));
+        } catch (final IOException ex) {
+            throw new RuntimeException("File " + race.getName() + ".txt not found.");
         }
 
-        getPolicyGraph(agentOne.getPlayer()).info();
-        tic = System.currentTimeMillis() - tic;
-        GameManager.printStatistics();
-        System.out.println("Total: " + tic / 1000 + "s");
-        GameManager.resetStatistics();
+        List<Policy> policyList = new LinkedList<Policy>();
+        String[] policyStrings = raceTactics.split("\n");
+        for (String policy : policyStrings) {
+
+            String[] actions = policy.split(";");
+            List<Integer> actionList = new LinkedList<Integer>();
+
+            for (String action : actions) {
+                actionList.add(Integer.parseInt(action));
+            }
+
+            policyList.add(new Policy(actionList, race));
+        }
+
+        return policyList;
+    }
+
+    public static void saveToFile(final Set<Policy> policies, final Race race) {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(race.getName() + ".txt", "UTF-8");
+        } catch (Exception e1) {}
+
+        for (Policy p : policies) {
+            for (Integer action : p.getActionList()) {
+                writer.print(action + ";");
+            }
+            writer.println();
+        }
+
+        writer.close();
     }
 
     private static Policy getLastPolicy(final Agent agent) {
         return new Policy(getLastDecisionChain(agent), agent.getRace());
     }
 
+    private static PolicyQuality calculatePolicyQuality(final Policy policy, final PolicyDependencyGraph enemyGraph) {
+
+        PolicyQuality policyQuality = new PolicyQuality();
+        for (Policy p : enemyGraph.getPolicies()) {
+            GameResult result = GameManager.run(policy, p);
+
+            if (result.getWinner() == Player.PLAYER_ONE) {
+                policyQuality.beats(new GameInfo(p, result.getSteps()));
+            } else if (result.getWinner() == Player.NONE) {
+                policyQuality.draws(new GameInfo(p, result.getSteps()));
+            } else {
+                policyQuality.loses(new GameInfo(p, result.getSteps()));
+            }
+
+            p.reset();
+            policy.reset();
+        }
+
+        return policyQuality;
+    }
+
     private static PolicyQuality calculatePolicyQuality(final Agent agentOne, final Agent agentTwo) {
         List<Integer> decisionChain = getLastDecisionChain(agentOne);
 
         Policy policyAgentOne = new Policy(decisionChain, agentOne.getRace());
+        if (getPolicyGraph(agentOne.getPlayer()).getPolicies().contains(policyAgentOne)) {
+            return getPolicyGraph(agentOne.getPlayer()).getPolicyQuality(policyAgentOne);
+        }
+
         PolicyDependencyGraph agentTwoPolicies = getPolicyGraph(agentTwo.getPlayer());
 
         PolicyQuality policyQuality = new PolicyQuality();
@@ -210,12 +328,73 @@ public class MCTSTacticsFinder {
             if (trys % 158000 == 0) {
                 System.out.println(" " + trys);
 
-                if (trys % (158000 * 40) == 0) {
+                if (trys % (158000 * 5) == 0) {
                     GameManager.printStatistics();
                     agentOne.printStatistics();
                     System.out.println();
                 }
             }
         }
+    }
+
+    public static void bruteForceFight() {
+        GameField playerOneMap = Parser.parseFile(GameManager.MAP_FILE);
+
+        Race race = new AlienRace();
+        BruteForceStepAgent agentOne = new BruteForceStepAgent(Player.PLAYER_ONE, race);
+
+        race = new HumanRace();
+        BruteForceAgent agentTwo = new BruteForceAgent(Player.PLAYER_TWO, race);
+
+        long tic = System.currentTimeMillis();
+        int trys = 0;
+        GameResult result = null;
+        boolean fixPlayerOne = false;
+        boolean fixPlayerTwo = false;
+
+        for (; !agentOne.mDone;) {
+
+            do {
+                agentOne.start(fixPlayerOne);
+                agentTwo.start(fixPlayerTwo);
+
+                result = GameManager.run(agentOne, agentTwo, fixPlayerOne, fixPlayerTwo);
+                agentTwo.end(result, fixPlayerTwo);
+
+                if (++trys % 157000 == 0) {
+                    printLastTactic(agentOne, agentTwo);
+                }
+
+            } while (result.getWinner() == agentOne.getPlayer() && !agentTwo.mDone);
+
+            if (result.getWinner() == agentOne.getPlayer()) {
+                // This tactic won against all!
+                System.out.println("Winner Winner Chicken Dinner! "
+                        + new Policy(agentOne.getRace(), agentOne.getLastDecisionChain()));
+
+            }
+
+            // System.out.println();
+            // printLastTactic(agentOne, agentTwo);
+
+            agentOne.end(result, false);
+            agentTwo.reset();
+            // trys = 0;
+        }
+
+        boolean donePruning = false;
+        while (!donePruning) {
+            donePruning = !getPolicyGraph(agentOne.getPlayer()).prune(getPolicyGraph(agentTwo.getPlayer()));
+            donePruning = !getPolicyGraph(agentTwo.getPlayer()).prune(getPolicyGraph(agentOne.getPlayer()))
+                    || donePruning;
+
+            System.out.println("pruned");
+        }
+
+        getPolicyGraph(agentOne.getPlayer()).info();
+        tic = System.currentTimeMillis() - tic;
+        GameManager.printStatistics();
+        System.out.println("Total: " + tic / 1000 + "s");
+        GameManager.resetStatistics();
     }
 }

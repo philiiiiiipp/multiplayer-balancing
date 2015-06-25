@@ -8,6 +8,8 @@ import nl.uva.td.game.faction.tower.Tower;
 
 public class AlienRace implements Race {
 
+    public static final String NAME = "Alien";
+
     @Override
     public Tower getTowerByNumber(final int number) {
         switch (number) {
@@ -25,7 +27,7 @@ public class AlienRace implements Race {
 
     @Override
     public String getName() {
-        return "Alien";
+        return NAME;
     }
 
     @Override
@@ -33,4 +35,8 @@ public class AlienRace implements Race {
         return 3;
     }
 
+    @Override
+    public Type getType() {
+        return Type.ALIEN;
+    }
 }

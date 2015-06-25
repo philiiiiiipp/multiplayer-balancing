@@ -18,15 +18,19 @@ public class Util {
         return list.remove(position);
     }
 
-    public static void print(final List<Object> list) {
+    public static void print(final List<?> list) {
         for (Object o : list) {
             System.out.print(o);
         }
+
+        System.out.println();
     }
 
-    public static void print(final Set<Object> list) {
+    public static void print(final Set<?> list) {
         for (Object o : list) {
             System.out.print(o);
         }
+
+        System.out.println();
     }
 }

@@ -32,4 +32,9 @@ public class HumanRace implements Race {
     public int getAvailableTowerAmount() {
         return 3;
     }
+
+    @Override
+    public Type getType() {
+        return Type.HUMAN;
+    }
 }

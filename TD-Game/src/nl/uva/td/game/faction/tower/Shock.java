@@ -13,10 +13,10 @@ public class Shock extends MovementChange {
     private static final int ID = 0;
 
     /** The duration this parasite affects the creep */
-    private static final int PARASITE_DURATION = 2;
+    private static final int SHOCK_DURATION = 3;
 
     /** The remaining duration this creep gets affected */
-    private int mRemainingTurns = PARASITE_DURATION;
+    private int mRemainingTurns = SHOCK_DURATION;
 
     @Override
     public boolean apply(final Creep creep) {

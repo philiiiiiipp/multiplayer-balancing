@@ -1,8 +1,15 @@
 package nl.uva.td.game.faction;
 
+import nl.uva.td.game.faction.alien.AlienRace;
+import nl.uva.td.game.faction.human.HumanRace;
 import nl.uva.td.game.faction.tower.Tower;
 
 public interface Race {
+
+    public enum Type {
+        HUMAN,
+        ALIEN
+    }
 
     /**
      * Returns an initialised tower for the given id number
@@ -15,7 +22,7 @@ public interface Race {
 
     /**
      * Get the available amount of towers from this race
-     * 
+     *
      * @return The available amount of towers from this race
      */
     public int getAvailableTowerAmount();
@@ -27,4 +34,18 @@ public interface Race {
      */
     public String getName();
 
+    /**
+     * The type of this race
+     *
+     * @return The type of this race
+     */
+    public Race.Type getType();
+
+    public static Race getRaceForType(final Race.Type type) {
+        if (type == Type.HUMAN) {
+            return new HumanRace();
+        } else {
+            return new AlienRace();
+        }
+    }
 }

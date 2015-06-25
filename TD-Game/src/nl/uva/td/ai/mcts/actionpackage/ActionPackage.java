@@ -15,7 +15,7 @@ public abstract class ActionPackage {
 
     private final ActionPackageType mType;
 
-    public static final int MAX_ACTION_PACKAGE_LENGTH = 5;
+    public static final int MAX_ACTION_PACKAGE_LENGTH = 8;
 
     private final List<Integer> mActions;
 

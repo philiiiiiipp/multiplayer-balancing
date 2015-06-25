@@ -17,11 +17,11 @@ public class PolicyDependencyGraph {
         return new HashSet<Policy>(mPolicyDependencies.keySet());
     }
 
-    public void addPolicy(final Policy lastPolicy, final PolicyQuality policyQuality,
+    public boolean addPolicy(final Policy lastPolicy, final PolicyQuality policyQuality,
             final PolicyDependencyGraph enemyGraph) {
 
         if (mPolicyDependencies.containsKey(lastPolicy)) {
-            return;
+            return false;
         }
 
         mPolicyDependencies.put(lastPolicy, policyQuality);
@@ -37,6 +37,8 @@ public class PolicyDependencyGraph {
         for (GameInfo p : policyQuality.getLoses()) {
             enemyGraph.getPolicyQuality(p.getPlayedAgainst()).beats(new GameInfo(lastPolicy, p.getSteps()));
         }
+
+        return true;
     }
 
     public PolicyQuality getPolicyQuality(final Policy policy) {

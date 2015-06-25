@@ -15,7 +15,7 @@ public class GameManager {
         PLAYER_TWO
     }
 
-    public static final int STARTING_LIVES = 1;
+    public static final int STARTING_LIVES = 3;
 
     public static final int STARTING_GOLD = 100;
 
@@ -23,9 +23,9 @@ public class GameManager {
 
     public static final int SALARY_FREQUENCY = 5;
 
-    public static final String MAP_FILE = "2x2";
+    public static final String MAP_FILE = "3x3";
 
-    public static final int MAX_STEPS = 100;
+    public static final int MAX_STEPS = 35;
 
     private static final boolean SHOW_UI = false;
 
@@ -55,7 +55,7 @@ public class GameManager {
         GameState playerTwoGameState = new GameState(playerTwoMap, SHOW_UI, playerTwo.getName());
 
         int step = 0;
-        while (step <= MAX_STEPS && playerOneAttributes.getLives() >= 0 && playerTwoAttributes.getLives() >= 0) {
+        while (step < MAX_STEPS && playerOneAttributes.getLives() > 0 && playerTwoAttributes.getLives() > 0) {
 
             startTimer();
             Decision playerOnesDecision = playerOne.makeDecision(playerOneMap, playerTwoMap, playerOneAttributes,

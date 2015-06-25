@@ -28,16 +28,16 @@ public class MCTSAgent extends Agent {
 
     public static final double INITIAL_REWARD = 0.5;
 
-    public static final double WIN_REWARD = 50000;
+    public static final double WIN_REWARD = 10;
 
-    public static final double LOOSER_REWARD = 0.5;
+    public static final double LOOSER_REWARD = -0.5;
 
-    public static final double DRAW_REWARD = LOOSER_REWARD;
+    public static final double DRAW_REWARD = 0;
 
     private final SearchTree mSearchTree;
 
     /** Progressive widening threshold */
-    public static final int T = 10;
+    public static final int T = 7;
 
     /** The total amount of available actions */
     private final int mTotalActionAmount;
@@ -76,6 +76,7 @@ public class MCTSAgent extends Agent {
     private final HashSet<String> mUsedStrategies = new HashSet<String>();
     private String mCurrentStrategie = "";
     private long mSameStrategieCounter = 0;
+    private long mDifferentStrategieCounter = 0;
 
     public MCTSAgent(final Race race, final int totalActionAmount, final Player player) {
         super("MCTS Agent", player, race);
@@ -170,7 +171,18 @@ public class MCTSAgent extends Agent {
         if (mRandomWalk == RandomWalkPhase.IN || mRandomWalk == RandomWalkPhase.STARTED) {
             // Simulation
             mRandomWalk = RandomWalkPhase.IN;
-            return randomWalk();
+            int action = randomWalk();
+
+            if (action > 3) {
+                // is tower action
+                int towerPos = action - 4;
+                towerPos /= mRace.getAvailableTowerAmount();
+                if (!mEmptyTowerPositions.remove(new Integer(towerPos))) {
+                    throw new RuntimeException("Doesnt contain");
+                }
+            }
+
+            return action;
 
         } else {
             // Selection
@@ -181,8 +193,22 @@ public class MCTSAgent extends Agent {
 
                 mCurrentActionPackage = doWidening();
             } else {
-                if (currentNode.getAmountOfChildren() != mTotalActionAmount - 3 + mUpgradeList.size()
-                        && currentNode.getVisitationCount() % T == 0) {
+
+                int upgradeSize = mUpgradeList.size();
+                if (mCurrentActionPackage != null && !mCurrentActionPackage.allowesUpdate()) {
+                    upgradeSize = 0;
+                }
+
+                int possibleActions = mTotalActionAmount - 3 + upgradeSize;
+                int possibleTowerActions = mTotalAmountOfTowerFields * mRace.getAvailableTowerAmount();
+                possibleActions -= possibleTowerActions;
+                possibleActions += mEmptyTowerPositions.size() * mRace.getAvailableTowerAmount();
+
+                if (currentNode.getAmountOfChildren() > possibleActions) {
+                    throw new RuntimeException("NONO");
+                }
+
+                if (currentNode.getAmountOfChildren() != possibleActions && currentNode.getVisitationCount() % T == 0) {
 
                     // Progressive widening
                     mCurrentActionPackage = doWidening();
@@ -351,7 +377,7 @@ public class MCTSAgent extends Agent {
             return Util.RND.nextInt(3) + 1;
         case 2:
             // Build tower
-            int nextPosition = Util.removeRandomObject(mEmptyTowerPositions);
+            int nextPosition = Util.randomObject(mEmptyTowerPositions);
             nextPosition *= mRace.getAvailableTowerAmount();
             nextPosition += 4 + Util.RND.nextInt(mRace.getAvailableTowerAmount());
             return nextPosition;
@@ -382,6 +408,7 @@ public class MCTSAgent extends Agent {
         if (mUsedStrategies.contains(mCurrentStrategie)) {
             mSameStrategieCounter++;
         } else {
+            mDifferentStrategieCounter++;
             mUsedStrategies.add(mCurrentStrategie);
         }
         mCurrentStrategie = "";
@@ -414,6 +441,7 @@ public class MCTSAgent extends Agent {
         if (gameResult.getWinner() == mPlayer) {
             // I won
             mPreviouslyUsedPolicy = getLastUsedPolicy();
+            mSearchTree.initialise();
         } else if (gameResult.getWinner() == Player.NONE) {
             // Draw
             mPreviouslyUsedPolicy = getLastUsedPolicy();
@@ -480,7 +508,8 @@ public class MCTSAgent extends Agent {
         System.out.println("---- Search Tree Statisctics ----");
         System.out.println("Race: " + mRace + "\t Player: " + mPlayer);
         System.out.println("Node count: " + mSearchTree.getNodeCount() + "\t Max Depth: " + mSearchTree.getMaxDepth());
-        System.out.println(" Draw: " + draw + "\t Same: " + mSameStrategieCounter);
+        System.out.println(" Draw: " + draw + "\t Same: " + mSameStrategieCounter + "\t Different: "
+                + mDifferentStrategieCounter);
         System.out.print(root.nodeInfo(mRace, mUpgradeList));
 
     }

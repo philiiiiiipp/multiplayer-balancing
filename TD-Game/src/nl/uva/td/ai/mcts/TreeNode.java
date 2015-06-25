@@ -10,7 +10,7 @@ import nl.uva.td.game.faction.Race;
 public class TreeNode {
 
     /** Tuning constant for the exploration bonus */
-    public static final double C = Math.sqrt(2);
+    public static final double C = 2 * Math.sqrt(2);
 
     /** The reward given this state and an action **/
     private final HashMap<Integer, Double> mActionReward = new HashMap<>();
@@ -40,6 +40,7 @@ public class TreeNode {
      *            The node resulting from that action
      */
     public void addChild(final int action, final TreeNode treeNode) {
+        if (mChildrens.containsKey(action)) throw new RuntimeException("NONO");
         mChildrens.put(action, treeNode);
     }
 
