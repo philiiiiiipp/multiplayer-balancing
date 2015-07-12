@@ -14,6 +14,7 @@ public class AlienRace implements Race {
     public Tower getTowerByNumber(final int number) {
         switch (number) {
         case ChainLightningTower.ID:
+            // return new ArcherTower(2);
             return new ChainLightningTower();
         case ParasiteTower.ID:
             return new ParasiteTower();

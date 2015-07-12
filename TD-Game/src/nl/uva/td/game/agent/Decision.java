@@ -26,8 +26,8 @@ public class Decision {
             mWantsToUpgradeCreep = UpgradeType.values()[decision]; // Decision 0 == UpgradeType.NONE
         } else {
             decision -= 4;
-            int towerType = decision % 3;
-            int towerPosition = decision / 3;
+            int towerType = decision % race.getAvailableTowerAmount();
+            int towerPosition = decision / race.getAvailableTowerAmount();
 
             mTowerPlacement = new TowerPlacement(towerPosition, race.getTowerByNumber(towerType));
         }
@@ -71,14 +71,22 @@ public class Decision {
 
     @Override
     public String toString() {
-
         if (mWantsToPlaceCreep) {
-            return "C__";
+            return "C";
         } else if (mWantsToUpgradeCreep != UpgradeType.NONE) {
-            return mWantsToUpgradeCreep.toString().substring(0, 2) + "_";
+            return mWantsToUpgradeCreep.toString().substring(0, 2);
         } else {
-            return "" + mTowerPlacement.getTower().toString().charAt(0) + mTowerPlacement.getTowerPosition() + "_";
+            return "" + mTowerPlacement.getTower().toString().charAt(0) + mTowerPlacement.getTowerPosition();
         }
+
+        // if (mWantsToPlaceCreep) {
+        // return "C__";
+        // } else if (mWantsToUpgradeCreep != UpgradeType.NONE) {
+        // return mWantsToUpgradeCreep.toString().substring(0, 2) + "_";
+        // } else {
+        // return "" + mTowerPlacement.getTower().toString().charAt(0) +
+        // mTowerPlacement.getTowerPosition() + "_";
+        // }
     }
 
 }

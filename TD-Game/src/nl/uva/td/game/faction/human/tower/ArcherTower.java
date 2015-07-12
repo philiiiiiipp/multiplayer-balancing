@@ -10,6 +10,10 @@ public class ArcherTower extends Tower {
         super(false, 1, 3, 30, ID);
     }
 
+    public ArcherTower(final double dmg) {
+        super(false, dmg, 3, 30, ID);
+    }
+
     @Override
     public String toString() {
         return "Archer";

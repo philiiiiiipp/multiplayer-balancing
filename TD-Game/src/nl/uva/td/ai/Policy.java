@@ -28,7 +28,7 @@ public class Policy {
         mRace = race;
     }
 
-    public Integer getNextAction() {
+    public int getNextAction() {
         if (mCurrentPolicyPosition < mPolicy.size()) {
             return mPolicy.get(mCurrentPolicyPosition++);
         }

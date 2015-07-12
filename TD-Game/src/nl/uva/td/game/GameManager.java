@@ -15,7 +15,7 @@ public class GameManager {
         PLAYER_TWO
     }
 
-    public static final int STARTING_LIVES = 3;
+    public static final int STARTING_LIVES = 2;
 
     public static final int STARTING_GOLD = 100;
 
@@ -25,7 +25,7 @@ public class GameManager {
 
     public static final String MAP_FILE = "3x3";
 
-    public static final int MAX_STEPS = 35;
+    public static final int MAX_STEPS = 40;
 
     private static final boolean SHOW_UI = false;
 

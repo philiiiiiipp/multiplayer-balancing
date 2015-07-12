@@ -1,5 +1,8 @@
 package nl.uva.td.ai;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -19,6 +22,7 @@ import nl.uva.td.game.GameManager.Player;
 import nl.uva.td.game.GameResult;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
+import nl.uva.td.game.faction.Race.Type;
 import nl.uva.td.game.faction.alien.AlienRace;
 import nl.uva.td.game.faction.human.HumanRace;
 import nl.uva.td.game.map.GameField;
@@ -26,23 +30,140 @@ import nl.uva.td.game.map.Parser;
 
 public class MCTSTacticsFinder {
 
-    private static final String GOOD_ALIEN_TACTIC_1 = "25;22;13;4;28;2;3;12;3;9;3;3;1;21;0;3;1;3;2;1;3;1;0;0;0;0;2;1;1;0;0;3;2;0;1;2;0;1;0;3;3;0;1;0;0;0;3;2;1;2;0;0;2;2;0;0;1;1;0;1;1;0;1;1;1;2;0;0;2;1;2;2;0;3;0;2;0;0;0;0;2";
-
-    private static final String GOOD_HUMAN_TACTIC_1 = "23;8;2;3;26;0;2;4;3;2;11;3;0;14;1;0;0;0;2;1;0;3;2;0;17;0;20;3;0;0;0;3;0;2;3;2;3;3;3;0;0;0;2;1;2;2;3;2;0;2;0;2;3;1;2;0;0;3;3;1;0;3;1;1;0;0;0;2;0;0;3;2;2;2;1;0;2;2;0;0;2;2;1;2;2;2;1;0;3;1;0;2;2;3;0;2;3;0;0;3;2";
-
-    private static final String GOOD_HUMAN_TACTIC_2 = "23;17;26;0;0;14;3;2;5;1;1;0;11;2;0;20;8;3;2;3;0;0;1;0;2;2;1;2;2;3;0;1;3;0;3;2;1;3;1;0;0;3;3;0;2;0;3;0;3;3;2;2;3;1;0;0;0;2;2;2;0;0;0;0;0;2;0;3;2;1;2;0;3;2;2;3;0;0;3;1;1;3;0;0;3;2;0;0;0;2;3;2;3;1;0;0;2;0;2;1;0;0;2;2;0;2;0;0;0;2;2;0;1;3;2;2;1;0;2;";
-
-    private static final String GOOD_HUMAN_TACTIC_3 = "18;2;0;0;0;3;0;11;3;1;2;0;6;3;21;8;0;13;1;22;0;1;27;0;3;0;0;1;0;0;0;2;2;0;3;0;2;1;1;1;0;3;0;0;2;2;1;0;0;2;2;1;2;3;0;0;0;0;0;0;1;3;3;1;0;2;3;2;0;1;0;0;0;0;3;3;0;0;0;0;0;1;1;3;1;0;0;0;0;0;2;0;1;3;0;3;3;0;1;0;1;1;3;0;3;3;1;3;0;0;0;1;0;2;1;2;";
-
-    private static final String GOOD_HUMAN_TACTIC_4 = "18;2;2;2;2;3;2;11;3;1;2;2;6;3;21;8;2;13;1;22;2;1;27;2;3;2;2;1;2;2;2;2;2;2;3;2;2;1;1;1;2;3;2;2;2;2;1;2;2;2;2;1;2;3;0;0;0;0;0;0;1;3;3;1;0;2;3;2;0;1;0;0;0;0;3;3;0;0;0;0;0;1;1;3;1;0;0;0;0;0;2;0;1;3;0;3;3;0;1;0;1;1;3;0;3;3;1;3;0;0;0;1;0;2;1;2;";
-
     private static final PolicyDependencyGraph sPlayerOne = new PolicyDependencyGraph();
 
     private static final PolicyDependencyGraph sPlayerTwo = new PolicyDependencyGraph();
 
     public static void main(final String[] args) {
-        // createFighters();
+        createFighters();
+
+        System.out.println("Created contestants");
+
         fight();
+
+        System.out.println("Done fighting");
+
+        // useContestant();
+
+        System.out.println("Done");
+    }
+
+    public static final String CONSIDER_ALL = "X";
+
+    public static final String SEPERATOR = " ";
+
+    public static final String DECISION_CHAIN = "";
+
+    public static void useContestant() {
+        List<ActionNode> nextNodes = readNodes();
+        // System.out.println(ActionNode.lastUsedID);
+        System.out.println("Done Reading");
+
+        String arg = "0;";
+        Short nextAction = Short.parseShort(arg.substring(0, arg.indexOf(SEPERATOR)));
+        String leftoverArgument = arg.substring(arg.indexOf(SEPERATOR) + 1);
+
+        for (ActionNode node : nextNodes) {
+            if (node.action == nextAction) {
+                try {
+                    getValues(node, leftoverArgument);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+
+        // ActionNode[] alienNodes = new ActionNode[19];
+        // for (short i = 0; i < alienNodes.length; ++i) {
+        // alienNodes[i] = new ActionNode(i, Type.ALIEN, null);
+        // }
+        //
+        // System.out.println("---- HUMAN ----");
+        // for (ActionNode node : nextNodes) {
+        // for (ActionNode child : node.children.values()) {
+        // alienNodes[child.action].winCounter += child.winCounter;
+        // alienNodes[child.action].drawCounter += child.drawCounter;
+        // alienNodes[child.action].loseCounter += child.loseCounter;
+        //
+        // if (child.action == 16) {
+        // System.out.println(node.action + " -> " + child);
+        // }
+        // }
+        // }
+    }
+
+    public static void getValues(final ActionNode current, final String arg) throws Exception {
+        if (arg.length() == 0) {
+            printActionNodePath(current);
+            System.out.println(current);
+            System.out.println();
+
+            for (ActionNode node : current.children) {
+                if (node == null) {
+                    continue;
+                }
+
+                System.out.println(node);
+            }
+
+            printActionNodePath(current);
+            return;
+        }
+
+        Short nextAction = Short.parseShort(arg.substring(0, arg.indexOf(SEPERATOR)));
+        String leftoverArgument = arg.substring(arg.indexOf(SEPERATOR) + 1);
+        ActionNode nextActionNode = current.children[nextAction];
+
+        getValues(nextActionNode, leftoverArgument);
+    }
+
+    public static ActionNode getNode(final ActionNode current, final String arg) throws Exception {
+        if (arg.length() == 0) {
+            return current;
+        }
+
+        Short nextAction = Short.parseShort(arg.substring(0, arg.indexOf(SEPERATOR)));
+        String leftoverArgument = arg.substring(arg.indexOf(SEPERATOR) + 1);
+        ActionNode nextActionNode = current.children[nextAction];
+
+        return getNode(nextActionNode, leftoverArgument);
+    }
+
+    public static void find(final ActionNode node) {
+        if (node.winCounter + node.drawCounter + node.loseCounter == 1) {
+            return;
+        }
+
+        if (node.loseCounter == 0) {
+            ActionNode current = node;
+            while (current != null) {
+                System.out.print(new Decision(current.action, Race.getRaceForType((current.isHuman ? Type.HUMAN
+                        : Type.ALIEN))) + "<-");
+                current = current.parent;
+            }
+
+            System.out.println(" \t \t W:" + node.winCounter + "\t D:" + node.drawCounter + "\t L:" + node.loseCounter
+                    + "\t " + (node.isHuman ? Type.HUMAN : Type.ALIEN));
+        } else {
+            for (ActionNode child : node.children) {
+                if (child == null) {
+                    continue;
+                }
+
+                find(child);
+            }
+        }
+    }
+
+    public static void printActionNodePath(ActionNode node) {
+        while (node != null) {
+            System.out.print(new Decision(node.action, Race.getRaceForType((node.isHuman ? Type.HUMAN : Type.ALIEN)))
+                    + "<-");
+            node = node.parent;
+        }
+        System.out.println();
     }
 
     public static void fight() {
@@ -50,11 +171,12 @@ public class MCTSTacticsFinder {
         List<Policy> humanPolicyList = readFromFile(new HumanRace());
         List<Policy> alienPolicyList = readFromFile(new AlienRace());
 
-        ActionNode currentNode = new ActionNode(0, Race.Type.ALIEN);
+        ActionNode currentNode = new ActionNode((short) 0, Race.Type.ALIEN, null);
         final ActionNode startingNode = currentNode;
 
+        int counter = 0;
         for (Policy humanPolicy : humanPolicyList) {
-
+            System.out.println(counter++ + "/" + humanPolicyList.size());
             for (Policy alienPolicy : alienPolicyList) {
 
                 GameResult result = GameManager.run(humanPolicy, alienPolicy);
@@ -70,8 +192,8 @@ public class MCTSTacticsFinder {
                 alienPolicy.reset();
 
                 for (int step = 0; step < result.getSteps(); ++step) {
-                    currentNode = addOrReturnNode(currentNode, humanPolicy.getNextAction(), humanPolicy.getRace()
-                            .getType());
+                    currentNode = addOrReturnNode(currentNode, (short) humanPolicy.getNextAction(), humanPolicy
+                            .getRace().getType());
 
                     if (relation == Relation.BETTER) {
                         currentNode.winCounter++;
@@ -81,8 +203,8 @@ public class MCTSTacticsFinder {
                         currentNode.loseCounter++;
                     }
 
-                    currentNode = addOrReturnNode(currentNode, alienPolicy.getNextAction(), alienPolicy.getRace()
-                            .getType());
+                    currentNode = addOrReturnNode(currentNode, (short) alienPolicy.getNextAction(), alienPolicy
+                            .getRace().getType());
 
                     if (relation == Relation.BETTER) {
                         currentNode.loseCounter++;
@@ -100,22 +222,37 @@ public class MCTSTacticsFinder {
         }
 
         PrintWriter writer = null;
-        try {
-            writer = new PrintWriter("neo4jdb-action-nodes" + ".txt", "UTF-8");
-        } catch (Exception e1) {}
-        startingNode.buildNodeJOutput(writer);
+        // try {
+        // writer = new PrintWriter("neo4jdb-action-nodes.txt", "UTF-8");
+        // } catch (Exception e1) {}
+        // startingNode.buildNodeJOutput(writer);
+        //
+        // writer.close();
 
+        try {
+            writer = new PrintWriter("action-nodes-graph.txt", "UTF-8");
+        } catch (Exception e1) {}
+
+        for (ActionNode child : startingNode.children) {
+            if (child == null) {
+                continue;
+            }
+
+            child.saveGraph(writer);
+        }
+        writer.println(ActionNode.END_OF_CHILDREN);
         writer.close();
+
         System.out.println((System.currentTimeMillis() - tic) / 1000 + "s");
     }
 
-    public static ActionNode addOrReturnNode(final ActionNode currentNode, final int action, final Race.Type raceType) {
-        if (currentNode.children.containsKey(action)) {
-            return currentNode.children.get(action);
+    public static ActionNode addOrReturnNode(final ActionNode currentNode, final short action, final Race.Type raceType) {
+        if (currentNode.children[action] != null) {
+            return currentNode.children[action];
         }
 
-        ActionNode node = new ActionNode(action, raceType);
-        currentNode.children.put(action, node);
+        ActionNode node = new ActionNode(action, raceType, currentNode);
+        currentNode.children[action] = node;
         return node;
     }
 
@@ -141,10 +278,16 @@ public class MCTSTacticsFinder {
         Set<Policy> humanPolicies = new HashSet<Policy>();
         Set<Policy> alienPolicies = new HashSet<Policy>();
 
-        final int amountOfCounterPolicySearches = 1000;
+        final int amountOfCounterPolicySearches = 100000;
+        final int amountOfPoliciesToConsider = 1500;
+        final int maxSeachingCounter = 1000;
 
         for (int i = 0; i < amountOfCounterPolicySearches; ++i) {
+            if (i % (amountOfCounterPolicySearches / 10) == 0) {
+                System.out.println(i);
+            }
 
+            int counter = 0;
             do {
                 agentOne.start(fixPlayerOne);
                 agentTwo.start(fixPlayerTwo);
@@ -156,17 +299,31 @@ public class MCTSTacticsFinder {
                     agentOne.end(result, fixPlayerOne);
                     agentTwo.end(result, fixPlayerTwo);
 
-                    if (agentOne.getRace().getName() == AlienRace.NAME) {
-                        alienPolicies.add(agentOne.getLastUsedPolicy());
-                    } else {
-                        humanPolicies.add(agentOne.getLastUsedPolicy());
+                    if (i > amountOfCounterPolicySearches - amountOfPoliciesToConsider) {
+                        if (agentOne.getRace().getName() == AlienRace.NAME) {
+                            alienPolicies.add(agentOne.getLastUsedPolicy());
+                        } else {
+                            humanPolicies.add(agentOne.getLastUsedPolicy());
+                        }
                     }
-
                 } else {
                     agentOne.end(result, fixPlayerOne);
                     agentTwo.end(result, fixPlayerTwo);
                 }
-            } while (result.getWinner() != agentOne.getPlayer());
+
+                if (++counter % 10000 == 0) {
+                    System.out.println(result.getWinner());
+                    System.out.println(agentOne.getLastUsedPolicy());
+                    System.out.println(agentTwo.getLastUsedPolicy());
+                    System.out.println("Taking long " + agentOne.getRace().getType());
+                }
+            } while (result.getWinner() != agentOne.getPlayer()); // ++counter != maxSeachingCounter
+            // &&
+
+            if (counter == maxSeachingCounter) {
+                System.out.println("Counter reached");
+                System.out.println(agentOne.getRace().getType());
+            }
 
             agentTwo.reset();
             agentOne.resetFixedPolicy();
@@ -179,6 +336,71 @@ public class MCTSTacticsFinder {
 
         saveToFile(alienPolicies, new AlienRace());
         saveToFile(humanPolicies, new HumanRace());
+    }
+
+    public static List<ActionNode> readNodes() {
+        List<ActionNode> result = new LinkedList<ActionNode>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("action-nodes-graph.txt"));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        String currentLine;
+        try {
+            while ((currentLine = reader.readLine()) != null && !currentLine.equals(ActionNode.END_OF_CHILDREN)) {
+                String[] arguments = currentLine.split(";");
+
+                short action = Short.parseShort(arguments[0]);
+                Race.Type type = Integer.parseInt(arguments[1]) == Race.Type.HUMAN.ordinal() ? Race.Type.HUMAN
+                        : Race.Type.ALIEN;
+
+                int winCounter = Integer.parseInt(arguments[2]);
+                int drawCounter = Integer.parseInt(arguments[3]);
+                int loseCounter = Integer.parseInt(arguments[4]);
+                ActionNode nextNode = new ActionNode(action, type, winCounter, drawCounter, loseCounter, null);
+                result.add(nextNode);
+
+                ActionNode.readGraph(reader, nextNode);
+            }
+        } catch (NumberFormatException | IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        // String currentLine;
+        // ActionNode toTest = null;
+        // try {
+        // currentLine = reader.readLine();
+        // String[] arguments = currentLine.split(";");
+        //
+        // int action = Integer.parseInt(arguments[0]);
+        // Race.Type type = Integer.parseInt(arguments[1]) == Race.Type.HUMAN.ordinal() ?
+        // Race.Type.HUMAN
+        // : Race.Type.ALIEN;
+        //
+        // int winCounter = Integer.parseInt(arguments[2]);
+        // int drawCounter = Integer.parseInt(arguments[3]);
+        // int loseCounter = Integer.parseInt(arguments[4]);
+        // toTest = new ActionNode(action, type, winCounter, drawCounter, loseCounter, null);
+        // toTest.readGraph(reader);
+        //
+        // } catch (NumberFormatException | IOException e1) {
+        // // TODO Auto-generated catch block
+        // e1.printStackTrace();
+        // }
+
+        // close the BufferedReader when we're done
+        try {
+            reader.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public static List<Policy> readFromFile(final Race race) {

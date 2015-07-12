@@ -86,7 +86,7 @@ public class MCTSAgent extends Agent {
 
         mUpgradeList = ActionPackage.generateUpdateList();
 
-        mTotalAmountOfTowerFields = (totalActionAmount - 1 - race.getAvailableTowerAmount()) / 3;
+        mTotalAmountOfTowerFields = ((totalActionAmount - 4) / race.getAvailableTowerAmount());
         mEmptyTowerPositions = new ArrayList<Integer>(mTotalAmountOfTowerFields);
         for (int i = 0; i < mTotalAmountOfTowerFields; ++i) {
             mEmptyTowerPositions.add(i);
@@ -520,6 +520,6 @@ public class MCTSAgent extends Agent {
 
         mCurrentActionPackage = null;
         mActionHistory.clear();
-        mSearchTree.reset();
+        // mSearchTree.reset();
     }
 }

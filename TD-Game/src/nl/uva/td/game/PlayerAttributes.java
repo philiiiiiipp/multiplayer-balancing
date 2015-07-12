@@ -9,11 +9,11 @@ public class PlayerAttributes {
         AMOUNT
     }
 
-    private static final double HEALTH_INCREASE_PER_UPDATE = 0.4;
+    private static final double HEALTH_INCREASE_PER_UPDATE = 0.7;
 
-    private static final double MOVEMENT_INCREASE_PER_UPDATE = 0.1;
+    private static final double MOVEMENT_INCREASE_PER_UPDATE = 0.4;
 
-    private static final double CREEP_AMOUNT_INCREASE_PER_UPDATE = 0.5;
+    private static final double CREEP_AMOUNT_INCREASE_PER_UPDATE = 0.75;
 
     private int mLives;
 

@@ -116,15 +116,9 @@ public class BruteForceStepAgent extends Agent {
     }
 
     @Override
-    public void reset() {
-        // TODO Auto-generated method stub
-
-    }
+    public void reset() {}
 
     @Override
-    public void printStatistics() {
-        // TODO Auto-generated method stub
-
-    }
+    public void printStatistics() {}
 
 }

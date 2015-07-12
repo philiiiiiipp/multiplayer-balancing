@@ -1,5 +1,6 @@
 *.class
-
+action-nodes-graph.txt
+neo4jdb-action-nodes.txt
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
