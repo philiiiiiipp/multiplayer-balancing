@@ -35,7 +35,7 @@ public class GridOperator {
         Collections.sort(traversalX, direction.equals(Direction.RIGHT) ? Collections.reverseOrder()
                 : Integer::compareTo);
         Collections
-        .sort(traversalY, direction.equals(Direction.DOWN) ? Collections.reverseOrder() : Integer::compareTo);
+                .sort(traversalY, direction.equals(Direction.DOWN) ? Collections.reverseOrder() : Integer::compareTo);
     }
 
     public int traverseGrid(final IntBinaryOperator func) {

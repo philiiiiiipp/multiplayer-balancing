@@ -32,12 +32,12 @@ public class MCTSAgent extends Agent {
 
     public static final double LOOSER_REWARD = -0.5;
 
-    public static final double DRAW_REWARD = 0;
+    public static final double DRAW_REWARD = -0.5;
 
     private final SearchTree mSearchTree;
 
     /** Progressive widening threshold */
-    public static final int T = 7;
+    public static final int T = 5;
 
     /** The total amount of available actions */
     private final int mTotalActionAmount;
@@ -418,9 +418,10 @@ public class MCTSAgent extends Agent {
             reward = WIN_REWARD * gameResult.getMultiplier();// GameManager.MAX_STEPS -
             // gameResult.getSteps();
         } else if (isDraw(gameResult.getWinner())) {
-            reward = DRAW_REWARD * gameResult.getMultiplier();
+            reward = gameResult.getSteps() - GameManager.MAX_STEPS;// DRAW_REWARD *
+            // gameResult.getMultiplier();
         } else {
-            reward = gameResult.getSteps() - GameManager.MAX_STEPS;
+            reward = -2 * GameManager.MAX_STEPS;
         }
 
         for (int historyPosition = 0; historyPosition < mStateHistory.size(); ++historyPosition) {
@@ -521,5 +522,9 @@ public class MCTSAgent extends Agent {
         mCurrentActionPackage = null;
         mActionHistory.clear();
         // mSearchTree.reset();
+    }
+
+    public void initialiseSearchTree() {
+        mSearchTree.initialise();
     }
 }

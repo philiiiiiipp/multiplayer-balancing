@@ -5,6 +5,7 @@ import java.util.List;
 
 import nl.uva.td.ai.MCTSTacticsFinder;
 import nl.uva.td.ai.quality.ActionNode;
+import nl.uva.td.game.GameManager;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
 
@@ -27,7 +28,9 @@ public class AnalysisTool extends javax.swing.JFrame {
     public AnalysisTool() {
         initComponents();
 
-        String text = getChildTable(mNodes.toArray(new ActionNode[19]));
+        String text = getChildTable(mNodes) + "\n";
+        text += ActionNode.getActionInfo();
+
         jTextArea1.setText(jTextArea1.getText() + "\n" + text);
     }
 
@@ -82,7 +85,7 @@ public class AnalysisTool extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(final java.awt.event.KeyEvent evt) {
         if (jTextField1.getText().length() == 0) {
-            String text = getChildTable(mNodes.toArray(new ActionNode[19]));
+            String text = getChildTable(mNodes);
 
             jTextArea1.setText(jTextArea1.getText() + "\n\n" + text);
             return;
@@ -113,7 +116,7 @@ public class AnalysisTool extends javax.swing.JFrame {
                     }
                     text += "\n" + foundNode + "\n\n";
 
-                    text += getChildTable(foundNode.children);
+                    text += getChildTable(foundNode.mChildren);
                     jTextArea1.setText(jTextArea1.getText() + "\n\n" + text);
                     break;
                 }
@@ -123,21 +126,43 @@ public class AnalysisTool extends javax.swing.JFrame {
         }
     }
 
-    private String getChildTable(final ActionNode[] children) {
+    private String getChildTable(final List<ActionNode> children) {
+        ActionNode[] sorting = new ActionNode[GameManager.TOTAL_ACTIONS];
+        for (ActionNode node : children) {
+            sorting[node.action] = node;
+        }
+
         String text = "";
         int totalWin = 0;
         int totalLose = 0;
         int totalDraw = 0;
-        for (ActionNode child : children) {
-            if (child == null) {
+        for (int i = 0; i < 4; ++i) {
+            if (sorting[i] == null) {
                 continue;
             }
+            text += sorting[i].toString() + "\n";
 
-            text += child + "\n";
-            totalWin += child.winCounter;
-            totalDraw += child.drawCounter;
-            totalLose += child.loseCounter;
+            totalWin += sorting[i].winCounter;
+            totalDraw += sorting[i].drawCounter;
+            totalLose += sorting[i].loseCounter;
         }
+
+        text += "\n";
+        for (int towerType = 0; towerType < 3; ++towerType) {
+            for (int towerPos = 0; towerPos < 5; ++towerPos) {
+                int i = 4 + towerType + towerPos * 3;
+                if (sorting[i] == null) {
+                    continue;
+                }
+                text += sorting[i].toString() + "\n";
+
+                totalWin += sorting[i].winCounter;
+                totalDraw += sorting[i].drawCounter;
+                totalLose += sorting[i].loseCounter;
+            }
+            text += "\n";
+        }
+
         double total = totalWin + totalDraw + totalLose;
         final NumberFormat form = NumberFormat.getPercentInstance();
         text += "                                       Avg. Win: " + form.format(totalWin / total) + " Avg. Draw: "

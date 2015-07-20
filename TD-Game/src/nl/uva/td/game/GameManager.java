@@ -23,11 +23,13 @@ public class GameManager {
 
     public static final int SALARY_FREQUENCY = 5;
 
-    public static final String MAP_FILE = "3x3";
+    public static final int TOTAL_ACTIONS = 31;
+
+    public static final String MAP_FILE = "6x6";
 
     public static final int MAX_STEPS = 40;
 
-    private static final boolean SHOW_UI = false;
+    private static final boolean SHOW_UI = true;
 
     private static long sParsingTime = 0;
 

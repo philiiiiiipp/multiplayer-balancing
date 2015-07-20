@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.util.LinkedList;
 
+import nl.uva.td.game.GameManager;
 import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
 import nl.uva.td.game.faction.Race.Type;
@@ -25,26 +27,46 @@ public class ActionNode {
 
     public int loseCounter = 0;
 
-    // public final LinkedList<ActionNode> mChildren = new LinkedList<ActionNode>();
+    public static final ActionInfo[] humanInfo = new ActionInfo[GameManager.TOTAL_ACTIONS];
 
-    public final ActionNode[] children = new ActionNode[19];
+    public static final ActionInfo[] alienInfo = new ActionInfo[GameManager.TOTAL_ACTIONS];
 
-    // public final Map<Short, ActionNode> children = new HashMap<>();
+    public final LinkedList<ActionNode> mChildren = new LinkedList<ActionNode>();
+
+    static {
+        for (int i = 0; i < GameManager.TOTAL_ACTIONS; ++i) {
+            humanInfo[i] = new ActionInfo(i, Race.Type.HUMAN);
+            alienInfo[i] = new ActionInfo(i, Race.Type.ALIEN);
+        }
+    }
 
     public ActionNode(final short action, final Race.Type type, final int winCounter, final int drawCounter,
-            final int loseCounter, final ActionNode parent) {
+            final int loseCounter, final ActionNode parent, final int depth) {
         this(action, type, parent);
 
         this.winCounter = winCounter;
         this.drawCounter = drawCounter;
         this.loseCounter = loseCounter;
+
+        ActionInfo info = null;
+        if (isHuman) {
+            info = humanInfo[this.action];
+
+        } else {
+            info = alienInfo[this.action];
+        }
+
+        info.score += (winCounter / depth) + (drawCounter * 0.5 / depth) - (loseCounter / depth);
+
+        info.winCounter += winCounter;
+        info.drawCounter += drawCounter;
+        info.loseCounter += loseCounter;
     }
 
     public ActionNode(final short action, final Race.Type type, final ActionNode parent) {
         this.action = (byte) action;
         this.isHuman = type == Type.HUMAN;
         this.parent = parent;
-        // this.id = lastUsedID++;
     }
 
     @Override
@@ -110,17 +132,15 @@ public class ActionNode {
     public void saveGraph(final PrintWriter writer) {
         writer.println(action + ";" + (isHuman ? 0 : 1) + ";" + winCounter + ";" + drawCounter + ";" + loseCounter);
 
-        for (ActionNode child : children) {
-            if (child == null) {
-                continue;
-            }
+        for (ActionNode child : mChildren) {
 
             child.saveGraph(writer);
         }
         writer.println(END_OF_CHILDREN);
     }
 
-    public static void readGraph(final BufferedReader reader, final ActionNode parent) throws IOException {
+    public static void readGraph(final BufferedReader reader, final ActionNode parent, final int depth)
+            throws IOException {
         String currentLine;
         while (!(currentLine = reader.readLine()).equals(END_OF_CHILDREN)) {
             String[] arguments = currentLine.split(";");
@@ -132,13 +152,13 @@ public class ActionNode {
             int winCounter = Integer.parseInt(arguments[2]);
             int drawCounter = Integer.parseInt(arguments[3]);
             int loseCounter = Integer.parseInt(arguments[4]);
-            ActionNode nextNode = new ActionNode(action, type, winCounter, drawCounter, loseCounter, parent);
+            ActionNode nextNode = new ActionNode(action, type, winCounter, drawCounter, loseCounter, parent, depth);
 
             if (parent != null) {
-                parent.children[action] = nextNode;
+                parent.mChildren.add(nextNode);
             }
 
-            readGraph(reader, nextNode);
+            readGraph(reader, nextNode, depth + 1);
         }
     }
 
@@ -171,6 +191,44 @@ public class ActionNode {
         } else {
             return Race.Type.ALIEN;
         }
+    }
+
+    public ActionNode getChild(final int action) {
+        for (ActionNode child : mChildren) {
+            if (child.action == action) {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
+    public static String getActionInfo() {
+        String result = "---- HUMAN ----\n";
+        result += getActionInfo(humanInfo);
+
+        result += "---- ALIEN ----\n";
+        result += getActionInfo(alienInfo);
+
+        return result;
+    }
+
+    private static String getActionInfo(final ActionInfo[] actionInfo) {
+        String result = "";
+
+        for (int i = 0; i < 4; ++i) {
+            result += actionInfo[i].toString() + "\n";
+        }
+
+        result += "\n";
+        for (int towerType = 0; towerType < 3; ++towerType) {
+            for (int towerPos = 0; towerPos < 5; ++towerPos) {
+                result += actionInfo[4 + towerType + towerPos * 3].toString() + "\n";
+            }
+            result += "\n";
+        }
+
+        return result;
     }
 
     // return String.format("%-7s %-10s %-10s %-10s | %-9s %-9s %-11s %-1s",

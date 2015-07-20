@@ -100,10 +100,7 @@ public class MCTSTacticsFinder {
             System.out.println(current);
             System.out.println();
 
-            for (ActionNode node : current.children) {
-                if (node == null) {
-                    continue;
-                }
+            for (ActionNode node : current.mChildren) {
 
                 System.out.println(node);
             }
@@ -114,7 +111,7 @@ public class MCTSTacticsFinder {
 
         Short nextAction = Short.parseShort(arg.substring(0, arg.indexOf(SEPERATOR)));
         String leftoverArgument = arg.substring(arg.indexOf(SEPERATOR) + 1);
-        ActionNode nextActionNode = current.children[nextAction];
+        ActionNode nextActionNode = current.getChild(nextAction);
 
         getValues(nextActionNode, leftoverArgument);
     }
@@ -126,7 +123,7 @@ public class MCTSTacticsFinder {
 
         Short nextAction = Short.parseShort(arg.substring(0, arg.indexOf(SEPERATOR)));
         String leftoverArgument = arg.substring(arg.indexOf(SEPERATOR) + 1);
-        ActionNode nextActionNode = current.children[nextAction];
+        ActionNode nextActionNode = current.getChild(nextAction);
 
         return getNode(nextActionNode, leftoverArgument);
     }
@@ -147,10 +144,7 @@ public class MCTSTacticsFinder {
             System.out.println(" \t \t W:" + node.winCounter + "\t D:" + node.drawCounter + "\t L:" + node.loseCounter
                     + "\t " + (node.isHuman ? Type.HUMAN : Type.ALIEN));
         } else {
-            for (ActionNode child : node.children) {
-                if (child == null) {
-                    continue;
-                }
+            for (ActionNode child : node.mChildren) {
 
                 find(child);
             }
@@ -233,10 +227,7 @@ public class MCTSTacticsFinder {
             writer = new PrintWriter("action-nodes-graph.txt", "UTF-8");
         } catch (Exception e1) {}
 
-        for (ActionNode child : startingNode.children) {
-            if (child == null) {
-                continue;
-            }
+        for (ActionNode child : startingNode.mChildren) {
 
             child.saveGraph(writer);
         }
@@ -247,12 +238,13 @@ public class MCTSTacticsFinder {
     }
 
     public static ActionNode addOrReturnNode(final ActionNode currentNode, final short action, final Race.Type raceType) {
-        if (currentNode.children[action] != null) {
-            return currentNode.children[action];
+        ActionNode result = currentNode.getChild(action);
+        if (result != null) {
+            return result;
         }
 
         ActionNode node = new ActionNode(action, raceType, currentNode);
-        currentNode.children[action] = node;
+        currentNode.mChildren.add(node);
         return node;
     }
 
@@ -260,12 +252,12 @@ public class MCTSTacticsFinder {
         GameField playerOneMap = Parser.parseFile(GameManager.MAP_FILE);
         Race race = new HumanRace();
 
-        Agent agentOne = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount() + 4,
-                Player.PLAYER_ONE);
+        MCTSAgent agentOne = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount()
+                + 4, Player.PLAYER_ONE);
 
         race = new AlienRace();
-        Agent agentTwo = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount() + 4,
-                Player.PLAYER_TWO);
+        MCTSAgent agentTwo = new MCTSAgent(race, playerOneMap.getTowerFields().size() * race.getAvailableTowerAmount()
+                + 4, Player.PLAYER_TWO);
 
         long tic = System.currentTimeMillis();
         int trys = 0;
@@ -278,8 +270,8 @@ public class MCTSTacticsFinder {
         Set<Policy> humanPolicies = new HashSet<Policy>();
         Set<Policy> alienPolicies = new HashSet<Policy>();
 
-        final int amountOfCounterPolicySearches = 100000;
-        final int amountOfPoliciesToConsider = 1500;
+        final int amountOfCounterPolicySearches = 1000000;
+        final int amountOfPoliciesToConsider = 2300;
         final int maxSeachingCounter = 1000;
 
         for (int i = 0; i < amountOfCounterPolicySearches; ++i) {
@@ -316,6 +308,11 @@ public class MCTSTacticsFinder {
                     System.out.println(agentOne.getLastUsedPolicy());
                     System.out.println(agentTwo.getLastUsedPolicy());
                     System.out.println("Taking long " + agentOne.getRace().getType());
+
+                    if (counter % (10 * 10000) == 0) {
+                        System.out.println("------------- RESETING --------------");
+                        agentOne.initialiseSearchTree();
+                    }
                 }
             } while (result.getWinner() != agentOne.getPlayer()); // ++counter != maxSeachingCounter
             // &&
@@ -329,7 +326,7 @@ public class MCTSTacticsFinder {
             agentOne.resetFixedPolicy();
 
             trys = 0;
-            Agent tmp = agentOne;
+            MCTSAgent tmp = agentOne;
             agentOne = agentTwo;
             agentTwo = tmp;
         }
@@ -360,10 +357,10 @@ public class MCTSTacticsFinder {
                 int winCounter = Integer.parseInt(arguments[2]);
                 int drawCounter = Integer.parseInt(arguments[3]);
                 int loseCounter = Integer.parseInt(arguments[4]);
-                ActionNode nextNode = new ActionNode(action, type, winCounter, drawCounter, loseCounter, null);
+                ActionNode nextNode = new ActionNode(action, type, winCounter, drawCounter, loseCounter, null, 1);
                 result.add(nextNode);
 
-                ActionNode.readGraph(reader, nextNode);
+                ActionNode.readGraph(reader, nextNode, 2);
             }
         } catch (NumberFormatException | IOException e1) {
             // TODO Auto-generated catch block

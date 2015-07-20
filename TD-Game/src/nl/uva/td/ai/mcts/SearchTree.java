@@ -26,6 +26,7 @@ public class SearchTree {
     public void initialise() {
         mRootNode = mCurrentNode = new TreeNode(0);
         mNodeCounter = 0;
+        mCurrentDeepestDepth = 0;
         mInitialised = true;
     }
 
