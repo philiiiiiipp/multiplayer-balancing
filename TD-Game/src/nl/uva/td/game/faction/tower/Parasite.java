@@ -13,7 +13,7 @@ public class Parasite extends MovementChange {
     private static final int ID = 0;
 
     /** The duration this parasite affects the creep */
-    private static final int PARASITE_DURATION = 2;
+    public static final int PARASITE_DURATION = 3;
 
     /** The remaining duration this creep gets affected */
     private int mRemainingTurns = PARASITE_DURATION;

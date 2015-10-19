@@ -115,7 +115,7 @@ public class Game2048 extends Application implements GameUpdateSubscriber {
         });
 
         try {
-            Thread.sleep(800000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

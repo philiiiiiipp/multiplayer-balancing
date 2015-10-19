@@ -7,9 +7,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import nl.uva.td.ai.PolicyQuality.Relation;
@@ -24,28 +29,172 @@ import nl.uva.td.game.agent.Decision;
 import nl.uva.td.game.faction.Race;
 import nl.uva.td.game.faction.Race.Type;
 import nl.uva.td.game.faction.alien.AlienRace;
+import nl.uva.td.game.faction.alien.tower.ChainLightningTower;
+import nl.uva.td.game.faction.alien.tower.ParasiteTower;
+import nl.uva.td.game.faction.alien.tower.ShockTower;
 import nl.uva.td.game.faction.human.HumanRace;
+import nl.uva.td.game.faction.human.tower.ArcherTower;
+import nl.uva.td.game.faction.human.tower.FireTower;
+import nl.uva.td.game.faction.human.tower.IceTower;
+import nl.uva.td.game.faction.tower.Frozen;
+import nl.uva.td.game.faction.tower.Parasite;
+import nl.uva.td.game.faction.tower.Shock;
+import nl.uva.td.game.faction.tower.Tower;
 import nl.uva.td.game.map.GameField;
 import nl.uva.td.game.map.Parser;
+import nl.uva.td.visual.AnalysisTool;
 
 public class MCTSTacticsFinder {
 
-    private static final PolicyDependencyGraph sPlayerOne = new PolicyDependencyGraph();
+    private static PolicyDependencyGraph sPlayerOne = new PolicyDependencyGraph();
 
-    private static final PolicyDependencyGraph sPlayerTwo = new PolicyDependencyGraph();
+    private static PolicyDependencyGraph sPlayerTwo = new PolicyDependencyGraph();
 
     public static void main(final String[] args) {
-        createFighters();
 
-        System.out.println("Created contestants");
+        String name = "action-nodes-graph-3x3-SettingD_";
+        List<double[]> towerImpact = new ArrayList<double[]>();
+        for (int i = 1; i < 4; i++) {
 
-        fight();
+            AnalysisTool.FILENAME = name + i;
 
-        System.out.println("Done fighting");
+            createFighters();
 
-        // useContestant();
+            System.out.println("Created contestants");
 
-        System.out.println("Done");
+            fight();
+
+            sPlayerOne = new PolicyDependencyGraph();
+            sPlayerTwo = new PolicyDependencyGraph();
+
+            AnalysisTool.mNodes = MCTSTacticsFinder.readNodes();
+
+            System.out.println("Done fighting");
+
+            // useContestant();
+
+            System.out.println("Done");
+
+            String text = "";
+            Tower tower = new FireTower();
+            text += "Fire Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: Does splash\n";
+
+            tower = new IceTower();
+            text += "Ice Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: "
+                    + Frozen.FROZEN_HINDRANCE + " for " + Frozen.FROZEN_DURATION + "\n";
+
+            tower = new ArcherTower();
+            text += "Archer Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + "\n\n";
+
+            tower = new ChainLightningTower();
+            text += "Chain Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: "
+                    + ChainLightningTower.CHAIN_JUMPS + " times, max " + ChainLightningTower.MAXIMUM_JUMP_LENGTH
+                    + " fields\n";
+
+            tower = new ParasiteTower();
+            text += "Parasite Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: "
+                    + "Backwards for " + Parasite.PARASITE_DURATION + " steps\n";
+
+            tower = new ShockTower();
+            text += "Shock Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: " + "Stop for "
+                    + Shock.SHOCK_DURATION + " steps\n";
+
+            text += AnalysisTool.getChildTable(AnalysisTool.mNodes) + "\n";
+            text += ActionNode.getActionInfo() + "\n";
+
+            text += ActionNode.createLatexTable(ActionNode.humanInfo) + "\n";
+            text += ActionNode.createLatexTable(ActionNode.alienInfo) + "\n";
+
+            text += "HUMAN \n";
+            text += AnalysisTool.printWithoutTower(
+                    new ArrayList<Tower>(Arrays.asList(new ArcherTower(), new IceTower(), new FireTower())), true,
+                    AnalysisTool.mNodes);
+            text += "\nALIEN \n";
+
+            text += AnalysisTool.printWithoutTower(
+                    new ArrayList<Tower>(Arrays
+                            .asList(new ChainLightningTower(), new ParasiteTower(), new ShockTower())), false,
+                    AnalysisTool.mNodes);
+
+            System.out.println(text);
+
+            PrintWriter out = null;
+            try {
+                out = new PrintWriter(AnalysisTool.FILENAME + "-result");
+                out.println(text);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                out.close();
+            }
+
+            towerImpact.add(AnalysisTool.sTowerImpact);
+            AnalysisTool.sTowerImpact = new double[6];
+
+            AnalysisTool.mNodes = null;
+            ActionNode.reset();
+        }
+
+        System.out.println();
+
+        // Locale locale = new Locale("da", "DK");
+        // String pattern = "###.######";
+
+        // DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+        // format.applyPattern(pattern);
+        PrintWriter out = null;
+        String impact = "";
+        try {
+            out = new PrintWriter(AnalysisTool.FILENAME + "-result-complete");
+            DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.GERMAN);
+            otherSymbols.setDecimalSeparator(',');
+            final DecimalFormat format = new DecimalFormat("###.#####", otherSymbols);
+            impact += "Chain Lightning\t";
+            for (int i = 0; i < towerImpact.size(); ++i) {
+                impact += format.format(towerImpact.get(i)[3]) + "\t";
+            }
+            impact += "\n";
+
+            impact += "Parasite\t";
+            for (int i = 0; i < towerImpact.size(); ++i) {
+                impact += format.format(towerImpact.get(i)[4]) + "\t";
+            }
+            impact += "\n";
+
+            impact += "Schock\t";
+            for (int i = 0; i < towerImpact.size(); ++i) {
+                impact += format.format(towerImpact.get(i)[5]) + "\t";
+            }
+            impact += "\n";
+
+            impact += "Archer\t";
+            for (int i = 0; i < towerImpact.size(); ++i) {
+                impact += format.format(towerImpact.get(i)[0]) + "\t";
+            }
+            impact += "\n";
+
+            impact += "Ice\t";
+            for (int i = 0; i < towerImpact.size(); ++i) {
+                impact += format.format(towerImpact.get(i)[1]) + "\t";
+            }
+            impact += "\n";
+
+            impact += "Fire\t";
+            for (int i = 0; i < towerImpact.size(); ++i) {
+                impact += format.format(towerImpact.get(i)[2]) + "\t";
+            }
+            impact += "\n";
+
+            out.println(impact);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            out.close();
+        }
+
+        System.out.println(impact);
     }
 
     public static final String CONSIDER_ALL = "X";
@@ -160,7 +309,7 @@ public class MCTSTacticsFinder {
         System.out.println();
     }
 
-    public static void fight() {
+    public static List<ActionNode> fight() {
         long tic = System.currentTimeMillis();
         List<Policy> humanPolicyList = readFromFile(new HumanRace());
         List<Policy> alienPolicyList = readFromFile(new AlienRace());
@@ -224,17 +373,52 @@ public class MCTSTacticsFinder {
         // writer.close();
 
         try {
-            writer = new PrintWriter("action-nodes-graph.txt", "UTF-8");
-        } catch (Exception e1) {}
+            writer = new PrintWriter(AnalysisTool.FILENAME, "UTF-8");
 
-        for (ActionNode child : startingNode.mChildren) {
+            for (ActionNode child : startingNode.mChildren) {
+                child.saveGraph(writer);
+            }
 
-            child.saveGraph(writer);
+            writer.println(ActionNode.END_OF_CHILDREN);
+        } catch (Exception e1) {
+
+        } finally {
+            writer.close();
         }
-        writer.println(ActionNode.END_OF_CHILDREN);
-        writer.close();
+
+        Tower tower = new FireTower();
+        String text = "Fire Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: Does splash\n";
+
+        tower = new IceTower();
+        text += "Ice Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: "
+                + Frozen.FROZEN_HINDRANCE + " for " + Frozen.FROZEN_DURATION + "\n";
+
+        tower = new ArcherTower();
+        text += "Archer Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + "\n\n";
+
+        tower = new ChainLightningTower();
+        text += "Chain Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: "
+                + ChainLightningTower.CHAIN_JUMPS + " times, max " + ChainLightningTower.MAXIMUM_JUMP_LENGTH
+                + " fields\n";
+
+        tower = new ParasiteTower();
+        text += "Parasite Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: " + "Backwards for "
+                + Parasite.PARASITE_DURATION + " steps\n";
+
+        tower = new ShockTower();
+        text += "Shock Dmg: " + tower.getDamage() + " Range: " + tower.getRange() + " Special: " + "Stop for "
+                + Shock.SHOCK_DURATION + " steps\n";
+
+        try {
+            writer = new PrintWriter(AnalysisTool.FILENAME + "-info", "UTF-8");
+            writer.print(text);
+        } catch (Exception e1) {} finally {
+            writer.close();
+        }
 
         System.out.println((System.currentTimeMillis() - tic) / 1000 + "s");
+
+        return startingNode.mChildren;
     }
 
     public static ActionNode addOrReturnNode(final ActionNode currentNode, final short action, final Race.Type raceType) {
@@ -270,8 +454,8 @@ public class MCTSTacticsFinder {
         Set<Policy> humanPolicies = new HashSet<Policy>();
         Set<Policy> alienPolicies = new HashSet<Policy>();
 
-        final int amountOfCounterPolicySearches = 1000000;
-        final int amountOfPoliciesToConsider = 2300;
+        final int amountOfCounterPolicySearches = 100000;
+        final int amountOfPoliciesToConsider = 1800;
         final int maxSeachingCounter = 1000;
 
         for (int i = 0; i < amountOfCounterPolicySearches; ++i) {
@@ -336,10 +520,14 @@ public class MCTSTacticsFinder {
     }
 
     public static List<ActionNode> readNodes() {
+        return readNodes(AnalysisTool.FILENAME);
+    }
+
+    public static List<ActionNode> readNodes(final String file) {
         List<ActionNode> result = new LinkedList<ActionNode>();
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("action-nodes-graph.txt"));
+            reader = new BufferedReader(new FileReader(file));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

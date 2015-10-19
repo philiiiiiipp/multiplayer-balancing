@@ -14,7 +14,7 @@ public class ShockTower extends Tower {
     public static final int ID = 2;
 
     public ShockTower() {
-        super(false, 1, 1, 30, ID);
+        super("Shock", false, 0.5, 1, 30, ID);
     }
 
     /**

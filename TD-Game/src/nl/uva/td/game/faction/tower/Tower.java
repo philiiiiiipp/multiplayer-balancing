@@ -44,12 +44,17 @@ public abstract class Tower {
     /** The unique identifier of this tower */
     protected final int mID;
 
-    public Tower(final boolean splash, final double damage, final int range, final double cost, final int id) {
+    /** The name of this tower */
+    protected final String mName;
+
+    public Tower(final String name, final boolean splash, final double damage, final int range, final double cost,
+            final int id) {
         mSplash = splash;
         mDamage = damage;
         mRange = range;
         mCost = cost + 30;
         mID = id;
+        mName = name;
     }
 
     protected Creep findCreepInRange() {
@@ -230,5 +235,43 @@ public abstract class Tower {
      */
     public double getCost() {
         return mCost;
+    }
+
+    /**
+     * Evaluates if the given tower is of the same type as this tower
+     *
+     * @param tower
+     *            The other tower
+     * @return True if the same, false if not
+     */
+    public boolean isSameType(final Tower tower) {
+        return this.mName.equals(tower.mName);
+    }
+
+    /**
+     * The name of the tower
+     *
+     * @return The name of this tower
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * The damage this tower deals
+     *
+     * @return The damage
+     */
+    public double getDamage() {
+        return mDamage;
+    }
+
+    /**
+     * Get the range of this tower in tower fields
+     *
+     * @return The range of this tower
+     */
+    public int getRange() {
+        return mRange;
     }
 }

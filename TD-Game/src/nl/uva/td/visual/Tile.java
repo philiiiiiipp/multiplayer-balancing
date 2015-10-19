@@ -80,7 +80,7 @@ public class Tile extends Label {
             setText("Fire");
         } else if (fitness == ARCHER_TOWER_NUM) {
             getStyleClass().addAll("game-label", ARCHER_TOWER);
-            setText("Archer");
+            setText("Arch");
         } else if (fitness == CHAIN_LIGHTNING_TOWER_NUM) {
             getStyleClass().addAll("game-label", CHAIN_LIGHTNING_TOWER);
             setText("Light");

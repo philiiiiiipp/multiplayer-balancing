@@ -15,21 +15,15 @@ public class GameManager {
         PLAYER_TWO
     }
 
-    public static final int STARTING_LIVES = 2;
-
-    public static final int STARTING_GOLD = 100;
-
-    public static final double BASE_SALARY = 20;
-
-    public static final int SALARY_FREQUENCY = 5;
+    public static final int STARTING_LIVES = 10;
 
     public static final int TOTAL_ACTIONS = 31;
 
-    public static final String MAP_FILE = "6x6";
+    public static final String MAP_FILE = "3x3";
 
-    public static final int MAX_STEPS = 40;
+    public static final int MAX_STEPS = 100;
 
-    private static final boolean SHOW_UI = true;
+    private static final boolean SHOW_UI = false;
 
     private static long sParsingTime = 0;
 

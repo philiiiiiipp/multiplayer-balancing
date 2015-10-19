@@ -9,7 +9,7 @@ public class FireTower extends Tower {
     public static final Type TYPE = Type.FIRE;
 
     public FireTower() {
-        super(true, 0.6, 1, 30, ID);
+        super("Fire", true, 0.6, 1, 30, ID);
         mAttributes.add(Attribute.FIRE);
     }
 

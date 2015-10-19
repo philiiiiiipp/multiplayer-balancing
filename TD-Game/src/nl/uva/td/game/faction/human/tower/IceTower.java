@@ -15,7 +15,7 @@ public class IceTower extends Tower {
     public static final Type TYPE = Type.ICE;
 
     public IceTower() {
-        super(false, 1, 1, 30, ID);
+        super("Ice", false, 1, 1, 30, ID);
         mAttributes.add(Attribute.ICE);
     }
 

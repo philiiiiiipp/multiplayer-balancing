@@ -13,7 +13,7 @@ public class ParasiteTower extends Tower {
     public static final int ID = 1;
 
     public ParasiteTower() {
-        super(false, 0, 1, 30, ID);
+        super("Parasite", false, 0, 1, 30, ID);
     }
 
     /**
@@ -23,7 +23,6 @@ public class ParasiteTower extends Tower {
      */
     @Override
     public Set<Creep> shoot() {
-
         Iterator<CreepField> creepFieldIterator = mFieldsInRange.iterator();
         Parasite parasite = new Parasite();
         while (creepFieldIterator.hasNext()) {

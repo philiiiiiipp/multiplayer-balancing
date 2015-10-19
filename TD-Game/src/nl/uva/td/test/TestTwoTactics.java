@@ -12,9 +12,9 @@ import nl.uva.td.game.map.Parser;
 
 public class TestTwoTactics {
 
-    private static String sTacticAlien = "2;4;1;1;1;1;2;1;1;1;0;1;1;1;1;1;0;0;0;1;1;2;";
+    private static String sTacticAlien = "4;8;12;";
 
-    private static String sTacticHuman = "8;3;3;3;3;3;1;1;1;3;3;5;1;1;1;3;3;";
+    private static String sTacticHuman = "4;8;12;";
 
     public static void main(final String[] args) {
 

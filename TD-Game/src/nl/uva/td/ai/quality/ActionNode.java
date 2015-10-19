@@ -3,6 +3,7 @@ package nl.uva.td.ai.quality;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 
@@ -34,6 +35,13 @@ public class ActionNode {
     public final LinkedList<ActionNode> mChildren = new LinkedList<ActionNode>();
 
     static {
+        for (int i = 0; i < GameManager.TOTAL_ACTIONS; ++i) {
+            humanInfo[i] = new ActionInfo(i, Race.Type.HUMAN);
+            alienInfo[i] = new ActionInfo(i, Race.Type.ALIEN);
+        }
+    }
+
+    public static void reset() {
         for (int i = 0; i < GameManager.TOTAL_ACTIONS; ++i) {
             humanInfo[i] = new ActionInfo(i, Race.Type.HUMAN);
             alienInfo[i] = new ActionInfo(i, Race.Type.ALIEN);
@@ -170,10 +178,10 @@ public class ActionNode {
         int norm = 13;
         int norm2 = 10;
         return f(new Decision(this.action, Race.getRaceForType(getType())).toString(), 4) + " " + this.action + " \t"
-                + f("Win: " + this.winCounter, norm) + f(" Draw: " + this.drawCounter, norm)
-                + f(" Lose: " + this.loseCounter, norm) + f(" \tWin: " + form.format(this.winCounter / total), norm2)
-                + f(" Draw: " + form.format(this.drawCounter / total), norm2)
-                + f(" Lose: " + form.format(this.loseCounter / total), norm2) + "   \t" + getType();
+        + f("Win: " + this.winCounter, norm) + f(" Draw: " + this.drawCounter, norm)
+        + f(" Lose: " + this.loseCounter, norm) + f(" \tWin: " + form.format(this.winCounter / total), norm2)
+        + f(" Draw: " + form.format(this.drawCounter / total), norm2)
+        + f(" Lose: " + form.format(this.loseCounter / total), norm2) + "   \t" + getType();
     }
 
     private String f(final String s, final int preferedLength) {
@@ -231,6 +239,133 @@ public class ActionNode {
         return result;
     }
 
+    public static String createLatexTable(final ActionInfo[] actionInfo) {
+        final DecimalFormat sDecimalFormat = new DecimalFormat("#.###");
+        Type type = (actionInfo[0].isHuman ? Type.HUMAN : Type.ALIEN);
+        int maxTowerPos = 5;
+
+        String result = "\\begin{table}[H]\n\\begin{tabular} {c c c c c c c} \toprule \n& AWR & ADR & ALR & Tower AWR & Tower ADR & Tower ALR\\\\ \\midrule \n";
+
+        result += "" + new Decision(actionInfo[0].action, Race.getRaceForType(type)).toString() + " & "
+                + sDecimalFormat.format(actionInfo[0].winProb()) + " & "
+                + sDecimalFormat.format(actionInfo[0].drawProb()) + " & "
+                + sDecimalFormat.format(actionInfo[0].loseProb()) + " & & &" + "\\\\\n";
+
+        for (int i = 1; i < 4; ++i) {
+            result += "" + new Decision(actionInfo[i].action, Race.getRaceForType(type)).toString() + " & "
+                    + sDecimalFormat.format(actionInfo[i].winProb()) + " & "
+                    + sDecimalFormat.format(actionInfo[i].drawProb()) + " & "
+                    + sDecimalFormat.format(actionInfo[i].loseProb()) + " & & &" + "\\\\"
+                    + (i == 3 ? "\\midrule\n" : "\n");
+        }
+
+        for (int towerType = 0; towerType < 3; ++towerType) {
+            double avgWin = 0;
+            double avgDraw = 0;
+            double avgLose = 0;
+
+            for (int towerPos = 0; towerPos < 5; ++towerPos) {
+                int i = 4 + towerType + towerPos * 3;
+                avgWin += actionInfo[i].winCounter;
+                avgDraw += actionInfo[i].drawCounter;
+                avgLose += actionInfo[i].loseCounter;
+            }
+
+            double total = avgWin + avgDraw + avgLose;
+            avgWin /= total;
+            avgDraw /= total;
+            avgLose /= total;
+
+            // avgWin *= 100;
+            // avgDraw *= 100;
+            // avgLose *= 100;
+
+            for (int towerPos = 0; towerPos < 5; ++towerPos) {
+                int i = 4 + towerType + towerPos * 3;
+                result += ""
+                        + new Decision(actionInfo[i].action, Race.getRaceForType(type)).toString()
+                        + " & "
+                        + sDecimalFormat.format(actionInfo[i].winProb())
+                        + " & "
+                        + sDecimalFormat.format(actionInfo[i].drawProb())
+                        + " & "
+                        + sDecimalFormat.format(actionInfo[i].loseProb())
+                        + " & "
+                        + (towerPos == 0 ? "\\multirow{" + maxTowerPos + "}{*}{" + sDecimalFormat.format(avgWin) + ""
+                                + "} & \\multirow{" + maxTowerPos + "}{*}{" + sDecimalFormat.format(avgDraw) + ""
+                                + "} & \\multirow{" + maxTowerPos + "}{*}{" + sDecimalFormat.format(avgLose) + ""
+                                + "} " : "&&") + "\\\\"
+                        + (towerPos == 4 ? (towerType == 2 ? "\\bottomrule\n" : "\\midrule\n") : "\n");
+            }
+        }
+
+        return result + "\\end{tabular}\n\\caption{Text}\n\\label{tab:}\n\\end{table}";
+    }
+
+    // public static String createLatexTable(final ActionInfo[] actionInfo) {
+    // final DecimalFormat sDecimalFormat = new DecimalFormat("#.###");
+    // Type type = (actionInfo[0].isHuman ? Type.HUMAN : Type.ALIEN);
+    // int maxTowerPos = 5;
+    //
+    // String result =
+    // "\\begin{table}[H]\n\\begin{tabular} {| c | c | c | c | c | c | c |} \\hline & AWR & ADR & ALR & Tower AWR & Tower ADR & Tower ALR\\\\ \\hline \n";
+    //
+    // result += "" + new Decision(actionInfo[0].action, Race.getRaceForType(type)).toString() +
+    // " & "
+    // + sDecimalFormat.format(actionInfo[0].winProb()) + " & "
+    // + sDecimalFormat.format(actionInfo[0].drawProb()) + " & "
+    // + sDecimalFormat.format(actionInfo[0].loseProb()) + " & & &" + "\\\\ \\cline{2-4}\n";
+    //
+    // for (int i = 1; i < 4; ++i) {
+    // result += "" + new Decision(actionInfo[i].action, Race.getRaceForType(type)).toString() +
+    // " & "
+    // + sDecimalFormat.format(actionInfo[i].winProb()) + " & "
+    // + sDecimalFormat.format(actionInfo[i].drawProb()) + " & "
+    // + sDecimalFormat.format(actionInfo[i].loseProb()) + " & & &" + "\\\\ \\cline{2-4} "
+    // + (i == 3 ? "\\cline{2-7}\n" : "\n");
+    // }
+    //
+    // for (int towerType = 0; towerType < 3; ++towerType) {
+    // double avgWin = 0;
+    // double avgDraw = 0;
+    // double avgLose = 0;
+    //
+    // for (int towerPos = 0; towerPos < 5; ++towerPos) {
+    // int i = 4 + towerType + towerPos * 3;
+    // avgWin += actionInfo[i].winCounter;
+    // avgDraw += actionInfo[i].drawCounter;
+    // avgLose += actionInfo[i].loseCounter;
+    // }
+    //
+    // double total = avgWin + avgDraw + avgLose;
+    // avgWin /= total;
+    // avgDraw /= total;
+    // avgLose /= total;
+    //
+    // // avgWin *= 100;
+    // // avgDraw *= 100;
+    // // avgLose *= 100;
+    //
+    // for (int towerPos = 0; towerPos < 5; ++towerPos) {
+    // int i = 4 + towerType + towerPos * 3;
+    // result += ""
+    // + new Decision(actionInfo[i].action, Race.getRaceForType(type)).toString()
+    // + " & "
+    // + sDecimalFormat.format(actionInfo[i].winProb())
+    // + " & "
+    // + sDecimalFormat.format(actionInfo[i].drawProb())
+    // + " & "
+    // + sDecimalFormat.format(actionInfo[i].loseProb())
+    // + " & "
+    // + (towerPos == 0 ? "\\multirow{" + maxTowerPos + "}{*}{" + sDecimalFormat.format(avgWin) + ""
+    // + "} & \\multirow{" + maxTowerPos + "}{*}{" + sDecimalFormat.format(avgDraw) + ""
+    // + "} & \\multirow{" + maxTowerPos + "}{*}{" + sDecimalFormat.format(avgLose) + ""
+    // + "} " : "&&") + "\\\\ \\cline{2-4}" + (towerPos == 4 ? "\\cline{2-7}\n" : "\n");
+    // }
+    // }
+    //
+    // return result + "\\end{tabular}\n\\caption{Text}\n\\label{tab:}\n\\end{table}";
+    // }
     // return String.format("%-7s %-10s %-10s %-10s | %-9s %-9s %-11s %-1s",
     // new Decision(this.action, Race.getRaceForType(this.raceType)) + " " + this.action, "Win: "
     // + this.winCounter, "Draw: " + this.drawCounter, "Lose: " + this.loseCounter,

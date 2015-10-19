@@ -7,11 +7,7 @@ public class ArcherTower extends Tower {
     public static final int ID = 0;
 
     public ArcherTower() {
-        super(false, 1, 3, 30, ID);
-    }
-
-    public ArcherTower(final double dmg) {
-        super(false, dmg, 3, 30, ID);
+        super("Archer", false, 0.4, 3, 30, ID);
     }
 
     @Override
